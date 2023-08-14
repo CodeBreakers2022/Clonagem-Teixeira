@@ -3,11 +3,11 @@
     $dbHost = 'localhost';
     $dbUsername = 'root';
     $dbPassword = '';
-    $dbName = 'teixeira_clonagem';
+    $dbName = 'teixeira_turismo';
 
     // Passando os parâmetros para conectar ao banco
-    $conexao = mysqli_connect($dbHost, $dbUsername, $dbPassword, $dbName);
-    if(!$conexao) {
+    $connection = mysqli_connect($dbHost, $dbUsername, $dbPassword, $dbName);
+    if(!$connection) {
         die("Houve um erro: ". mysqli_connect_error());
 
     } else {
