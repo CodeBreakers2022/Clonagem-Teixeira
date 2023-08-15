@@ -24,7 +24,7 @@
             if (password_verify($password, $hash)) {
                 $_SESSION['email'] = $email;
                 $_SESSION['user_id'] = $row['user_id'];
-                header("Location: index.php");
+                header("Location: homePage.html");
                 // header("Location: system.php?user_id=". $row['id']);
             } else {
                 // Senha incorreta

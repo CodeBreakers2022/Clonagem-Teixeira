@@ -48,3 +48,15 @@ CREATE TABLE user_travel (
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (coupon_id) REFERENCES coupon(coupon_id)
 );
+
+-- Criação da tabela "user_chair"
+CREATE TABLE `user_chair` (
+    `user_chair_id` int NOT NULL AUTO_INCREMENT,
+    `user_id` int DEFAULT NULL,
+    `travel_id` int DEFAULT NULL,
+    `chair_number` int DEFAULT NULL,
+    `busy` int NOT NULL,
+    PRIMARY KEY (`user_chair_id`),
+    KEY `user_id` (`user_id`),
+    KEY `travel_id` (`travel_id`)
+);

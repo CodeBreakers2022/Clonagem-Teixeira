@@ -1,5 +1,21 @@
+<?php
+
+    include_once('connect.php');
+
+    if (isset($_GET['travel_id'])) {
+        $travel_id = $_GET['travel_id'];
+    } else {
+        echo "Erro de carregamento";
+    }
+
+    if (isset($_POST['reservar']) && !empty($_POST['chair'])){
+        //tem que cadastrar passar o id do usuário ou por seção ou pelo get, se ele chegar aqui e não tiver cadastrado ainda, precisa direcionar ele para a página de login 
+    }
+?>
+
+<!DOCTYPE html>
 <html>
-    <header>
+    <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="assets/styles/global.css">
@@ -9,10 +25,9 @@
         </style>
         <!-- icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-        <!--tecket 2-->
-    </header>
+    </head>
     <body>
-        <!-- navbar -->
+        <!-- Seu navbar aqui -->
         <nav>
             <div class="navbar-big">
                 <img src="assets/images/teixeira_logo.png" width="auto" height="50px"/>
@@ -111,14 +126,42 @@
                 </div>
             </div>
         </nav>
-        
-        <!-- conteudo -->
-        <form action="login.php" method="post" class="form">
-            <input name="email" class="input" type="email" placeholder="Digite o seu e-mail">
-            <input type="password" id="password" name="password_"  placeholder="Digite sua senha" required placeholder="Digite sua senha">
-            <input class="button_form" name="submit" type="submit"/>
+        <!-- Conteúdo -->
+        <form method="post" action="">
+            <!-- fiz com o select e depois que eu lembrei que é button, porem acho que a estrutura ceria a mesma, a diferença é que não invéz de colocar o option no while vamos colocar um button, para que ele mude de cor -->
+            <select name="chair" required>
+                <option disabled selected>Escolha sua poutrona</option>
+                <?php
+                    
+                    $contador = 1;
+
+                    while ($contador <= 42) {
+                        $sql = "SELECT busy FROM user_chair WHERE chair_number = $contador";
+                        $result = mysqli_query($connection, $sql);
+
+                        if ($result) {
+                            $row = $result->fetch_assoc();
+                            $busy = $row['busy'];
+
+                            if ($busy == 1) {
+                                echo '<option value="' . $contador . '" disabled selected>' . $contador . ' (ocupado)</option>';
+                            } else {
+                                echo '<option value="' . $contador . '">' . $contador . '</option>';
+                            }
+                        } else {
+                            echo '<option value="' . $contador . '">Error retrieving data</option>';
+                        }
+
+                        $contador++;
+                    }
+                ?>
+
+            </select>
+            <input type="submit" name="reservar" value="reservar"/>
         </form>
 
+
+        
         <footer class="footer" id="footer">
             <div class="footer-links-sociais">
                 <img src="assets/images/teixeira_logo_branco.png" width="250px" height="auto" style="margin-bottom: 10px;">
