@@ -45,7 +45,7 @@
         <!-- Seu navbar aqui -->
         <nav>
             <div class="navbar-big">
-                <img src="assets/images/teixeira_logo.png" width="auto" height="50px"/>
+                <a href="homePage.php"><img src="assets/images/teixeira_logo.png" width="auto" height="50px"/></a>
                 <div>
                     <ul class="navbar-list">
                         <li class="ajuda-horarios" id="ajuda-horarios">Ajuda e horários 

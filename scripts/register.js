@@ -55,7 +55,7 @@ function checkPassword() {
     if (password !== confirmPassword) {
         alert("As senhas não correspondem. Por favor, verifique.");
     } else {
-        alert("Senhas correspondem. Formulário pode ser enviado.");
+        // alert("Senhas correspondem. Formulário pode ser enviado.");
     }
 }
 

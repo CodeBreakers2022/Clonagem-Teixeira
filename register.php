@@ -60,7 +60,7 @@
         echo "<script>window.location.href = 'register.html';</script>";
 
     } else { // Tentativa de acesso via URL
-        header('Location: denied.html');
+        header('Location: login.html');
       }
 
     // Fim da conexão

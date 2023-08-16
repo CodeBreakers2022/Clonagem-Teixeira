@@ -17,7 +17,8 @@ CREATE TABLE user (
     birth DATE,
     phone INT(11),
     city VARCHAR(300),
-    state_ VARCHAR(300)
+    state_ VARCHAR(300),
+    notific INT
 );
 
 -- Criação da tabela "travel"

@@ -1,3 +1,32 @@
+<?php
+
+    //Iniciando seção caso ainda não tenha sido iniciada
+    if (!isset($_SESSION)) {
+        // Seção iniciada
+        session_start();
+    }
+    
+    // Incluindo o arquivo connect.php
+    include_once('connect.php');
+
+    // Verifica se as seções de email e senha estão ativas
+    if ((!isset($_SESSION['email']) == true) && (!isset($_SESSION['password_']) == true)) { // Não estão
+        // Não está logado
+        unset($_SESSION['email']);
+        unset($_SESSION['password_']);
+
+        // Destroi a sessão
+        session_destroy();
+
+        // Tentativa de acesso via URL, vai para a página de acesso negado
+        header('Location: login.html');
+    }
+
+    //Pegando a variável de seção 
+    $user_id = $_SESSION['user_id'];
+
+?>
+
 <html>
     <header>
         <meta charset="UTF-8"/>
@@ -15,7 +44,7 @@
         <!-- navbar -->
         <nav>
             <div class="navbar-big">
-                <img src="assets/images/teixeira_logo.png" width="auto" height="50px"/>
+                <a href="homePage.php"><img src="assets/images/teixeira_logo.png" width="auto" height="50px"/></a>
                 <div>
                     <ul class="navbar-list">
                         <li class="ajuda-horarios" id="ajuda-horarios">Ajuda e horários 
@@ -111,6 +140,10 @@
                 </div>
             </div>
         </nav>
+
+        <?php
+        echo $user_id;
+        ?>
         
         <!-- conteudo -->
         
