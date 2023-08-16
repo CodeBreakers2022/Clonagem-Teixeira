@@ -24,7 +24,7 @@
             if (password_verify($password, $hash)) {
                 $_SESSION['email'] = $email;
                 $_SESSION['user_id'] = $row['user_id'];
-                header("Location: homePage.html");
+                header("Location: homePage.php");
                 // header("Location: system.php?user_id=". $row['id']);
             } else {
                 // Senha incorreta
@@ -40,7 +40,7 @@
         mysqli_close($connection); // Fechando a conexão
     } else if (!isset($_POST['submit'])) { // Tentativa de acesso sem ser pelo método POST
         // Tentativa de acesso via URL, vai para a página de acesso negado
-        header('Location: denied.html');
+        header('Location: login.html');
     } else {
         // Campos vazios
         echo "<script>alert('Preencha seus dados!')</script>";
