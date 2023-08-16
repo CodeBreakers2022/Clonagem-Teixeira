@@ -60,3 +60,10 @@ CREATE TABLE `user_chair` (
     KEY `user_id` (`user_id`),
     KEY `travel_id` (`travel_id`)
 );
+
+-- Criação da tabela "cities"
+CREATE TABLE cities (
+    city_id INT AUTO_INCREMENT PRIMARY KEY,
+    city_state VARCHAR(300),
+    city_name VARCHAR(300)
+);

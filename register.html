@@ -140,14 +140,14 @@
             <br>
             <input type="password" id="confirm-password" name="confirm-password" placeholder="Repita sua senha" required>
             <label>
-                <input type="checkbox" name="termos" required>
+                <input type="checkbox" name="terms" required>
                 Ao confirmar o cadastro, eu concordo com os <a href="#">termos de uso</a> e <a href="#">política de privacidade</a>.
             </label>
             <label>
-                <input type="checkbox" name="termos">
+                <input type="checkbox" name="notification" id="notifc" onclick="checkNotification()">
                 Desejo receber promoções, novidades e informações.
             </label>
-            <input class="button_form" name="submit" type="submit" onclick="checkPassword()"/>
+            <input class="button_form" name="submit" id="submit" type="submit" onclick="checkPassword()"/>
         </form>
 
 

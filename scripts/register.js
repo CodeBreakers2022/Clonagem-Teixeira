@@ -51,10 +51,21 @@ stateSelect.addEventListener("change", () => {
 // confirmação de senha: 
 function checkPassword() {
     const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementByI("confirm-password").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
     if (password !== confirmPassword) {
         alert("As senhas não correspondem. Por favor, verifique.");
     } else {
         alert("Senhas correspondem. Formulário pode ser enviado.");
     }
+}
+
+// Verificando se o checkbox de notificações foi selecionado
+function checkNotification() {
+    var getNotific = 0;
+    if (document.getElementById("notific").checked) {
+        var getNotific = 1;
+    } else {
+        var getNotific = 0;
+    }
+    console.log(getNotific);
 }
