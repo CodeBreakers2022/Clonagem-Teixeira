@@ -2,6 +2,7 @@
 
     include_once 'connect.php';
 
+
     //get
     if (isset($_GET['city_origin']) && isset($_GET['city_destiny'])) {
         $city_origin = $_GET['city_origin'];
@@ -22,10 +23,7 @@
         if ($date_and !== '') {
             $sql_base .= " AND arrival_date = '$date_and'";
         }
-    
-        // $sql_base = "SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'";
-        // $sql = "$sql_base AND departure_date = '$date_initial' AND arrival_date = '$date_and'";
-        $result = mysqli_query($connection, $sql);
+        $result = mysqli_query($connection, $sql_base);
     
     }else {
         echo "Erro de carregamento";
@@ -40,6 +38,7 @@
             $date_initial = $_POST['date_initial'];
             $date_and = $_POST['date_and'];
 
+            // Construir a parte básica da consulta
             $sql_base = "SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'";
     
             // Adicionar condição para date_initial, se não for vazio
@@ -51,35 +50,25 @@
             if ($date_and !== '') {
                 $sql_base .= " AND arrival_date = '$date_and'";
             }
-
-            //pesquisas 
-            $sql_base = "SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'";
-            $sql = "$sql_base AND departure_date = '$date_initial' AND arrival_date = '$date_and'";
-            $result = mysqli_query($connection, $sql);
+            $result = mysqli_query($connection, $sql_base);
             
         }
-
-        // if (mysqli_num_rows($result) === 0) {
-        //     echo '<script>alert("Nenhuma viagem encontrada!");</script>';
-        // }
-        
     }
 ?>
-<html>
-    <header>
-        <meta charset="UTF-8"/>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Teixeira</title>
+        <link rel="stylesheet" href="assets/styles/busca.css">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <link rel="stylesheet" type="text/css" href="assets/styles/global.css">
-        <link rel="stylesheet" type="text/css" href="assets/styles/register.css">
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-        </style>
-        <!-- icons -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-        <link rel="stylesheet" href="assets/styles/busca.css" />
-        <!--tecket 2-->
-    </header>
-    <body>
-        <!-- navbar -->
+
+    </head>
+
+    <body style="margin-top: 4em;">
         <nav>
             <div class="navbar-big">
                 <a href="homePage.php"><img src="assets/images/teixeira_logo.png" width="auto" height="50px"/></a>
@@ -178,9 +167,8 @@
                 </div>
             </div>
         </nav>
-        
-        <!-- conteúdo -->
-        <form action="" method="post" class="form">
+
+        <form action="" method="post" class="form" id="form">
             <label>Origem:</label>
             <select name="city_origin_search" required>
                 <option <?php if ($city_origin === 'DIVINOPOLIS - MG') echo 'selected'; ?>>DIVINOPOLIS - MG</option>
@@ -248,10 +236,135 @@
             <input class="button_form" name="submit" type="submit" value="Alterar busca"/>
         </form>
 
+        <div class="container-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="step-title">
+                            <h1 class="title">Passagens de ônibus de <?php echo "$city_origin"?> para <?php echo "$city_destiny"?>&nbsp;&nbsp;<span class="ida">ida</span></h1>
+                            <div class="steps">passo <b>1</b> de <b>2</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
+        <div class="container">
+                <section>
+                <div class="row">
+                    <div class="col">
+                        <div class="list">
+                            <div class="other-day"><span class="date">quarta-feira, 16 de
+                                ago.</span>indisponível
+                            </div>
+                            <div class="other-day"><span class="date">quinta-feira, 17 de
+                                ago.</span>indisponível
+                            </div>
+                            <div class="other-day-today"><span class="date">sexta-feira, 18 de
+                                ago.</span><span class="price2">R$&nbsp;7,90</span>
+                            </div>
+                            <div class="other-day"><span class="date">sábado, 19 de ago.</span><span
+                                class="price2">R$&nbsp;7,90</span>
+                            </div>
+                            <div class="other-day-u"><span class="date">domingo, 20 de ago.</span><span
+                                class="price2">R$&nbsp;7,90</span>
+                            </div>
+                        </div>
+                    </section>
+                        
+                    <div class="actions">
+                        <div class="length"><b>30</b> viagens encontradas</div>
+                        <div class="filters">&nbsp;&nbsp;filtrar viagens por <span title="Filtrar por classe"
+                            class="filter-type">classe</span><span title="Filtrar por horário"
+                            class="filter-type">horário</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tripcol">
+            <div class="titlelist">
+                <div class="empresa">
+                    Empresa
+                </div>
+
+                <div class="trechoclasse">
+                    Trecho / Classe
+                </div>
+
+                <div class="duracao">
+                    Horário / Duração
+                </div>
+
+                <div class="tarifa">
+                    Tarifa
+                </div>
+
+            </div>
+            <?php
+                if ($result->num_rows > 0) {
+                    // Loop para percorrer os resultados
+                    while ($row = $result->fetch_assoc()) {
+                        // Aqui você pode acessar cada coluna do resultado usando $row['nome_da_coluna']
+                        //echo "ID: " . $row['travel_id']. "";
+                        $separador = ','; //separa as casas decimais com vpirgula
+                        $price_formatted = number_format($row['price'], 2, $separador); //formata o preço
+                        echo "
+                            <div class='triplist'>
+                                <div class='imgmargin'>
+                                    <img class='Image' style='width: 100px; height: 38.95px' src='assets/images/Z.png'>
+                                </div>
+
+                                <div class='route'>
+                                    <div class='divita'>
+                                        ".$row['origin']."<br>".$row['destiny']."
+                                    </div>
+                                </div>
+
+                                <div class='conv-area'>
+                                    <div class='conv'>
+                                    ".$row['class']."
+                                    </div>
+                                </div>
+
+                                <div class='triptime'>
+                                    <div class='hourcontainer'>
+                                        <div class='hours'>
+                                            <span class='time'> ".$row['arrival_time']." </span>
+                                        </div>
+                                    </div>
+                                    <div class='duration'>
+                                        <div class='duration-container'>
+                                            <div class='dur'>
+                                                <span class='h'>00h</span>
+                                                <span class='min'>55m</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class='hourcontainer2'>
+                                        <div class='hours'>
+                                            <span class='time'> ".$row['exit_time']." </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='tripprice'>
+                                    <div class='textprice'>
+                                        a partir de</div>
+                                    <div class='price'>
+                                    R$ ".$price_formatted."</div>
+                                </div>
+                            </div>
+                        ";
+                    }
+                    } else {
+                        echo "Nenhum resultado encontrado.";
+                    }
+                ?>
 
 
-        
+        </div>
         <footer class="footer">
             <div class="footer-links-sociais">
                 <img src="assets/images/teixeira_logo_branco.png" width="250px" height="auto" style="margin-bottom: 10px;">
@@ -296,7 +409,15 @@
                 para deficientes de fala e auditivos.
             </div>
         </footer>
-        <script type="text/javascript" src="scripts/register.js"></script>
         <script type="text/javascript" src="scripts/global.js"></script>
+        <script>
+            // Detecta o envio do formulário
+            document.getElementById('form').addEventListener('submit', function() {
+                // Recarrega a página
+                location.reload();
+            });
+        </script>
+
     </body>
+
 </html>

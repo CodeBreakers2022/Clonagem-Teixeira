@@ -1,30 +1,24 @@
 <?php
+    include_once 'connect.php';
 
-    //Iniciando seção caso ainda não tenha sido iniciada
-    if (!isset($_SESSION)) {
-        // Seção iniciada
-        session_start();
-    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['submit']) && !empty($_POST['city_origin']) && !empty($_POST['city_destiny'])) { // Acessa através do método POST
+            $city_origin = $_POST['city_origin'];
+            $city_destiny = $_POST['city_destiny'];
+
+            $date_initial = isset($_POST['date_initial']) ? $_POST['date_initial'] : null;
+            $date_and = isset($_POST['date_and']) ? $_POST['date_and'] : null;
+            $coupon = isset($_POST['coupon']) ? $_POST['coupon'] : null;
+            if ($date_and !== null && $date_initial === null){
+                echo 'alert("Para preencher a dara final você precisa preencher a data de ida")'; 
+            }else{
+                echo "<script>window.location.href = 'buscaPassagem1.php?city_origin=$city_origin&city_destiny=$city_destiny&date_initial=$date_initial&date_and=$date_and&coupon=$coupon';</script>";
+            }
+
+            mysqli_close($connection); // Fechando a conexão
     
-    // Incluindo o arquivo connect.php
-    include_once('connect.php');
-
-    // Verifica se as seções de email e senha estão ativas
-    if ((!isset($_SESSION['email']) == true) && (!isset($_SESSION['password_']) == true)) { // Não estão
-        // Não está logado
-        unset($_SESSION['email']);
-        unset($_SESSION['password_']);
-
-        // Destroi a sessão
-        session_destroy();
-
-        // Tentativa de acesso via URL, vai para a página de acesso negado
-        header('Location: login.html');
+        }
     }
-
-    //Pegando a variável de seção 
-    $user_id = $_SESSION['user_id'];
-
 ?>
 
 <html>
@@ -140,13 +134,28 @@
                 </div>
             </div>
         </nav>
-
-        <?php
-        echo $user_id;
-        ?>
         
         <!-- conteudo -->
-        
+        <form action="" method="post" class="form">
+            <!-- Seus campos de formulário aqui -->
+            <select name="city_origin" required>
+                <option disabled selected value="">Saindo de</option>
+                <option>DIVINOPOLIS - MG</option>
+                <option>SÃO JOSÉ DO SALGADO -MG</option>
+                <option>ITAUNA - MG</option>
+            </select>
+            <select name="city_destiny" required>
+                <option disabled selected value="">Chegando em</option>
+                <option>DIVINOPOLIS - MG</option>
+                <option>SÃO JOSÉ DO SALGADO -MG</option>
+                <option>ITAUNA - MG</option>
+            </select>
+            <input type="date" name="date_initial" placeholder="Data de ida"/>
+            <input type="date" name="date_and" placeholder="Data de retorno"/>
+            <input type="text" name="coupon" placeholder="cupom"/>
+            <input class="button_form" name="submit" type="submit" value="Submit"/>
+        </form>
+
         <footer class="footer" id="footer">
             <div class="footer-links-sociais">
                 <img src="assets/images/teixeira_logo_branco.png" width="250px" height="auto" style="margin-bottom: 10px;">

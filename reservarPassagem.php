@@ -10,20 +10,20 @@
     include_once('connect.php');
 
     // Verifica se as seções de email e senha estão ativas
-    if ((!isset($_SESSION['email']) == true) && (!isset($_SESSION['password_']) == true)) { // Não estão
-        // Não está logado
-        unset($_SESSION['email']);
-        unset($_SESSION['password_']);
+    // if ((!isset($_SESSION['email']) == true) && (!isset($_SESSION['password_']) == true)) { // Não estão
+    //     // Não está logado
+    //     unset($_SESSION['email']);
+    //     unset($_SESSION['password_']);
 
-        // Destroi a sessão
-        session_destroy();
+    //     // Destroi a sessão
+    //     session_destroy();
 
-        // Tentativa de acesso via URL, vai para a página de acesso negado
-        header('Location: login.html');
-    }
+    //     // Tentativa de acesso via URL, vai para a página de acesso negado
+    //     header('Location: login.html');
+    // }
 
     //Pegando a variável de seção 
-    $user_id = $_SESSION['user_id'];
+    //$user_id = $_SESSION['user_id'];
 
     if (isset($_GET['travel_id'])) {
         $travel_id = $_GET['travel_id'];
@@ -152,35 +152,26 @@
         </nav>
         <!-- Conteúdo -->
         <form method="post" action="">
-            <!-- fiz com o select e depois que eu lembrei que é button, porem acho que a estrutura ceria a mesma, a diferença é que não invéz de colocar o option no while vamos colocar um button, para que ele mude de cor -->
-            <select name="chair" required>
-                <option disabled selected>Escolha sua poutrona</option>
+            <div class="chair">
                 <?php
-                    
                     $contador = 1;
+                    $sql = "SELECT busy FROM user_chair WHERE chair_number = $contador";
+                    $result = mysqli_query($connection, $sql);
 
-                    while ($contador <= 42) {
-                        $sql = "SELECT busy FROM user_chair WHERE chair_number = $contador";
-                        $result = mysqli_query($connection, $sql);
-
-                        if ($result) {
-                            $row = $result->fetch_assoc();
-                            $busy = $row['busy'];
-
-                            if ($busy == 1) {
-                                echo '<option value="' . $contador . '" disabled selected>' . $contador . ' (ocupado)</option>';
-                            } else {
-                                echo '<option value="' . $contador . '">' . $contador . '</option>';
-                            }
-                        } else {
-                            echo '<option value="' . $contador . '">Error retrieving data</option>';
-                        }
-
+                    if($result){
+                        $row = $result->fetch_assoc();
+                        $busy = $row['busy'];
+                    }
+                    echo '<span>Escolha a sua poltrona</span><br>';
+                    while($contador <= 42){
+                        
+                        echo '<button>'.$contador.'</button>';
+                        
+                        
                         $contador++;
                     }
                 ?>
-
-            </select>
+            </div> 
             <input type="submit" name="reservar" value="reservar"/>
         </form>
 
