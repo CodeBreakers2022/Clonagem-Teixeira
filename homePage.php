@@ -141,13 +141,13 @@
             <select name="city_origin" required>
                 <option disabled selected value="">Saindo de</option>
                 <option>DIVINOPOLIS - MG</option>
-                <option>SÃO JOSÉ DO SALGADO -MG</option>
+                <option>SÃO JOSÉ DO SALGADO - MG</option>
                 <option>ITAUNA - MG</option>
             </select>
             <select name="city_destiny" required>
                 <option disabled selected value="">Chegando em</option>
                 <option>DIVINOPOLIS - MG</option>
-                <option>SÃO JOSÉ DO SALGADO -MG</option>
+                <option>SÃO JOSÉ DO SALGADO - MG</option>
                 <option>ITAUNA - MG</option>
             </select>
             <input type="date" name="date_initial" placeholder="Data de ida"/>

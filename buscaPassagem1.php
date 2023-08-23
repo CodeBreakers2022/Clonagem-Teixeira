@@ -2,6 +2,11 @@
 
     include_once 'connect.php';
 
+    //inicializa as variáveis 
+    $city_origin = '';
+    $city_destiny = '';
+    $date_initial = '';
+    $date_and = '';
 
     //get
     if (isset($_GET['city_origin']) && isset($_GET['city_destiny'])) {
@@ -9,7 +14,7 @@
         $city_destiny = $_GET['city_destiny'];
         $date_initial = $_GET['date_initial'];
         $date_and = $_GET['date_and'];
-        //$coupon = $_GET['coupon'];
+        $coupon = $_GET['coupon'];
     
         // Construir a parte básica da consulta
         $sql_base = "SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'";
@@ -23,6 +28,8 @@
         if ($date_and !== '') {
             $sql_base .= " AND arrival_date = '$date_and'";
         }
+    
+        
         $result = mysqli_query($connection, $sql_base);
     
     }else {
@@ -30,15 +37,16 @@
     }
 
     $alertMessage = "";
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Verifica se o formulário foi submetido via POST
-        if (!empty($_POST['city_origin']) && !empty($_POST['city_destiny'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) { // Verifica se o formulário foi submetido via POST
+        if (!empty($_POST['city_origin_search']) && !empty($_POST['city_destiny_search'])) {
             // Dados do formulário foram preenchidos corretamente
-            $city_origin = $_POST['city_origin'];
-            $city_destiny = $_POST['city_destiny'];
-            $date_initial = $_POST['date_initial'];
-            $date_and = $_POST['date_and'];
+            
+            $city_origin = $_POST['city_origin_search'];
+            $city_destiny = $_POST['city_destiny_search'];
+            $date_initial = $_POST['date_initial_search'];
+            $date_and = $_POST['date_and_search'];
+            $coupon = $_POST['coupon_search'];
 
-            // Construir a parte básica da consulta
             $sql_base = "SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'";
     
             // Adicionar condição para date_initial, se não for vazio
@@ -50,10 +58,28 @@
             if ($date_and !== '') {
                 $sql_base .= " AND arrival_date = '$date_and'";
             }
+
             $result = mysqli_query($connection, $sql_base);
             
         }
     }
+
+    function calculateDate($daysToAddOrSubtract) {
+        $date = new DateTime(); // Data atual
+        
+        // Adiciona ou subtrai a quantidade de dias desejada
+        $date->modify($daysToAddOrSubtract . ' days');
+        
+        // Define a configuração regional para pt-BR
+        setlocale(LC_TIME, 'pt_BR.utf-8', 'pt_BR', 'Portuguese_Brazil');
+        
+        // Formata a data no formato desejado (dia da semana, dia do mês e mês)
+        $formattedDate = ucfirst(strftime('%A, %e de %B', $date->getTimestamp()));
+        
+        return $formattedDate;
+    }
+    
+
 ?>
 <html lang="en">
     <head>
@@ -168,71 +194,26 @@
             </div>
         </nav>
 
-        <form action="" method="post" class="form" id="form">
+        <!-- conteúdo -->
+        <form action="" method="post" class="form">
             <label>Origem:</label>
             <select name="city_origin_search" required>
-                <option <?php if ($city_origin === 'DIVINOPOLIS - MG') echo 'selected'; ?>>DIVINOPOLIS - MG</option>
-                <option <?php if ($city_origin === 'SÃO JOSÉ DO SALGADO - MG') echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
-                <option <?php if ($city_origin === 'ITAUNA - MG') echo 'selected'; ?>>ITAUNA - MG</option>
+                <option <?php if (($city_origin !== null) && ($city_origin === 'DIVINOPOLIS - MG')) echo 'selected'; ?>>DIVINOPOLIS - MG</option>
+                <option <?php if (($city_origin !== null) && ($city_origin === 'SÃO JOSÉ DO SALGADO - MG')) echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
+                <option <?php if (($city_origin !== null) && ($city_origin === 'ITAUNA - MG')) echo 'selected'; ?>>ITAUNA - MG</option>
             </select>
 
             <label>Destino: </label>
             <select name="city_destiny_search" required>
-                <option <?php if ($city_destiny === 'DIVINOPOLIS - MG') echo 'selected'; ?>>DIVINOPOLIS - MG</option>
-                <option <?php if ($city_destiny === 'SÃO JOSÉ DO SALGADO - MG') echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
-                <option <?php if ($city_destiny === 'ITAUNA - MG') echo 'selected'; ?>>ITAUNA - MG</option>
+                <option <?php if (($city_destiny !== null) && ($city_destiny === 'DIVINOPOLIS - MG')) echo 'selected'; ?>>DIVINOPOLIS - MG</option>
+                <option <?php if (($city_destiny !== null) && ($city_destiny === 'SÃO JOSÉ DO SALGADO - MG')) echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
+                <option <?php if (($city_destiny !== null) && ($city_destiny === 'ITAUNA - MG')) echo 'selected'; ?>>ITAUNA - MG</option>
             </select>
-            <?php
-                if(!empty($date_initial)&&!empty($date_and)&&!empty($coupon)){
-                    echo '
-                        <input type="date" name="date_initial_search" placeholder="Data de ida" value="' . $date_initial . '"/>
-                        <input type="date" name="date_and_search" placeholder="Data de retorno" value="' . $date_and . '"/>
-                        <input type="text" name="coupon_search" placeholder="cupom" value="' . $coupon . '"/>
-                    ';
-                }else if(!empty($date_initial)&&!empty($date_and)){
-                    echo '
-                        <input type="date" name="date_initial_search" placeholder="Data de ida" value="' . $date_initial . '"/>
-                        <input type="date" name="date_and_search" placeholder="Data de retorno" value="' . $date_and . '"/>
-                        <input type="text" name="coupon_search" placeholder="cupom"/>
-                    ';
-                }else if(!empty($date_initial)&&!empty($coupon)){
-                    echo '
-                        <input type="date" name="date_initial_search" placeholder="Data de ida" value="' . $date_initial . '"/>
-                        <input type="date" name="date_and_search" placeholder="Data de retorno"/>
-                        <input type="text" name="coupon_search" placeholder="cupom" value="' . $coupon . '"/>
-                    ';
-                }else if(!empty($date_and)&&!empty($coupon)){
-                    echo '
-                        <input type="date" name="date_initial_search" placeholder="Data de ida"/>
-                        <input type="date" name="date_and_search" placeholder="Data de retorno" value="' . $date_and . '"/>
-                        <input type="text" name="coupon_search" placeholder="cupom" value="' . $coupon . '"/>
-                    ';
-                }else if(!empty($coupon)){
-                    echo '
-                        <input type="date" name="date_initial_search" placeholder="Data de ida"/>
-                        <input type="date" name="date_and_search" placeholder="Data de retorno"/>
-                        <input type="text" name="coupon_search" placeholder="cupom" value="' . $coupon . '"/>
-                    ';
-                }else if(!empty($date_initial)){
-                    echo '
-                        <input type="date" name="date_initial_search" placeholder="Data de ida" value=""/>
-                        <input type="date" name="date_and_search" placeholder="Data de retorno"/>
-                        <input type="text" name="coupon_search" placeholder="cupom"/>
-                    ';
-                }else if(!empty($date_and)){
-                    echo '
-                        <input type="date" name="date_initial_search" placeholder="Data de ida"/>
-                        <input type="date" name="date_and_search" placeholder="Data de retorno" value="' . $date_and . '"/>
-                        <input type="text" name="coupon_search" placeholder="cupom"/>
-                    ';
-                }else{
-                    echo'
-                        <input type="date" name="date_initial_search" plapceholder="Data de ida"/>
-                        <input type="date" name="date_and_search" placeholder="Data de retorno"/>
-                        <input type="text" name="coupon_search" placeholder="cupom"/>
-                    ';
-                }
-            ?>
+            <input type="date" name="date_initial_search" placeholder="Data de ida" value="<?php if (($date_initial !== null) && (!empty($date_initial))) echo $date_initial; ?>"/>
+            <input type="date" name="date_and_search" placeholder="Data de retorno" value="<?php if (($date_and !== null) && (!empty($date_and))) echo $date_and; ?>"/>
+            <input type="text" name="coupon_search" placeholder="cupom" value="<?php if (($coupon !== null) && (!empty($coupon))) echo $date_and; ?>"/>
+
+            
             <input class="button_form" name="submit" type="submit" value="Alterar busca"/>
         </form>
 
@@ -250,37 +231,26 @@
         </div>
         
         <div class="container">
-                <section>
+            <section>
                 <div class="row">
                     <div class="col">
                         <div class="list">
-                            <div class="other-day"><span class="date">quarta-feira, 16 de
-                                ago.</span>indisponível
-                            </div>
-                            <div class="other-day"><span class="date">quinta-feira, 17 de
-                                ago.</span>indisponível
-                            </div>
-                            <div class="other-day-today"><span class="date">sexta-feira, 18 de
-                                ago.</span><span class="price2">R$&nbsp;7,90</span>
-                            </div>
-                            <div class="other-day"><span class="date">sábado, 19 de ago.</span><span
-                                class="price2">R$&nbsp;7,90</span>
-                            </div>
-                            <div class="other-day-u"><span class="date">domingo, 20 de ago.</span><span
-                                class="price2">R$&nbsp;7,90</span>
-                            </div>
+                            <div class="other-day"><span class="date"><?php echo calculateDate(-2);?></span>indisponível</div>
+                            <div class="other-day"><span class="date"><?php echo calculateDate(-1);?></span>indisponível</div>
+                            <div class="other-day-today"><span class="date"><?php echo calculateDate(0);?></span><span class="price2">R$&nbsp;7,90</span></div>
+                            <div class="other-day"><span class="date"><?php echo calculateDate(+1);?></span><span class="price2">R$&nbsp;7,90</span></div>
+                            <div class="other-day-u"><span class="date"><?php echo calculateDate(+2);?></span><span class="price2">R$&nbsp;7,90</span></div>
                         </div>
-                    </section>
-                        
-                    <div class="actions">
-                        <div class="length"><b>30</b> viagens encontradas</div>
-                        <div class="filters">&nbsp;&nbsp;filtrar viagens por <span title="Filtrar por classe"
-                            class="filter-type">classe</span><span title="Filtrar por horário"
-                            class="filter-type">horário</span>
+                    </div>
+                </section>
+                <div class="actions">
+                    <div class="length"><b>30</b> viagens encontradas</div>
+                        <div class="filters">&nbsp;&nbsp;filtrar viagens por 
+                            <span title="Filtrar por classe" class="filter-type">classe</span>
+                            <span title="Filtrar por horário" class="filter-type">horário</span>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
 
         <div class="tripcol">
@@ -358,13 +328,14 @@
                             </div>
                         ";
                     }
-                    } else {
+                } else {
                         echo "Nenhum resultado encontrado.";
-                    }
-                ?>
+                }
+            ?>
 
 
         </div>
+
         <footer class="footer">
             <div class="footer-links-sociais">
                 <img src="assets/images/teixeira_logo_branco.png" width="250px" height="auto" style="margin-bottom: 10px;">
@@ -410,14 +381,7 @@
             </div>
         </footer>
         <script type="text/javascript" src="scripts/global.js"></script>
-        <script>
-            // Detecta o envio do formulário
-            document.getElementById('form').addEventListener('submit', function() {
-                // Recarrega a página
-                location.reload();
-            });
-        </script>
+        
 
     </body>
-
 </html>
