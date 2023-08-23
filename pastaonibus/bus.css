@@ -1,0 +1,155 @@
+/*body {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0px;
+    background-color: rgb(153, 156, 158);
+}*/
+body {
+    width: 100vw;
+    height: 100vh;
+}
+
+button {
+    border: none;
+}
+
+.container-father {
+    width: 70rem;
+    height: 25rem;
+    background-color: #FFFFFFCC;
+    position: absolute;
+    box-shadow: 0 5px 22px rgb(0 0 0 / 15%), 0 0 38px rgb(0 0 0 / 15%);
+    color: #000!important;
+    /*transition: right 0.5s ease; Adicionado: Transição de altura com duração de 0.5s e função ease */
+}
+/*.container-father.open{
+    height: 0rem;
+}*/
+
+.container-vehicle {
+    height: 85%;
+    width: 100%;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    padding-right: 7rem;
+    padding-left: 7rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.bus-front {
+    background-image: url("../images/onibusfront.jpeg");
+    background-repeat: no-repeat;
+    width: 20%;
+    height: 100%;
+    width: 76px;
+    height: 231px;
+}
+.bus-middle {
+    background-color: yellowgreen;
+    width: 60%;
+    /*height: 100%;*/
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+    /*min-width: 665px;*/
+    height: 210px;
+    padding-left: 15px;
+    background-color: #fff;
+}
+.bus-back {
+    background-image: url("../images/onibusback.jpeg");
+    background-repeat: no-repeat;
+    /* width: 20%; */
+    /* height: 100%; */
+    height: 231px;
+    width: 32px;
+}
+
+.sum {
+    height: 15%;
+    width: 100%;
+    display: flex;
+    padding: 0px 40% 25px 38%;
+    box-sizing: border-box;
+    justify-content: center;
+}
+.disponivel, .ocupado, .selecionado{
+    margin: 0 2px;
+    font-family: "Montserrat",sans-serif!important;
+    padding: 1px 5px 2px;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 4px;
+    border: 1px solid;
+}
+.disponivel{
+    background-color: #EBEBEB;
+    color: #000;
+    border-color: #EBEBEB;
+}
+.ocupado{
+    background-color: #FFF9F9;
+    color: #555555;
+    border-color: #EBEBEB;
+}
+.selecionado{
+    background-color: #FFB300;
+    color: #FFFFFFE6;
+    border-color: #FFB300;
+}
+
+.container-bus {
+    height: 80%;
+    width: 100%;
+
+}
+
+.container-father-footer {
+    display: flex;
+    align-items: center;
+    height: 20%;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    background-color: #EEEEEE;
+}
+
+.close-div-father {
+    background-color: transparent;
+    color: #545557;
+    border: 1px solid #545557 !important;
+    text-align: center;
+}
+
+.submit-div-father {
+    background-color: #ED1C24;
+    color: white;
+}
+
+.close-div-father,
+.submit-div-father {
+    height: 70%;
+    width: 12%;
+    border-radius: 4px;
+    border: none;
+    font-family: "Montserrat", sans-serif !important;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 750;
+    font-size: 15px;
+}
+/*.bus-front{
+    background-image: url("assets/image/onibusfront");
+    background-repeat: no-repeat;
+}*/
+
+
