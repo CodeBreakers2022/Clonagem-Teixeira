@@ -91,7 +91,7 @@
         <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
         <link rel="stylesheet" type="text/css" href="assets/styles/global.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
 
     <body style="margin-top: 4em;">
@@ -281,49 +281,58 @@
                         $separador = ','; //separa as casas decimais com vpirgula
                         $price_formatted = number_format($row['price'], 2, $separador); //formata o preço
                         echo "
-                            <div class='triplist'>
-                                <div class='imgmargin'>
-                                    <img class='Image' style='width: 100px; height: 38.95px' src='assets/images/Z.png'>
-                                </div>
-
-                                <div class='route'>
-                                    <div class='divita'>
-                                        ".$row['origin']."<br>".$row['destiny']."
+                            <div class='triplist-father'>
+                                <div class='triplist'>
+                                    <div class='imgmargin'>
+                                        <img class='Image' style='width: 100px; height: 38.95px' src='assets/images/Z.png'>
                                     </div>
-                                </div>
 
-                                <div class='conv-area'>
-                                    <div class='conv'>
-                                    ".$row['class']."
-                                    </div>
-                                </div>
-
-                                <div class='triptime'>
-                                    <div class='hourcontainer'>
-                                        <div class='hours'>
-                                            <span class='time'> ".$row['arrival_time']." </span>
+                                    <div class='route'>
+                                        <div class='loc'>
+                                            <i class='fa fa-map-marker' aria-hidden='true'></i>
+                                        </div>
+                                        <div class='divita'>
+                                            ".$row['origin']."<br>".$row['destiny']."
                                         </div>
                                     </div>
-                                    <div class='duration'>
-                                        <div class='duration-container'>
-                                            <div class='dur'>
-                                                <span class='h'>00h</span>
-                                                <span class='min'>55m</span>
+
+                                    <div class='conv-area'>
+                                        <div class='conv'>
+                                        ".$row['class']."
+                                        </div>
+                                    </div>
+
+                                    <div class='triptime'>
+                                        <div class='hourcontainer'>
+                                            <div class='hours'>
+                                                <span class='time'> ".$row['arrival_time']." </span>
+                                            </div>
+                                        </div>
+                                        <div class='duration'>
+                                            <div class='duration-container'>
+                                            <div class='arrow-icon'>
+                                                <i class='fa fa-long-arrow-right'aria-hidden='true'></i>
+                                            </div>
+                                                <div class='dur'>
+                                                    <span class='h'>00h</span>
+                                                    <span class='min'>55m</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class='hourcontainer2'>
+                                        <div class='clock'> <i class='fa fa-clock-o' aria-hidden='true'></i></div>
+                                            <div class='hours'>
+                                                <span class='time'> ".$row['exit_time']." </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class='hourcontainer2'>
-                                        <div class='hours'>
-                                            <span class='time'> ".$row['exit_time']." </span>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class='tripprice'>
-                                    <div class='textprice'>
-                                        a partir de</div>
-                                    <div class='price'>
-                                    R$ ".$price_formatted."</div>
+                                    <div class='tripprice'>
+                                        <div class='textprice'>
+                                            a partir de</div>
+                                        <div class='price'>
+                                        R$ ".$price_formatted."</div>
+                                    </div>
                                 </div>
                             </div>
                         ";
