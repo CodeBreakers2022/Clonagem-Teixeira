@@ -1,34 +1,67 @@
+<?php
+
+    //Iniciando seção caso ainda não tenha sido iniciada
+    if (!isset($_SESSION)) {
+        // Seção iniciada
+        session_start();
+    }
+    
+    // Incluindo o arquivo connect.php
+    include_once('connect.php');
+
+?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
+    <script
+        src="chrome-extension://fdjamakpfbbddfjaooikfcpapjohcfmg/content/pageScripts/dashlane-tiresias-page-script.js"
+        id="dashlane_tiresias"></script>
+    <script
+        src="chrome-extension://fdjamakpfbbddfjaooikfcpapjohcfmg/content/pageScripts/dashlane-webauthn-page-script.js"
+        id="dashlane_webauthn" name="forward_webauthn_ready"></script>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link type="text/css" rel="stylesheet" href="/assets/styles/payment.css">
+
+    <title> Passagem de ônibus | Teixeira </title>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
     </style>
 
+    <link rel="stylesheet" href="styles.fedbbe35ba989d852a08.css" media="all" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="styles.fedbbe35ba989d852a08.css">
+    </noscript>
+
+    <style type="text/css" id="operaUserStyle"></style>
+    <meta name="description"
+        content="Compre passagens de ônibus da Teixeira. Garanta sua passagem online, com antecedência, segurança e conforto. Acesse o site e garanta já a sua!">
+    <meta name="theme-color" content="#04642f">
+    <link rel="canonical" href="/onibus/checkout">
+    <link type="image/x-icon" rel="shortcut icon"
+        href="https://smartbus-preprod-cdn.azurewebsites.net/_common/img/favicons/teixeira.ico">
+    <link type="image/x-icon" rel="icon"
+        href="https://smartbus-preprod-cdn.azurewebsites.net/_common/img/favicons/teixeira.ico">
+    <link type="text/css" rel="stylesheet"
+        href="https://smartbus-preprod-cdn.azurewebsites.net/ecommerce/styles/companies/teixeira/teixeira.min.css">
+
     <!-- Bootstrap and other icon libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.14.0/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <title> Passagem de ônibus | Teixeira </title>
+    <!-- Biblioteca do Angular -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular/12.0.0/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular/12.0.0/angular-animate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular/12.0.0/angular-aria.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular/12.0.0/angular-messages.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular/12.0.0/forms/angular-forms.min.js"></script>
+
+
 
 </head>
-
-<link rel="stylesheet" href="styles.fedbbe35ba989d852a08.css" media="all" onload="this.media='all'">
-<noscript>
-    <link rel="stylesheet" href="styles.fedbbe35ba989d852a08.css">
-</noscript>
-
-<style type="text/css" id="operaUserStyle"></style>
-<meta name="description" content="Compre passagens de ônibus da Teixeira. Garanta sua passagem online, com antecedência, segurança e conforto. Acesse o site e garanta já a sua!">
-<meta name="theme-color" content="#04642f">
-<link rel="canonical" href="/onibus/checkout">
-<link type="image/x-icon" rel="shortcut icon" href="https://smartbus-preprod-cdn.azurewebsites.net/_common/img/favicons/teixeira.ico">
-<link type="image/x-icon" rel="icon" href="https://smartbus-preprod-cdn.azurewebsites.net/_common/img/favicons/teixeira.ico">
-<link type="text/css" rel="stylesheet" href="https://smartbus-preprod-cdn.azurewebsites.net/ecommerce/styles/companies/teixeira/teixeira.min.css">
 
 <body>
 
@@ -50,7 +83,7 @@
                         <img src="https://smartbus-preprod-cdn.azurewebsites.net/ecommerce/imgs/teixeira/teixeira.png"
                             alt="Teixeira" class="main-company-logo" tabindex="0">
                         <!---->
-                        <a class="main-header-link login-link" href="login.php">
+                        <a class="main-header-link login-link" href="/login.php">
                             <i class="fa-solid fa-circle-user"></i>
                         </a>
                         <!---->
@@ -289,14 +322,17 @@
                                                                         <mat-checkbox class="mat-checkbox mat-accent"
                                                                             id="mat-checkbox-1">
                                                                             <label class="mat-checkbox-layout"
-                                                                                for="mat-checkbox-1-input">
+                                                                                for="mat-checkbox-1-input"
+                                                                                data-dashlane-label="true">
                                                                                 <span
                                                                                     class="mat-checkbox-inner-container">
                                                                                     <input type="checkbox"
                                                                                         class="mat-checkbox-input cdk-visually-hidden"
                                                                                         id="mat-checkbox-1-input"
                                                                                         tabindex="0"
-                                                                                        aria-checked="false">
+                                                                                        aria-checked="false"
+                                                                                        data-dashlane-rid="1b3e44e898126f61"
+                                                                                        data-form-type="other">
                                                                                     <span matripple=""
                                                                                         class="mat-ripple mat-checkbox-ripple mat-focus-indicator">
                                                                                         <span
@@ -306,17 +342,9 @@
                                                                                         class="mat-checkbox-frame"></span>
                                                                                     <span
                                                                                         class="mat-checkbox-background">
-                                                                                        <svg version="1.1"
-                                                                                            focusable="false"
-                                                                                            viewBox="0 0 24 24"
-                                                                                            xml:space="preserve"
-                                                                                            class="mat-checkbox-checkmark">
-                                                                                            <path fill="none"
-                                                                                                stroke="white"
-                                                                                                d="M4.1,12.7 9,17.6 20.3,6.3"
-                                                                                                class="mat-checkbox-checkmark-path">
-                                                                                            </path>
-                                                                                        </svg>
+                                                                                        <!--<svg version="1.1" focusable="false" viewBox="0 0 24 24" xml:space="preserve" class="mat-checkbox-checkmark">
+                                                                                        <path fill="none" stroke="white" d="M4.1,12.7 9,17.6 20.3,6.3" class="mat-checkbox-checkmark-path"></path>
+                                                                                    </svg>-->
                                                                                         <span
                                                                                             class="mat-checkbox-mixedmark"></span>
                                                                                     </span>
@@ -353,7 +381,8 @@
                                                                     <span class="passenger-seat">
                                                                         Poltrona
                                                                         <b class="seat-number">
-                                                                            <i class="fa fa-chair-office icon-seat"></i>
+                                                                            <i class="fa fa-chair-office icon-seat">
+                                                                            </i>
                                                                             26
                                                                         </b>
                                                                     </span>
@@ -520,28 +549,30 @@
                                                                         <div class="col-md-6 col-lg-3">
                                                                             <div
                                                                                 class="input-container input-contact-document">
-                                                                                <mat-checkbox
-                                                                                    class="mat-checkbox mat-accent"
-                                                                                    id="mat-checkbox-3">
-                                                                                    <label class="mat-checkbox-layout"
-                                                                                        for="mat-checkbox-3-input">
-                                                                                        <span
-                                                                                            class="mat-checkbox-inner-container">
-                                                                                            <input type="checkbox"
-                                                                                                class="mat-checkbox-input cdk-visually-hidden"
-                                                                                                id="mat-checkbox-3-input"
-                                                                                                tabindex="0"
-                                                                                                aria-checked="false">
-                                                                                            <span matripple=""
-                                                                                                class="mat-ripple mat-checkbox-ripple mat-focus-indicator">
+                                                                                <label class="checkbox-label">
+                                                                                    <mat-checkbox
+                                                                                        class="mat-checkbox mat-accent"
+                                                                                        id="mat-checkbox-3">
+                                                                                        <label
+                                                                                            class="mat-checkbox-layout"
+                                                                                            for="mat-checkbox-3-input">
+                                                                                            <span
+                                                                                                class="mat-checkbox-inner-container">
+                                                                                                <input type="checkbox"
+                                                                                                    class="mat-checkbox-input cdk-visually-hidden"
+                                                                                                    id="mat-checkbox-3-input"
+                                                                                                    tabindex="0"
+                                                                                                    aria-checked="false">
+                                                                                                <span matripple=""
+                                                                                                    class="mat-ripple mat-checkbox-ripple mat-focus-indicator">
+                                                                                                    <span
+                                                                                                        class="mat-ripple-element mat-checkbox-persistent-ripple"></span>
+                                                                                                </span>
                                                                                                 <span
-                                                                                                    class="mat-ripple-element mat-checkbox-persistent-ripple"></span>
-                                                                                            </span>
-                                                                                            <span
-                                                                                                class="mat-checkbox-frame"></span>
-                                                                                            <span
-                                                                                                class="mat-checkbox-background">
-                                                                                                <svg version="1.1"
+                                                                                                    class="mat-checkbox-frame"></span>
+                                                                                                <span
+                                                                                                    class="mat-checkbox-background">
+                                                                                                    <!--<svg version="1.1"
                                                                                                     focusable="false"
                                                                                                     viewBox="0 0 24 24"
                                                                                                     xml:space="preserve"
@@ -551,19 +582,19 @@
                                                                                                         d="M4.1,12.7 9,17.6 20.3,6.3"
                                                                                                         class="mat-checkbox-checkmark-path">
                                                                                                     </path>
-                                                                                                </svg>
-                                                                                                <span
-                                                                                                    class="mat-checkbox-mixedmark"></span>
+                                                                                                </svg>-->
+                                                                                                    <span
+                                                                                                        class="mat-checkbox-mixedmark"></span>
+                                                                                                </span>
                                                                                             </span>
-                                                                                        </span>
-                                                                                        <span
-                                                                                            class="mat-checkbox-label">
                                                                                             <span
-                                                                                                style="display: none;">&nbsp;</span>
-                                                                                            Mesmo CPF do contato.
-                                                                                        </span>
-                                                                                    </label>
-                                                                                </mat-checkbox>
+                                                                                                class="mat-checkbox-label">
+                                                                                                <span
+                                                                                                    style="display: none;">&nbsp;</span>
+                                                                                                Mesmo CPF do contato.
+                                                                                            </span>
+                                                                                        </label>
+                                                                                    </mat-checkbox>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -582,15 +613,23 @@
                                                                             <div class="input-container">
                                                                                 <label for="docNumber">N° do documento
                                                                                     *</label>
-                                                                                <input type="text" id="payerId" placeholder="N° do documento" autocomplete="on" maxlength="14" oninput="formatDocument(this)">
-                                                                                <input type="hidden" id="docNumber" data-checkout="docNumber">
+                                                                                <input type="text" id="payerId"
+                                                                                    placeholder="N° do documento"
+                                                                                    autocomplete="on" maxlength="14"
+                                                                                    oninput="formatDocument(this)">
+                                                                                <input type="hidden" id="docNumber"
+                                                                                    data-checkout="docNumber">
                                                                                 <!---->
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-12 col-lg-3">
                                                                             <div class="input-container">
-                                                                                <label for="zipCode">CEP da fatura *</label>
-                                                                                <input id="zipCode" type="text" placeholder="CEP da fatura" pattern="\d{5}-\d{3}" maxlength="9" oninput="formatZipCode(this)">
+                                                                                <label for="zipCode">CEP da fatura
+                                                                                    *</label>
+                                                                                <input id="zipCode" type="text"
+                                                                                    placeholder="CEP da fatura"
+                                                                                    pattern="\d{5}-\d{3}" maxlength="9"
+                                                                                    oninput="formatZipCode(this)">
                                                                                 <!---->
                                                                             </div>
                                                                         </div>
@@ -604,7 +643,11 @@
                                                                             <div class="input-container">
                                                                                 <label for="cardNumber">N° do cartão
                                                                                     *</label>
-                                                                                <input id="cnumber" mask="0000 0000 0000 0000" placeholder="N° do cartão" maxlength="19" oninput="formatCardNumber(this)">
+                                                                                <input id="cnumber"
+                                                                                    mask="0000 0000 0000 0000"
+                                                                                    placeholder="N° do cartão"
+                                                                                    maxlength="19"
+                                                                                    oninput="formatCardNumber(this)">
                                                                                 <!---->
                                                                                 <input type="hidden"
                                                                                     data-checkout="cardNumber"
@@ -832,49 +875,51 @@
                                             <!---->
                                             <!---->
                                             <div class="row row-about-text">
-                                                <div class="col-md-12">
-                                                    <mat-checkbox class="mat-checkbox mat-accent" id="mat-checkbox-2">
-                                                        <label class="mat-checkbox-layout" for="mat-checkbox-2-input">
-                                                            <span class="mat-checkbox-inner-container">
-                                                                <input type="checkbox"
-                                                                    class="mat-checkbox-input cdk-visually-hidden"
-                                                                    id="mat-checkbox-2-input" tabindex="0"
-                                                                    aria-checked="false">
-                                                                <span matripple=""
-                                                                    class="mat-ripple mat-checkbox-ripple mat-focus-indicator">
-                                                                    <span
-                                                                        class="mat-ripple-element mat-checkbox-persistent-ripple"></span>
-                                                                </span>
-                                                                <span class="mat-checkbox-frame"></span>
-                                                                <span class="mat-checkbox-background">
-                                                                    <svg version="1.1" focusable="false"
+                                                <div class="mat-checkbox mat-accent" id="mat-checkbox-2">
+                                                    <label class="mat-checkbox-layout" for="mat-checkbox-2-input">
+                                                        <div class="mat-checkbox-inner-container">
+                                                            <input type="checkbox"
+                                                                class="mat-checkbox-input cdk-visually-hidden"
+                                                                id="mat-checkbox-2-input" tabindex="0"
+                                                                aria-checked="false">
+                                                            <span matripple=""
+                                                                class="mat-ripple mat-checkbox-ripple mat-focus-indicator">
+                                                                <span
+                                                                    class="mat-ripple-element mat-checkbox-persistent-ripple"></span>
+                                                            </span>
+                                                            <span class="mat-checkbox-frame"></span>
+                                                            <span class="mat-checkbox-background">
+                                                                <!--<svg version="1.1" focusable="false"
                                                                         viewBox="0 0 24 24" xml:space="preserve"
                                                                         class="mat-checkbox-checkmark">
                                                                         <path fill="none" stroke="white"
                                                                             d="M4.1,12.7 9,17.6 20.3,6.3"
                                                                             class="mat-checkbox-checkmark-path"></path>
-                                                                    </svg>
-                                                                    <span class="mat-checkbox-mixedmark"></span>
-                                                                </span>
+                                                                    </svg>-->
+                                                                <span class="mat-checkbox-mixedmark"></span>
                                                             </span>
-                                                            <span class="mat-checkbox-label>
-                                                                <span style="display: none;">&nbsp;</span>
-                                                                Ao confirmar a compra eu concordo com os&nbsp;<a
-                                                                    target="_blank" href="/termos">termos de uso&nbsp;</a> e&nbsp;
-                                                                <a target="_blank" href="/privacidade">política de
-                                                                    privacidade</a>.
-                                                            </span>
-                                                        </label>
-                                                    </mat-checkbox>
+                                                        </div>
+
+                                                        <span style=" display: none;">&nbsp;</span>
+                                                        Ao confirmar a compra eu concordo com os&nbsp;<a target="_blank"
+                                                            href="/termos">termos de uso&nbsp;</a>
+                                                        e&nbsp;
+                                                        <a target="_blank" href="/privacidade">política de
+                                                            privacidade</a>.
+                                                        </span>
+                                                    </label>
                                                 </div>
                                             </div>
                                             <!---->
                                             <div class="row row-checkout-btns">
                                                 <div class="col-lg-4 col-md-12 m-t-15">
                                                     <button class="btn btn-outline">
-                                                        <i class="fa fa-chevron-circle-left"></i>
-                                                        &nbsp;&nbsp;
-                                                        VOLTAR
+                                                        <a href="/buscaPassagem.php"
+                                                            style="text-decoration: none; color: black;">
+                                                            <i class="fa fa-chevron-circle-left"></i>
+                                                            &nbsp;&nbsp;
+                                                            VOLTAR
+                                                        </a>
                                                     </button>
                                                 </div>
                                                 <div class="col-lg-8 col-md-12 m-t-15 text-right">
@@ -990,54 +1035,99 @@
             <!---->
             <!---->
 
-            <footer class="footer" id="footer">
-                <div class="footer-links-sociais">
-                    <img src="assets/images/teixeira_logo_branco.png" width="250px" height="auto" style="margin-bottom: 10px;">
-                    <label>
-                        <img src="assets/images/facebook-icon.png" width="auto" height="30px" style="margin-right: 5px;"/>
-                        Facebook
-                    </label>
-                    <label>
-                        <img src="assets/images/instagram-icon.png" width="auto" height="30px" style="margin-right: 5px;"/>
-                        Instagram
-                    </label>
-                </div>
-    
-                <div class="footer-meios-de-pagamento">
-                    <span style="margin-bottom: 10px;font-weight: bold">MEIOS DE PAGAMENTO</span>
-                    <div style="display: flex; flex-direction: row;flex-wrap: wrap;">
-                        <img src="assets/images/visa-icon.png" width="30px" height="auto" />
-                        <img src="assets/images/american-express-icon.png" width="30px" height="auto" />
-                        <img src="assets/images/mastercard-icon.png" width="30px" height="auto" />
+            <footer>
+                <div class="row">
+                    <div class="col">
+                        <div class="main-footer-first-line">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="top footer-box">
+                                            <figure>
+                                                <img src="https://smartbus-preprod-cdn.azurewebsites.net/ecommerce/imgs/teixeira/teixeira-branco.png"
+                                                    alt="Teixeira" class="main-footer-logo" tabindex="0">
+                                            </figure>
+                                            <div class="social">
+                                                <a href="https://www.facebook.com/teixeiraturismooficial/"
+                                                    target="_blank" class="main-footer-social-icon">
+                                                    <i class="fab fa-facebook"></i>
+                                                    <span>Facebook</span>
+                                                </a>
+                                                <a href="https://www.instagram.com/teixeiraturismo/" target="_blank"
+                                                    class="main-footer-social-icon">
+                                                    <i class="fab fa-instagram"></i>
+                                                    <span>Instagram</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="help footer-box">
+                                            <h4 class="footer-title">Ajuda</h4>
+                                            <ul>
+                                                <li class="footer-menu-item" tabindex="0">Horários dos guichês</li>
+                                                <li class="footer-menu-item" tabindex="0">Sobre Nós</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="payments footer-box">
+                                            <h4 class="footer-title">Meios de pagamento</h4>
+                                            <div class="payment-images">
+                                                <img src="https://smartbus-cdn.azurewebsites.net/_common/img/payment/visa.png"
+                                                    alt="Visa" title="Visa" class="payment-img">
+                                                <img src="https://smartbus-cdn.azurewebsites.net/_common/img/payment/mastercard.png"
+                                                    alt="Master Card" title="Master Card" class="payment-img">
+                                                <img src="https://smartbus-cdn.azurewebsites.net/_common/img/payment/amex.png"
+                                                    alt="Amex" title="Amex" class="payment-img">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="buy-by-phone footer-box">
+                                            <h4 class="footer-title">COMPRE PELO TELEFONE</h4>
+                                            <ul>
+                                                <li class="footer-menu-item">
+                                                    <a href="tel:3732144070">
+                                                        <i class="fad fa-phone phone-icon"></i>
+                                                        (37) 3214-4070
+                                                    </a>
+                                                </li>
+                                                <li class="footer-menu-item footer-menu-item-email">
+                                                    <a href="mailto:falecom@teixeiraturismo.com.br" class="fs-13">
+                                                        <i class="fad fa-envelope envelope-icon"></i>
+                                                        &nbsp;&nbsp;falecom@teixeiraturismo.com.br
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <div class="info-content">
+                                            <h4 class="footer-title">SAC
+                                                <small>(atendimento ao consumidor)</small>
+                                            </h4>
+                                            <a href="tel:3732144070" class="a-sac"> (37) 3214-4070 </a>
+                                            <br><br>
+                                        </div>
+                                        <div class="info-content">
+                                            <span class="sac-number">
+                                                <a href="tel:0800 703 5203" class="a-number">
+                                                    <i class="fad fa-phone phone-icon"></i>
+                                                    0800 703 5203
+                                                </a>
+                                                <br>
+                                                para deficientes de fala e auditivos.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="footer-phone-email">
-                    <span style="margin-bottom: 10px;font-weight: bold">COMPRE PELO TELEFONE</span>
-                    <label>
-                        <img src="assets/images/phone-icon.png" width="20px" height="auto"/> 
-                        (37) 3214-4070
-                    </label>
-                    <label>
-                        <img src="assets/images/email-icon.png" width="20px" height="auto" style="margin-right: 5px;"/>
-                        falecom@teixeiraturismo.com.br
-                    </label>
-                </div>
-                <div class="footer-atendimento">
-                    <span style="font-weight: bold">SAC (ATENDIMENTO AO CONSUMIDOR)</span><br>
-                    <div class="phone-atendimento">
-                        (37) 3214-4070
-                    </div>
-                    <label>
-                        <img src="assets/images/phone-icon.png" width="20px" height="auto" style="margin-right: 5px;"/>
-                        0800 703 5203
-                    </label>
-                    para deficientes de fala e auditivos.
                 </div>
             </footer>
         </div>
     </div>
-    
-    <whatsapp-link><!----></whatsapp-link>
+
     <!---->
     <iframe
         src="https://www.mercadolibre.com/jms/lgz/background?dps=armor.0f544cb78efb1e79c1c099b4ece094108f8cc86d5a12496518f7b12cc2deda7b9ef02e48b752744972a144c3be20bffd8bc279d7a3a7e53755624614321ddfac52120e864b00ec6a3c4fa6b53044c11c161cee0efe673b19e346d97dcbe6bfeb.7e4922c3e98543d6994ad65aa0446207"
@@ -1047,7 +1137,7 @@
         style="display: none; width: 0; height: 0; border: none; margin: 0;" data-dashlane-frameid="29"></iframe>
 
     <script type="text/javascript" src="scripts/payment.js"></script>
-    
+
 
 </body>
 
