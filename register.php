@@ -23,11 +23,11 @@
         // Verificar se o e-mail já existe
         if ($count > 0) { // Se existir surge um alert e retorna à página inicial
             echo "<script>alert('Este e-mail já foi utilizado!')</script>";
-            echo "<script>window.location.href = 'index.html';</script>";
+            echo "<script>window.location.href = 'login.html';</script>";
 
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) { // Verificar se o email possui um formato válido
             echo "<script>alert('O e-mail digitado é inválido!')</script>";
-            echo "<script>window.location.href = 'index.html';</script>";
+            echo "<script>window.location.href = 'login.html';</script>";
 
         } else { // Preparando a consulta SQL
             $sql = "INSERT INTO user (user_name, email, cpf, birth, phone, state_, city, password_) VALUES ('$name', '$email', '$cpf', '$birth', '$phone', '$state', '$city', '$password')";
@@ -46,8 +46,14 @@
                 //     $insertUsuarioTrilha = "INSERT INTO usuariotrilha (user_id, trilha_id) VALUES ('$idUser', '$idTrilha')";
                 //     mysqli_query($conexao, $insertUsuarioTrilha);
                 // }
+
+                // Iniciando sessão caso ainda não tenha sido iniciada
+                if (!isset($_SESSION)) {
+                    session_start();
+                }
+
                 echo "<script>alert('Cadastro realizado com sucesso!')</script>";
-                echo "<script>window.location.href = 'login.html';</script>";
+                echo "<script>window.location.href = 'homePage.php';</script>";
 
             } else { // Cadastro não efetuado
                 echo "Erro ao cadastrar no banco de dados " . mysqli_error($connection);

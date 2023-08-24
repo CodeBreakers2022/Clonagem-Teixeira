@@ -1,10 +1,5 @@
 <?php
 
-    // Iniciando sessão caso ainda não tenha sido iniciada
-    if (!isset($_SESSION)) {
-        session_start();
-    }
-
     // Verificação de Login
     if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['password_'])) { // Acessa através do método POST
         // Incluindo o arquivo connect.php
@@ -24,12 +19,19 @@
             if (password_verify($password, $hash)) {
                 $_SESSION['email'] = $email;
                 $_SESSION['user_id'] = $row['user_id'];
+
+                // Iniciando sessão caso ainda não tenha sido iniciada
+                if (!isset($_SESSION)) {
+                    $_SESSION['user_id'] = $user_id;
+                    session_start();
+                }
+
                 header("Location: homePage.php");
                 // header("Location: system.php?user_id=". $row['id']);
             } else {
                 // Senha incorreta
                 echo "<script>alert('E-mail ou senha incorretos!')</script>";
-                echo "<script>window.location.href = 'register.html';</script>";
+                echo "<script>window.location.href = 'login.html';</script>";
             }
         } else {
             // Email não cadastrado
@@ -40,7 +42,7 @@
         mysqli_close($connection); // Fechando a conexão
     } else if (!isset($_POST['submit'])) { // Tentativa de acesso sem ser pelo método POST
         // Tentativa de acesso via URL, vai para a página de acesso negado
-        header('Location: login.html');
+        header('Location: homePage.php');
     } else {
         // Campos vazios
         echo "<script>alert('Preencha seus dados!')</script>";

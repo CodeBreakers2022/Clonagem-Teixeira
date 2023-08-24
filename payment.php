@@ -1,13 +1,10 @@
 <?php
 
-    //Iniciando seção caso ainda não tenha sido iniciada
-    if (!isset($_SESSION)) {
-        // Seção iniciada
-        session_start();
-    }
-    
     // Incluindo o arquivo connect.php
     include_once('connect.php');
+
+    $user_id = $_SESSION['user_id'];
+    $travel_id = $_SESSION['travel_id'];
 
 ?>
 
@@ -217,6 +214,21 @@
                         </div>
                         <!---->
                         <div class="container">
+
+                        <?php
+                            if(isset($_POST['selectedChairs'])) {
+                                $receivedChairs = json_decode($_POST['selectedChairs']);
+                                for ($i = 0; $i < count($receivedChairs); $i++) {
+                                    $receivedChairNumber = $receivedChairs[$i];
+                                    print_r($receivedChairNumber);
+                                    print_r($receivedChairs);
+                                    $sql = "INSERT INTO user_chair(user_id, travel_id, chair_number, busy) VALUES ('$user_id', '$travel_id', '$receivedChairNumber', '1')";
+                                    mysqli_query($connection, $sql);
+                                    $chairNumber += 1;
+                                };
+                            }
+                        ?>
+
                             <div class="row">
                                 <div class="col">
                                     <div class="sale-header-step-title">

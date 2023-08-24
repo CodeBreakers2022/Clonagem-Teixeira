@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </span>
                                 </a>
                                 <hr>
-                                <a>
+                                <a href="login.html">
                                     Minha conta
                                     <span class="material-symbols-outlined">
                                         person
