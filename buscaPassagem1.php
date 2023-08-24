@@ -2,11 +2,13 @@
 
 include_once 'connect.php';
 
-//inicializa as variáveis 
-$city_origin = '';
-$city_destiny = '';
-$date_initial = '';
-$date_and = '';
+    //inicializa as variáveis 
+    $city_origin = '';
+    $city_destiny = '';
+    $date_initial = '';
+    $date_and = '';
+    $classe = '';
+    $horario = '';
 
 //get
 if (isset($_GET['city_origin']) && isset($_GET['city_destiny'])) {
@@ -64,6 +66,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) { // Verif
     }
 }
 
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['date'])) {
+            $selectedDate = $_POST['date'];
+    
+            // Consulta SQL para buscar registros com a data selecionada
+            $sql_base = "SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny' AND departure_date = '$selectedDate'";
+    
+            $result = mysqli_query($connection, $sql_base);
+    
+            if (!$result) {
+                echo "Erro na consulta: " . mysqli_error($connection);
+                // ou use die("Erro na consulta: " . mysqli_error($connection));
+            }
+            // mysqli_close($connection);
+        }
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (isset($_POST['Filtrar'])) {
+            $horario = isset($_POST['horario']) ? $_POST['horario'] : '';
+            $classe = isset($_POST['classe']) ? $_POST['classe'] : '';
+    
+            // Consulta SQL para buscar registros com os filtros selecionados
+            if ($classe !== '') {
+                $sql_base .= " AND class = '$classe'";
+            }
+    
+            if ($horario !== '') {
+                $sql_base .= " AND horario = '$horario'";
+            }
+    
+            $result = mysqli_query($connection, $sql_base);
+        }
+    }
+
 function calculateDate($daysToAddOrSubtract)
 {
     $date = new DateTime(); // Data atual
@@ -80,7 +117,23 @@ function calculateDate($daysToAddOrSubtract)
     return $formattedDate;
 }
 
+    function calculateDateNumber($daysToAddOrSubtract) {
+        $date = new DateTime(); // Data atual
+        
+        // Adiciona ou subtrai a quantidade de dias desejada
+        $date->modify($daysToAddOrSubtract . ' days');
+        
+        // Obtém os componentes da data (ano, mês, dia)
+        $year = $date->format('Y');
+        $month = $date->format('m');
+        $day = $date->format('d');
+        
+        // Retorna a data no formato (ano, mês, dia)
+        return $year . '/' . $month . '/' . $day;
+    }
 
+
+    
 ?>
 <html lang="en">
 
@@ -92,8 +145,7 @@ function calculateDate($daysToAddOrSubtract)
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="assets/styles/global.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
 
@@ -209,8 +261,7 @@ function calculateDate($daysToAddOrSubtract)
 
     <!-- conteúdo -->
     
-   
-     <form action="" method="post" class="form">
+    <form action="" method="post" class="form">
             <label>Origem:</label>
             <select name="city_origin_search" required>
                 <option <?php if (($city_origin !== null) && ($city_origin === 'DIVINOPOLIS - MG'))
@@ -239,55 +290,88 @@ function calculateDate($daysToAddOrSubtract)
 
             
             <input class="button_form" name="submit" type="submit" value="Alterar busca"/>
-        </form> 
-    <div class="container-fluid">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="step-title">
-                        <h1 class="title">Passagens de ônibus de
-                            <?php echo "$city_origin" ?> para
-                            <?php echo "$city_destiny" ?>&nbsp;&nbsp;<span class="ida">ida</span>
-                        </h1>
-                        <div class="steps">passo <b>1</b> de <b>2</b></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        </form>
 
-    <div class="container">
-        <section>
-            <div class="row">
-                <div class="col">
-                    <div class="list">
-                        <div class="other-day"><span class="date">
-                                <?php echo calculateDate(-2); ?>
-                            </span>indisponível</div>
-                        <div class="other-day"><span class="date">
-                                <?php echo calculateDate(-1); ?>
-                            </span>indisponível</div>
-                        <div class="other-day-today"><span class="date">
-                                <?php echo calculateDate(0); ?>
-                            </span><span class="price2">R$&nbsp;7,90</span></div>
-                        <div class="other-day"><span class="date">
-                                <?php echo calculateDate(+1); ?>
-                            </span><span class="price2">R$&nbsp;7,90</span></div>
-                        <div class="other-day-u"><span class="date">
-                                <?php echo calculateDate(+2); ?>
-                            </span><span class="price2">R$&nbsp;7,90</span></div>
+        <div class="container-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="step-title">
+                            <h1 class="title">Passagens de ônibus de <?php echo "$city_origin"?> para <?php echo "$city_destiny"?>&nbsp;&nbsp;<span class="ida">ida</span></h1>
+                            <div class="steps">passo <b>1</b> de <b>2</b></div>
+                        </div>
                     </div>
                 </div>
-        </section>
-        <div class="actions">
-            <div class="length"><b>30</b> viagens encontradas</div>
-            <div class="filters">&nbsp;&nbsp;filtrar viagens por
-                <span title="Filtrar por classe" class="filter-type">classe</span>
-                <span title="Filtrar por horário" class="filter-type">horário</span>
             </div>
         </div>
-    </div>
-    </div>
+        
+        <div class="container">
+            <section>
+                <div class="row">
+                    <div class="col">
+                        <form action="" method="post" class="list">
+                            <!-- ... seus outros campos de entrada ... -->
+                            <button class="other-day" type="submit" id="other-day-start" name="date" data-value="<?php echo calculateDateNumber(-2); ?>" data-sql="SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'" value="<?php echo calculateDateNumber(-2); ?>">
+                                <span class="date">
+                                    <?php echo calculateDate(-2); ?>
+                                </span>
+                                indisponível
+                            </button>
+                            <button class="other-day" type="submit" name="date" data-value="<?php echo calculateDateNumber(-1); ?>" data-sql="SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'" value="<?php echo calculateDateNumber(-1); ?>">
+                                <span class="date">
+                                    <?php echo calculateDate(-1); ?>
+                                </span>
+                                indisponível
+                            </button>
+                            <button class="other-day" type="submit" name="date" data-value="<?php echo calculateDateNumber(0); ?>" data-sql="SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'" value="<?php echo calculateDateNumber(0); ?>">
+                                <span class="date">
+                                    <?php echo calculateDate(0); ?>
+                                </span>
+                                indisponível
+                            </button>
+                            <button class="other-day" type="submit" name="date" data-value="<?php echo calculateDateNumber(1); ?>" data-sql="SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'" value="<?php echo calculateDateNumber(+1); ?>">
+                                <span class="date">
+                                    <?php echo calculateDate(+1); ?>
+                                </span>
+                                indisponível
+                            </button>
+                            <button class="other-day" id="other-day-and" type="submit" name="date" data-value="<?php echo calculateDateNumber(2); ?>" data-sql="SELECT * FROM travel WHERE origin = '$city_origin' AND destiny = '$city_destiny'" value="<?php echo calculateDateNumber(+2); ?>">
+                                <span class="date">
+                                    <?php echo calculateDate(+2); ?>
+                                </span>
+                                indisponível
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <div class="actions">
+                <div class="length"><b> <?php echo $result->num_rows;?></b> viagens encontradas</div>
+                    <!-- <div class="filters">&nbsp;&nbsp;filtrar viagens por 
+                        <span title="Filtrar por classe" class="filter-type">classe</span>
+                        <span title="Filtrar por horário" class="filter-type">horário</span>
+                    </div> -->
+                    
+                    <div class="filters">&nbsp;&nbsp;filtrar viagens por 
+                        <form action="" method="post">
+                            <select name="classe">
+                                <option selected disabled>Classe</option>
+                                <option>EXECUTIVO</option>
+                                <option>CONVENCIONAL</option>
+                                <option>ECONOMICA</option>
+                            </select>
+                            <select name="horario">
+                                <option selected disabled>Horário</option>
+                                <option>MANHÃ</option>
+                                <option>TARDE</option>
+                                <option>NOITE</option>
+                            </select>
+                            <input type="submit" value="Filtrar" name="Filtrar">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     <div class="tripcol">
         <div class="titlelist">
@@ -317,7 +401,6 @@ function calculateDate($daysToAddOrSubtract)
                 $separador = ','; //separa as casas decimais com vpirgula
                 $price_formatted = number_format($row['price'], 2, $separador); //formata o preço
                 echo "
-                           
                                 <div class='triplist'>
                                     <div class='imgmargin'>
                                         <img class='Image' src='assets/images/Z.png'>

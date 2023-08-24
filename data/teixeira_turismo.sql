@@ -29,14 +29,17 @@ VALUES (1, 'test', 'test@gmail.com', '1234', 12345678900, '2001-01-01', 'MG', 0)
        (4, 'test4', 'test4@gmail.com', '1234', 12345678903, '2004-04-04', 'MG', 0)
 
 -- Criação da tabela "travel"
-CREATE TABLE travel (
-    travel_id INT AUTO_INCREMENT PRIMARY KEY,
-    origin VARCHAR(300),
-    destiny VARCHAR(300),
-    departure_date DATE,
-    arrival_date DATE,
-    class VARCHAR(100),
-    price FLOAT
+CREATE TABLE IF NOT EXISTS `travel` (
+  `travel_id` int NOT NULL AUTO_INCREMENT,
+  `origin` varchar(300) DEFAULT NULL,
+  `destiny` varchar(300) DEFAULT NULL,
+  `departure_date` date DEFAULT NULL,
+  `arrival_date` date DEFAULT NULL,
+  `arrival_time` time NOT NULL,
+  `exit_time` time NOT NULL,
+  `class` varchar(100) DEFAULT NULL,
+  `price` float DEFAULT NULL,
+  PRIMARY KEY (`travel_id`)
 );
 
 -- Inserindo valores na tabela travel
@@ -45,6 +48,8 @@ VALUES (1, 'Divinopolis - MG', 'Itauna - MG', '2023-08-20', '2023-08-25', 'CONVE
        (2, 'Itauna - MG', 'Divinopolis - MG', '2023-08-20', '2023-08-22', 'CONVENCIONAL', '30.00'),
        (3, 'Divinopolis - MG', 'Belo Horizonte - MG', '2023-08-20', '2023-08-21', 'CONVENCIONAL', '45.00'),
        (4, 'Sao Jose do Salgado - MG', 'Belo Horizonte - MG', '2023-08-20', '2023-08-24', 'CONVENCIONAL', '30.00')
+       (5, 'SÃO JOSÉ DO SALGADO - MG', 'DIVINOPOLIS - MG', '2023-08-16', '2023-08-16', '00:00:00', '00:00:00', NULL, 8),
+       (6, 'DIVINOPOLIS - MG', 'ITAUNA - MG', '2023-08-24', '2023-08-26', '14:00:00', '14:55:00', 'ECONOMICA', 15);
 
 -- Criação da tabela "coupon"
 CREATE TABLE coupon (

@@ -396,17 +396,30 @@ h5 {
     justify-content: space-between;
     background-color: #fff;
     font-family: Montserrat;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    display: flex;
+    width: 100%;
 }
-
+@media (max-width: 1000px) {
+    #other-day-start{
+        display: none;
+    }
+    #other-day-and{
+        display: none;
+    }
+}
 .list .other-day {
-    transition: all .1s ease;
+    /* transition: all .1s ease;
     flex: 1;
     padding: 12px 0 8px 0;
     text-align: center;
     font-size: 13px;
     border-right: 1px solid #e2e2e2;
-    border-bottom: 5px solid #fff;
-    cursor: pointer;
+    border-bottom: 5px solid #ffffff;
+    cursor: pointer; */
+    border: none;
+    background-color: white;
 }
 
 .list .other-day-today {
@@ -427,7 +440,7 @@ h5 {
     padding: 12px 0 8px 0;
     text-align: center;
     font-size: 15px;
-    border-bottom: 5px solid #fff;
+    border-bottom: 5px solid #ff0000;
     cursor: pointer;
 }
 
@@ -479,6 +492,9 @@ h5 {
     left: 60%;
     font-family: Montserrat;
     color: #707070;
+}
+.filters form{
+    display: flex;
 }
 
 .filters i {
