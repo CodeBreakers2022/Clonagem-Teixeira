@@ -1,10 +1,13 @@
 <?php
 
-    // Incluindo o arquivo connect.php
-    include_once('connect.php');
+//Iniciando seção caso ainda não tenha sido iniciada
+if (!isset($_SESSION)) {
+    // Seção iniciada
+    session_start();
+}
 
-    $user_id = $_SESSION['user_id'];
-    $travel_id = $_SESSION['travel_id'];
+// Incluindo o arquivo connect.php
+include_once('connect.php');
 
 ?>
 
@@ -214,21 +217,6 @@
                         </div>
                         <!---->
                         <div class="container">
-
-                        <?php
-                            if(isset($_POST['selectedChairs'])) {
-                                $receivedChairs = json_decode($_POST['selectedChairs']);
-                                for ($i = 0; $i < count($receivedChairs); $i++) {
-                                    $receivedChairNumber = $receivedChairs[$i];
-                                    print_r($receivedChairNumber);
-                                    print_r($receivedChairs);
-                                    $sql = "INSERT INTO user_chair(user_id, travel_id, chair_number, busy) VALUES ('$user_id', '$travel_id', '$receivedChairNumber', '1')";
-                                    mysqli_query($connection, $sql);
-                                    $chairNumber += 1;
-                                };
-                            }
-                        ?>
-
                             <div class="row">
                                 <div class="col">
                                     <div class="sale-header-step-title">
@@ -331,45 +319,23 @@
                                                                 </div>
                                                                 <div class="row row-about-text">
                                                                     <div class="col-md-12">
-                                                                        <mat-checkbox class="mat-checkbox mat-accent"
-                                                                            id="mat-checkbox-1">
-                                                                            <label class="mat-checkbox-layout"
-                                                                                for="mat-checkbox-1-input"
-                                                                                data-dashlane-label="true">
+                                                                        <label class="mat-checkbox-layout"
+                                                                            style="display: flex; align-items: center; cursor: pointer;"
+                                                                            data-dashlane-label="true">
+                                                                            <span class="mat-checkbox-inner-container"
+                                                                                style="margin-right: 10px">
+                                                                                <input type="checkbox"
+                                                                                    class="mat-checkbox-input"
+                                                                                    id="mat-checkbox-1-input">
+                                                                            </span>
+                                                                            <span class="mat-checkbox-label">
                                                                                 <span
-                                                                                    class="mat-checkbox-inner-container">
-                                                                                    <input type="checkbox"
-                                                                                        class="mat-checkbox-input cdk-visually-hidden"
-                                                                                        id="mat-checkbox-1-input"
-                                                                                        tabindex="0"
-                                                                                        aria-checked="false"
-                                                                                        data-dashlane-rid="1b3e44e898126f61"
-                                                                                        data-form-type="other">
-                                                                                    <span matripple=""
-                                                                                        class="mat-ripple mat-checkbox-ripple mat-focus-indicator">
-                                                                                        <span
-                                                                                            class="mat-ripple-element mat-checkbox-persistent-ripple"></span>
-                                                                                    </span>
-                                                                                    <span
-                                                                                        class="mat-checkbox-frame"></span>
-                                                                                    <span
-                                                                                        class="mat-checkbox-background">
-                                                                                        <!--<svg version="1.1" focusable="false" viewBox="0 0 24 24" xml:space="preserve" class="mat-checkbox-checkmark">
-                                                                                        <path fill="none" stroke="white" d="M4.1,12.7 9,17.6 20.3,6.3" class="mat-checkbox-checkmark-path"></path>
-                                                                                    </svg>-->
-                                                                                        <span
-                                                                                            class="mat-checkbox-mixedmark"></span>
-                                                                                    </span>
-                                                                                </span>
-                                                                                <span class="mat-checkbox-label">
-                                                                                    <span
-                                                                                        style="display: none;">&nbsp;</span>
-                                                                                    Aceito receber informações, alertas
-                                                                                    de cancelamentos e/ou alterações das
-                                                                                    viagens.
-                                                                                </span>
-                                                                            </label>
-                                                                        </mat-checkbox>
+                                                                                    style="display: none;">&nbsp;</span>
+                                                                                Aceito receber informações, alertas
+                                                                                de cancelamentos e/ou alterações das
+                                                                                viagens.
+                                                                            </span>
+                                                                        </label>
                                                                     </div>
                                                                 </div>
                                                             </form>
@@ -567,9 +533,12 @@
                                                                                         id="mat-checkbox-3">
                                                                                         <label
                                                                                             class="mat-checkbox-layout"
-                                                                                            for="mat-checkbox-3-input">
+                                                                                            for="mat-checkbox-3-input"
+                                                                                            style="display: flex; align-items: center; cursor: pointer;"
+                                                                                            data-dashlane-label="true">
                                                                                             <span
-                                                                                                class="mat-checkbox-inner-container">
+                                                                                                class="mat-checkbox-inner-container"
+                                                                                                style="margin-right: 10px;">
                                                                                                 <input type="checkbox"
                                                                                                     class="mat-checkbox-input cdk-visually-hidden"
                                                                                                     id="mat-checkbox-3-input"
@@ -584,17 +553,6 @@
                                                                                                     class="mat-checkbox-frame"></span>
                                                                                                 <span
                                                                                                     class="mat-checkbox-background">
-                                                                                                    <!--<svg version="1.1"
-                                                                                                    focusable="false"
-                                                                                                    viewBox="0 0 24 24"
-                                                                                                    xml:space="preserve"
-                                                                                                    class="mat-checkbox-checkmark">
-                                                                                                    <path fill="none"
-                                                                                                        stroke="white"
-                                                                                                        d="M4.1,12.7 9,17.6 20.3,6.3"
-                                                                                                        class="mat-checkbox-checkmark-path">
-                                                                                                    </path>
-                                                                                                </svg>-->
                                                                                                     <span
                                                                                                         class="mat-checkbox-mixedmark"></span>
                                                                                                 </span>
@@ -888,8 +846,11 @@
                                             <!---->
                                             <div class="row row-about-text">
                                                 <div class="mat-checkbox mat-accent" id="mat-checkbox-2">
-                                                    <label class="mat-checkbox-layout" for="mat-checkbox-2-input">
-                                                        <div class="mat-checkbox-inner-container">
+                                                    <label class="mat-checkbox-layout" for="mat-checkbox-2-input"
+                                                        style="display: flex; align-items: center; cursor: pointer;"
+                                                        data-dashlane-label="true">
+                                                        <div class="mat-checkbox-inner-container"
+                                                            style="margin-right: 10px;">
                                                             <input type="checkbox"
                                                                 class="mat-checkbox-input cdk-visually-hidden"
                                                                 id="mat-checkbox-2-input" tabindex="0"
@@ -912,13 +873,14 @@
                                                             </span>
                                                         </div>
 
-                                                        <span style=" display: none;">&nbsp;</span>
-                                                        Ao confirmar a compra eu concordo com os&nbsp;<a target="_blank"
-                                                            href="/termos">termos de uso&nbsp;</a>
-                                                        e&nbsp;
-                                                        <a target="_blank" href="/privacidade">política de
-                                                            privacidade</a>.
-                                                        </span>
+                                                        <div style="text-align: left;">
+                                                            Ao confirmar a compra eu concordo com os
+                                                            <a target="_blank" href="/termos">termos de uso</a>
+                                                            e
+                                                            <a target="_blank" href="/privacidade">política de
+                                                                privacidade</a>.
+                                                        </div>
+
                                                     </label>
                                                 </div>
                                             </div>

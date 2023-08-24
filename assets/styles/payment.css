@@ -48202,14 +48202,11 @@ app-search .search-field-departure-date input {
     color:#ffb300;
 }
 
-.landing-page-content .main-footer{
-    margin:0 -30px -80px;
-}
+
 
 .landing-page-content .main-footer .main-footer-first-line{
     display:flex;
     justify-content:center;
-    padding:15px 0;
     background-color:#666;
 }
 
