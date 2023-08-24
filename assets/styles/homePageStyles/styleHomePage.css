@@ -39781,8 +39781,8 @@ app-customer-orders .buy-again {
 .sale-header-summary-container {
     padding: 12px 0;
     box-shadow: 0 3px 8px 0 rgba(0, 0, 0, .4);
-    background-color: #115896;
-    color: rgba(255, 255, 255, .8);
+    background-color: #9ca3a8;
+    color: rgba(177, 177, 177, 0.8);
 }
 
 .sale-header-summary-container .button-header {

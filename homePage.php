@@ -247,11 +247,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                         class="no-icon-input input-date-search departure">
                                                                         <input type="date" name="date_initial"
                                                                             class="ng-star-inserted">
-                                                                        <style>
+                                                                        <!-- <style>
                                                                             input[type="date"]::-webkit-calendar-picker-indicator {
                                                                                 display: none;
                                                                             }
-                                                                        </style>
+                                                                        </style> -->
                                                                         <!---->
                                                                         <app-custom-datepicker
                                                                             class="departure ng-star-inserted">
@@ -267,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     <label class="lbl">Data retorno</label>
                                                                     <div
                                                                         class="no-icon-input input-date-search arrival">
-                                                                        <input type="date"
+                                                                        <input type="date" name="date_and"
                                                                             class="no-border-left ng-star-inserted">
                                                                         <!---->
                                                                         <app-custom-datepicker subtitle="volta"
@@ -693,6 +693,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!---->
         <script type="text/javascript" src="scripts/scriptBusca.js"></script>
         <script type="text/javascript" src="scripts/global.js"></script>
+                                                      
     </body>
 
 </html>
