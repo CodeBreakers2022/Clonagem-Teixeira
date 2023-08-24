@@ -400,6 +400,13 @@ function calculateDate($daysToAddOrSubtract)
                 //echo "ID: " . $row['travel_id']. "";
                 $separador = ','; //separa as casas decimais com vpirgula
                 $price_formatted = number_format($row['price'], 2, $separador); //formata o preço
+
+                //formatação de horário
+                $arrivalTime = new DateTime($row['arrival_time']);
+                $formattedArrivalTime = $arrivalTime->format('H:i');
+
+                $exitTime = new DateTime($row['exit_time']);
+                $formattedExitTime = $exitTime->format('H:i');
                 echo "
                                 <div class='triplist'>
                                     <div class='imgmargin'>
@@ -425,7 +432,7 @@ function calculateDate($daysToAddOrSubtract)
                                         <div class='hourcontainer'>
                                         <div class='clock'> <i class='fa fa-clock-o' aria-hidden='true'></i></div>
                                             <div class='hours'>
-                                                <span class='time'> " . $row['arrival_time'] . " </span>
+                                                <span class='time'> " . $formattedArrivalTime . " </span>
                                             </div>
                                         </div>
                                         <div class='duration'>
@@ -442,7 +449,7 @@ function calculateDate($daysToAddOrSubtract)
                                         <div class='hourcontainer2'>
 
                                             <div class='hours'>
-                                                <span class='time'> " . $row['exit_time'] . " </span>
+                                                <span class='time'> " . $formattedExitTime . " </span>
                                             </div>
                                         </div>
                                     </div>
