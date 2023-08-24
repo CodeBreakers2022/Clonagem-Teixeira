@@ -8,3 +8,7 @@ function closedivfather() {
         divfather.style.display = "block";
     }
 }
+/*var divfather = document.getElementById("div-father");
+function closedivfather() {
+    divfather.classList.toggle('open')
+}*/
