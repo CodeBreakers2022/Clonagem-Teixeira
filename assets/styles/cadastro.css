@@ -1,0 +1,163 @@
+.container-pai {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 700px
+}
+
+.input-nome {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 20px;
+}
+
+.input-nomecontainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.titulo-container {
+    font-size: 24px;
+    line-height: 32px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.linha {
+    display: flex;
+    flex-direction: row;
+}
+
+.containerbase0 {
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 50%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.containerbase1 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.containerbase1 label,
+.input-nome label {
+    font-size: 13px;
+    color: #999;
+    font-family: "Montserrat", sans-serif !important;
+}
+
+.containerbase1 input,
+.input-nome input,
+.select-citystate {
+    font-family: "Montserrat", sans-serif !important;
+    padding: 12px 10px;
+    border-radius: 3px;
+    border: 1px solid #d1d1d1;
+}
+
+.select-citystate {
+    padding: 12px 25px !important;
+}
+
+.check-box-linha {
+    display: flex;
+    flex-direction: column;
+}
+
+.container-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-criar-conta {
+    font-family: "Montserrat", sans-serif !important;
+    transition: all .1s ease;
+    border-radius: 3px;
+    padding: 1px 18px 1px;
+    border: 0;
+    line-height: 42px;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: .5px;
+    white-space: nowrap;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    background: #ed1c24 !important;
+    margin-bottom: 20px;
+    width: 40%;
+}
+
+.link-fazerlogin {
+    font-size: 12px;
+    text-decoration: none;
+    text-align: center;
+    color: #545557;
+    cursor: pointer;
+}
+
+.link-fazerlogin:hover {
+    text-decoration: underline;
+}
+
+.span-checkbox {
+    font-size: small;
+    margin-bottom: 20px;
+}
+
+.span-checkbox label {
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox {
+    display: inline-block;
+    height: 16px;
+    line-height: 0;
+    margin: auto;
+    margin-right: 8px;
+    order: 0;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 16px;
+    flex-shrink: 0;
+}
+
+@media screen and (max-width:767px) {
+    .linha {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .containerbase0,
+    .input0 {
+        width: 80%;
+    }
+
+    .input-nome {
+        align-items: center;
+    }
+
+    .button-criar-conta {
+        width: 80%;
+    }
+}
