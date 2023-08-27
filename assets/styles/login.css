@@ -1,19 +1,13 @@
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
     font-family: Poppins, sans-serif;
 }
 
 body {
-
     background-color: white;
-    margin: 0;
-    padding: 0;
 }
 
 form {
-
     background-color: #fff;
     position: relative;
     padding: 20px;
@@ -22,7 +16,10 @@ form {
     max-width: 500px;
     margin: 0 auto;
 }
-
+.form{
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
 h2 {
     text-align: center;
     margin-bottom: 20px;

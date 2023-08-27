@@ -2,10 +2,9 @@
 body {
     position: relative;
     font-family: 'Poppins';
-    padding: 0;
-    margin: 0;
     padding-bottom: 50rem;
     padding-top: 4rem;
+    margin: 0;
 }
 
 .navbar-big{

@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="cadastro.css">
-    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" href="assets/styles/cadastro.css">
+    <link rel="stylesheet" href="assets/styles/global.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
     </style>
@@ -129,13 +129,12 @@
 
     <div class="container-pai">
 
-        <form>
+        <form method="post" action="register.php">
             <h1 class="titulo-container">Criação de conta</h1>
             <div class="input-nome">
 
                 <label>Nome</label>
-                <input name="name" autocomplete="on" formcontrolname="name" type="text"
-                    placeholder="Digite seu nome completo" class="input0">
+                <input name="user_name" autocomplete="on" formcontrolname="name" type="text" placeholder="Digite seu nome completo" class="input0" required>
 
             </div>
             <div class="linha">
@@ -149,7 +148,7 @@
                 <div class="containerbase0">
                     <div class="containerbase1">
                         <label>CPF</label>
-                        <input name="document" autocomplete="on" formcontrolname="document" type="number"
+                        <input name="cpf" autocomplete="on" formcontrolname="document" type="number"
                             placeholder="Digite seu CPF" class="form-inputglobal" required>
                     </div>
                 </div>
@@ -158,14 +157,14 @@
                 <div class="containerbase0">
                     <div class="containerbase1">
                         <label>Data de nascimento</label>
-                        <input name="date" autocomplete="" formcontrolname="document" type="date"
+                        <input name="birth" autocomplete="" formcontrolname="document" type="date"
                             placeholder="Digite a data de nascimento" class="form-inputglobal" required>
                     </div>
                 </div>
                 <div class="containerbase0">
                     <div class="containerbase1">
                         <label>celular</label>
-                        <input name="number" autocomplete="" formcontrolname="document" type="number"
+                        <input name="phone" autocomplete="" formcontrolname="document" type="number"
                             placeholder="Digite seu celular com DDD" class="form-inputglobal" required>
                     </div>
                 </div>
@@ -176,8 +175,8 @@
                     <div class="containerbase1">
                         <label>Estado</label>
                         <span class="material-symbols-outlined">person_pin_circle</span>
-                        <select id="state" name="form-inputglobal" class="select-citystate">
-                            <option value="AC"> </option>
+                        <select id="state" name="state_" class="select-citystate" required>
+                            <option value="" disabled selected>Selecione um estado</option>
                             <option value="AC">Acre</option>
                             <option value="AL">Alagoas</option>
                             <option value="AP">Amapá</option>
@@ -212,7 +211,7 @@
                     <div class="containerbase1">
                         <label>Cidade</label>
                         <span class="material-symbols-outlined">person_pin_circle</span>
-                        <select id="city" name="city" class="select-citystate">
+                        <select id="city" name="city" class="select-citystate" required>
                             <option value="" disabled selected>Selecione uma cidade</option>
                         </select>
                     </div>
@@ -222,14 +221,14 @@
                 <div class="containerbase0">
                     <div class="containerbase1">
                         <label>Senha</label>
-                        <input name="number" autocomplete="on" formcontrolname="document" type="password"
+                        <input name="password_" autocomplete="on" formcontrolname="document" type="password"
                             placeholder="Digite sua senha" class="form-inputglobal" required>
                     </div>
                 </div>
                 <div class="containerbase0">
                     <div class="containerbase1">
                         <label>Confirmaçao de senha</label>
-                        <input name="number" autocomplete="on" formcontrolname="document" type="password"
+                        <input name="password_confirm" autocomplete="on" formcontrolname="document" type="password"
                             placeholder="Repita a senha digitada" class="form-inputglobal" required>
                     </div>
                 </div>
@@ -249,16 +248,14 @@
                 </span>
             </div>
             <div class="container-button">
-                <button class="button-criar-conta">Criar conta</button>
+                <!-- <button class="button-criar-conta">Criar conta</button> -->
+                <input class="button-criar-conta" name="submit" value="Criar conta" type="submit">
                 <a class="link-fazerlogin" href="">Já tem cadastro? Faça o login aqui.</a>
             </div>
         </form>
 
     </div>
 
-
-
-    <!-- conteudo -->
     <footer class="footer" id="footer">
         <div class="footer-links-sociais">
             <img src="assets/images/teixeira_logo_branco.png" width="250px" height="auto" style="margin-bottom: 10px;">
@@ -304,6 +301,7 @@
         </div>
     </footer>
     <script type="text/javascript" src="scripts/global.js"></script>
+    <script type="text/javascript" src="scripts/register.js"></script>
 </body>
 
 </html>

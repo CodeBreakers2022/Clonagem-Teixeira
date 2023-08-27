@@ -126,17 +126,16 @@
 
     <!-- conteudo -->
 
-    <body>
+    <div class="form">
         <h2> Login</h2>
-        <form action="login.html" method="post">
+        <form action="login.php" method="post">
             <div class="input-field">
                 <label>E-mail</label>
-                <input type="email" id="usename" name="email" autocomplete="on" formcontrolname="email" type="text"
-                    placeholder="Digite seu e-mail" class="ng-pristine ng-invalid ng-touched">
+                <input type="email" id="usename" name="email" autocomplete="on" formcontrolname="email" type="text" placeholder="Digite seu e-mail" class="ng-pristine ng-invalid ng-touched" required>
             </div>
             <div class="input-field">
                 <label>Senha</label>
-                <input name="pass" id="senha" autocomplete="on" formcontrolname="pass" type="password"
+                <input name="password_" id="senha" autocomplete="on" formcontrolname="pass" type="password"
                     placeholder="Digite sua senha" class="ng-untouched ng-pristine ng-invalid">
                 <a class="form-link text-right" href="login.html">Esqueci minha senha</a>
             </div>
@@ -152,8 +151,7 @@
 
 
         </form>
-        <script src="/cadastro/script.js"></script>
-    </body>
+    </div>
 
     <footer class="footer">
         <div class="footer-links-sociais">
