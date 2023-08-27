@@ -120,7 +120,7 @@
 
 .route {
     height: 40px;
-    padding-left: 25px;
+    padding-left: 14px;
     padding-right: 10px;
     justify-content: flex-start;
     align-items: auto;
@@ -142,8 +142,8 @@
     height: 27px;
     padding-top: 1px;
     padding-bottom: 1px;
-    padding-left: 8px;
-    padding-right: 50px;
+    padding-left: 12px;
+    padding-right: 60px;
     background: rgba(30, 136, 229, 0.10);
     border-radius: 3px;
     justify-content: flex-start;
@@ -169,7 +169,6 @@
 
 .hourcontainer {
     left: 22px;
-    top: -3px;
     position: absolute;
     justify-content: flex-start;
     align-items: flex-end;
@@ -237,7 +236,6 @@
 
 .hourcontainer2 {
     left: 120px;
-
     position: absolute;
     justify-content: center;
     align-items: center;
@@ -250,7 +248,7 @@
     bottom: 14px;
     font-size: 20px;
     color: #d1d1d1;
-    top: -16px;
+    top: -11px;
 }
 
 .tripprice {
@@ -385,8 +383,7 @@ h5 {
     position: relative;
     width: 100%;
     min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
+    
 }
 
 .list {
@@ -467,9 +464,9 @@ h5 {
 .actions {
     display: flex;
     align-items: center;
-    padding-top: 40px;
-    margin-left: 110px;
-    margin-right: 110px;
+    padding-top: 60px;
+    margin-left: 170px;
+    margin-right: 170px;
 
 }
 
@@ -502,21 +499,14 @@ h5 {
     color: #187bd1;
 }
 
-.filters .filter-type {
-    border-radius: 3px;
-    transition: all .1s ease;
-    display: inline-block;
-    margin-left: 5px;
-    padding: 2px 6px 4px;
-    background-color: rgba(0, 0, 0, .07);
-    color: #707070;
-    cursor: pointer;
 
-}
 
 .clock {
     color: #187BD1;
-
+    position: relative;
+    display: flex;
+    left: 7;
+    top: -2;
 }
 
 
@@ -536,23 +526,37 @@ h5 {
 .loc {
     padding-right: 8px;
     color: rgba(30, 136, 229, 0.551);
+    top: 1.7;
+    position: relative;
 }
 
 
 /* Estilos para telas menores - tablets em modo paisagem */
 @media (max-width: 1024px) {
 
-    .container,
-    .container-fluid {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+    
 
     .step-title {
         padding-left: 20px;
         padding-right: 20px;
     }
+    .triplist{
+        margin-left: 50px
+    }
+    
+.actions {
+    display: flex;
+    
+    padding-top: 30px;
+    margin-left: 90px;
+    margin-right: 90px;
 
+}
+
+.steps{
+    display: none;
+}
+   
 }
 
 @media (max-width: 850px) {
@@ -560,11 +564,8 @@ h5 {
         position: static;
     }
 
-    .container,
-    .container-fluid {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
+    
+
 
     .step-title {
         justify-content: flex-start;
@@ -613,6 +614,7 @@ h5 {
         justify-content: center;
         margin-left: 0;
         margin-right: 0;
+        padding-left: 80px;
     }
 
     .length {
@@ -676,7 +678,7 @@ h5 {
         font-size: 16px;
         margin-top: 5px;
         right: 30px;
-        transform: translateY(100%);
+        transform: translateY(60%);
     }
 
     .tripprice {
@@ -698,11 +700,7 @@ h5 {
 
 @media (max-width: 480px) {
 
-    .container,
-    .container-fluid {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
+    
 
     .steps,
     .title {
@@ -720,12 +718,7 @@ h5 {
         position: static;
     }
 
-    .container,
-    .container-fluid {
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
+    
     .step-title {
         justify-content: flex-start;
         padding-left: 15px;
@@ -783,12 +776,7 @@ h5 {
         display: none;
     }
 
-    .filters {
-        left: 0;
-        text-align: center;
-        font-size: 13px;
-        padding-bottom: 30px;
-    }
+  
 
     .triplist {
         display: flex;
@@ -856,4 +844,29 @@ h5 {
         transform: translateY(-160%);
     }
 
+    .filters{
+        left: -35;
+        text-align: center;
+        font-size: 13px;
+    }
+
+}
+
+
+@media (max-width: 1096px) {
+
+
+    
+.actions {
+    display: flex;
+    padding-top: 30px;
+    margin-left: 90px;
+    margin-right: 180px;
+
+}
+
+.steps{
+    display: none;
+}
+   
 }
