@@ -209,7 +209,7 @@
                 </div>
             </div>
             <div class="container-father-footer">
-                <input type="button" name="fechar" value="FECHAR" class="close-div-father" onclick="closedivfather()">
+                <a class="close-div-father"href="buscaPassagem.php?travel_id=' . $row['travel_id'] . '">VOLTAR</a>
                 <input type="submit" name="reservar" value="RESERVAR" class="submit-div-father">
             </div>
         </form>
