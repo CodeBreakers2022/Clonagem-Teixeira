@@ -164,6 +164,10 @@ form{
     display: flex;
     flex-wrap: wrap;
 }
+.boxchair button{
+    width: 9.090909090909091%;
+    
+}
 @media only screen  and (max-width: 1024px){
     .close-div-father, .submit-div-father{
         height: 60%;

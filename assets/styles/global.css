@@ -268,10 +268,6 @@ body {
 /* reservarPassagem.php style */
 
 
-.boxchair {
-    background-color: #fff;
-    display: grid;
-}
 
 .selected {
     background-color: orange;

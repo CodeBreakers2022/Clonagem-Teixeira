@@ -209,7 +209,7 @@
                 </div>
             </div>
             <div class="container-father-footer">
-                <a class="close-div-father"href="buscaPassagem.php?travel_id=' . $row['travel_id'] . '">VOLTAR</a>
+                <a class="close-div-father"href="buscaPassagem1.php">VOLTAR</a>
                 <input type="submit" name="reservar" value="RESERVAR" class="submit-div-father">
             </div>
         </form>
@@ -264,7 +264,6 @@
         </div>
     </footer>
     <script type="text/javascript" src="scripts/global.js"></script>
-    <script type="text/javascript" src="scripts/onibusopenclose.js"></script>
 </body>
 </body>
 
