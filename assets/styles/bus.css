@@ -133,7 +133,11 @@ form{
     background-color: transparent;
     color: #545557;
     border: 1px solid #545557 !important;
-    text-align: center;
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
 }
 
 .submit-div-father {
@@ -160,14 +164,28 @@ form{
 .boxchair{
     width: 100%;
     height: 100%;
-    background-color: green;
+    background-color: #FFFFFFCC;
     display: flex;
     flex-wrap: wrap;
 }
 .boxchair button{
-    width: 9.090909090909091%;
-    
+    border: none;
+    height: 19%;
+    width: 8%;
+    margin-right: 5px;
+    margin-left: 5px;
+    font-size: 12px;
+    background-color: #EEEEEE;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    font-weight:900;
+    color: #555555;
 }
+.boxchair button:hover{
+    background-color:#FFB300;
+    color:#FFFFFFCC;
+}
+
 @media only screen  and (max-width: 1024px){
     .close-div-father, .submit-div-father{
         height: 60%;
