@@ -290,6 +290,7 @@ function calculateDate($daysToAddOrSubtract)
 
             
             <input class="button_form" name="submit" type="submit" value="Alterar busca"/>
+
         </form>
 
         <div class="container-fluid">
@@ -407,69 +408,112 @@ function calculateDate($daysToAddOrSubtract)
 
                 $exitTime = new DateTime($row['exit_time']);
                 $formattedExitTime = $exitTime->format('H:i');
-                echo "
-                                <div class='triplist'>
-                                    <div class='imgmargin'>
-                                        <img class='Image' src='assets/images/Z.png'>
-                                    </div>
+                echo "<div class='triplist'>
+                            <div class='imgmargin'>
+                                <img class='Image' src='assets/images/Z.png'>
+                            </div>
 
-                                    <div class='route'>
-                                        <div class='loc'>
-                                            <i class='fa fa-map-marker' aria-hidden='true'></i>
-                                        </div>
-                                        <div class='divita'>
-                                            " . $row['origin'] . "<br>" . $row['destiny'] . "
-                                        </div>
-                                    </div>
+                            <div class='route'>
+                                <div class='loc'>
+                                    <i class='fa fa-map-marker' aria-hidden='true'></i>
+                                </div>
+                                <div class='divita'>
+                                    " . $row['origin'] . "<br>" . $row['destiny'] . "
+                                </div>
+                            </div>
 
-                                    <div class='conv-area'>
-                                        <div class='conv'>
-                                        " . $row['class'] . "
-                                        </div>
-                                    </div>
+                            <div class='conv-area'>
+                                <div class='conv'>
+                                " . $row['class'] . $row['travel_id']."
+                                </div>
+                            </div>
 
-                                    <div class='triptime'>
-                                        <div class='hourcontainer'>
-                                        <div class='clock'> <i class='fa fa-clock-o' aria-hidden='true'></i></div>
-                                            <div class='hours'>
-                                                <span class='time'> " . $formattedArrivalTime . " </span>
-                                            </div>
-                                        </div>
-                                        <div class='duration'>
-                                            <div class='duration-container'>
-                                            <div class='arrow-icon'>
-                                                <i class='fa fa-long-arrow-right'aria-hidden='true'></i>
-                                            </div>
-                                                <div class='dur'>
-                                                    <span class='h'>00h</span>
-                                                    <span class='min'>55m</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class='hourcontainer2'>
-
-                                            <div class='hours'>
-                                                <span class='time'> " . $formattedExitTime . " </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class='tripprice'>
-                                        <div class='textprice'>
-                                            a partir de</div>
-                                        <div class='price'>
-                                        R$ " . $price_formatted . "</div>
+                            <div class='triptime'>
+                                <div class='hourcontainer'>
+                                <div class='clock'> <i class='fa fa-clock-o' aria-hidden='true'></i></div>
+                                    <div class='hours'>
+                                        <span class='time'> " . $formattedArrivalTime . " </span>
                                     </div>
                                 </div>
-                            
-                        ";
+                                <div class='duration'>
+                                    <div class='duration-container'>
+                                    <div class='arrow-icon'>
+                                        <i class='fa fa-long-arrow-right'aria-hidden='true'></i>
+                                    </div>
+                                        <div class='dur'>
+                                            <span class='h'>00h</span>
+                                            <span class='min'>55m</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='hourcontainer2'>
+
+                                    <div class='hours'>
+                                        <span class='time'> " . $formattedExitTime . " </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='tripprice'>
+                                <div class='textprice'>
+                                    a partir de</div>
+                                <div class='price'>
+                                R$ " . $price_formatted . "</div>
+                            </div>
+                            <div class='container-father' id='div-father' style='display: block;'>
+                                <form method='post' action=''>
+                                    <div class='container-bus'>
+                                        <div class='container-vehicle'>
+                                            <div class='bus-front'></div>
+                                            <div class='bus-middle'>
+                                            <div class='chair'>
+                                                <div class='boxchair'>";
+                                                    echo "<div class='boxchair'>";
+                                                    
+                                                    $count = 1;
+                                                    while ($count <= 42) {
+                                                        $sql = "SELECT busy FROM user_chair WHERE chair_number = $count";
+                                                        $resultSearch = mysqli_query($connection, $sql);
+                        
+                                                        if (mysqli_num_rows($resultSearch) > 0) {
+                                                            $row = mysqli_fetch_assoc($resultSearch);
+                                                            $busy = $row['busy'];
+                        
+                                                            if ($busy == 1) {
+                                                                echo "<div name='bttchair' class='bttchair' style='background-color: #e9252b; font-size: 22px; opacity: 10%'>".$count."</div>";
+                                                            } else {
+                                                                echo "<div name='bttchair' class='bttchair' onclick='event'>".$count."</div>";
+                                                            }
+                                                        } else {
+                                                            echo "<div name='bttchair' class='bttchair' onclick='event'>".$count."</div>";
+                                                        }
+                        
+                                                        $count++;
+                        
+                                                    echo "</div>";
+                                                    }   
+                                                echo "</div>";
+                                            echo"</div>";
+                                            echo"<div class='bus-back'></div>";
+                                        echo"</div>";
+                                        echo"<div class='sum'>
+                                            <div class='disponivel'>disponivel</div>
+                                            <div class='ocupado'>ocupado</div>
+                                            <div class='selecionado'>selecionado</div>
+                                        </div>";
+                                    echo"</div>";
+                                    echo"<div class='container-father-footer'>
+                                        <input type='button' name='fechar' value='FECHAR' class='close-div-father' onclick='closedivfather()'>
+                                        <input type='submit' name='reservar' value='RESERVAR' class='submit-div-father'>
+                                    </div>";
+                                echo"</form>";
+                            echo"</div>";
+                        echo"</div>";
             }
         } else {
             echo "Nenhum resultado encontrado.";
         }
         ?>
-
-
     </div>
 
     <footer class="footer">
