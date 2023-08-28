@@ -147,6 +147,8 @@ function calculateDate($daysToAddOrSubtract)
     <link rel="stylesheet" type="text/css" href="assets/styles/global.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="assets/styles/homePageStyles/styleHomePage.css">
+    <link rel="stylesheet" href="assets/styles/homePageStyles/styles.fedbbe35ba989d852a08.css">
     
 
 </head>
@@ -260,8 +262,112 @@ function calculateDate($daysToAddOrSubtract)
     </nav>
 
     <!-- conteúdo -->
-    
-    <form action="" method="post" class="form">
+    <div class="row">
+        <div class="col">
+            <div class="sale-header-summary-container on-sale ng-star-inserted">
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-header-search-mobile">
+                            <button class="btn btn-primary btn-toggle-search">
+                                Alterar sua busca</button><!---->
+                        </div>
+                        <div class="col col-header-search-above-mobile">
+                            <app-search>
+                                <div class="form-container">
+                                    <form novalidate="" class="ng-untouched ng-pristine ng-invalid">
+                                        <div class="row row-search-title">
+                                            <div class="col"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="search-fields">
+                                                    <div class="search-field">
+                                                        <label class="lbl">Origem</label>
+                                                        <div class="input-with-icon">
+                                                            <i class="fad fa-map-marker-alt input-icon"></i>
+                                                            <select name="city_origin_search" required>
+                                                                <option <?php if (($city_origin !== null) && ($city_origin === 'DIVINOPOLIS - MG'))
+                                                                    echo 'selected'; ?>>DIVINOPOLIS - MG</option>
+                                                                <option <?php if (($city_origin !== null) && ($city_origin === 'SÃO JOSÉ DO SALGADO - MG'))
+                                                                    echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
+                                                                <option <?php if (($city_origin !== null) && ($city_origin === 'ITAUNA - MG'))
+                                                                    echo 'selected'; ?>>ITAUNA - MG</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="search-field search-field-destination">
+                                                        <label class="lbl">Destino</label>
+                                                        <div class="input-with-icon">
+                                                            <i class="fad fa-map-marker-alt input-icon"></i>
+                                                            <select name="city_destiny_search" required>
+                                                                <option <?php if (($city_destiny !== null) && ($city_destiny === 'DIVINOPOLIS - MG'))
+                                                                    echo 'selected'; ?>>DIVINOPOLIS - MG</option>
+                                                                <option <?php if (($city_destiny !== null) && ($city_destiny === 'SÃO JOSÉ DO SALGADO - MG'))
+                                                                    echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
+                                                                <option <?php if (($city_destiny !== null) && ($city_destiny === 'ITAUNA - MG'))
+                                                                    echo 'selected'; ?>>ITAUNA
+                                                                    - MG</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6 search-field-departure-date">
+                                                            <div class="search-field date-field ng-star-inserted">
+                                                                <label class="lbl">Data de ida</label>
+                                                                <div class="no-icon-input input-date-search departure">
+                                                                    <input type="date" name="date_initial_search"
+                                                                        placeholder="Data de ida" value="<?php if (($date_initial !== null) && (!empty($date_initial)))
+                                                                            echo $date_initial; ?>" />
+                                                                    <app-custom-datepicker
+                                                                        class="departure ng-star-inserted"></app-custom-datepicker>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 search-field-return-date">
+                                                            <div class="search-field date-field ng-star-inserted">
+                                                                <label class="lbl">Data de volta</label>
+                                                                <div class="no-icon-input input-date-search arrival">
+                                                                    <input type="date" name="date_and_search"
+                                                                        placeholder="Data de retorno" value="<?php if (($date_and !== null) && (!empty($date_and)))
+                                                                            echo $date_and; ?>" />
+                                                                    <app-custom-datepicker subtitle="volta"
+                                                                        class="arrival ng-star-inserted"></app-custom-datepicker>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="search-field discount-field ng-star-inserted">
+                                                        <label class="lbl">Cupom</label>
+                                                        <div class="input-with-icon">
+                                                            <i class="fad fa-tag input-icon"></i>
+                                                            <input type="text" name="coupon_search" placeholder="cupom"
+                                                                class="ng-untouched ng-pristine ng-valid ng-star-inserted"
+                                                                value="<?php if (($coupon !== null) && (!empty($coupon)))
+                                                                    echo $date_and; ?>" />
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn-primary search-button button-home" name="submit"
+                                                        type="submit" style="background-color: rgb(155, 155, 155)">
+                                                        BUSCAR PASSAGENS</button><button
+                                                        class="btn-primary search-button button-header ng-star-inserted"
+                                                        style="background-color: rgb(165, 165, 165)">
+                                                        ALTERAR
+                                                        <br class="only-above-mobile" />BUSCA
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </app-search>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <form action="" method="post" class="form">
             <label>Origem:</label>
             <select name="city_origin_search" required>
                 <option <?php if (($city_origin !== null) && ($city_origin === 'DIVINOPOLIS - MG'))
@@ -289,7 +395,7 @@ function calculateDate($daysToAddOrSubtract)
                 echo $date_and; ?>"/>
 
             
-            <input class="button_form" name="submit" type="submit" value="Alterar busca"/>
+            <input class="button_form" name="submit" type="submit" value="Alterar busca"/> -->
 
         </form>
 
