@@ -408,7 +408,8 @@ function calculateDate($daysToAddOrSubtract)
 
                 $exitTime = new DateTime($row['exit_time']);
                 $formattedExitTime = $exitTime->format('H:i');
-                echo "<a href='reservarPassagem.php?travel_id=" . $row['travel_id'] . "'><div class='triplist'>
+                echo "<div class='triplist'>
+                    <a class='link' href='reservarPassagem.php?travel_id=" . $row['travel_id'] . "' >
                             <div class='imgmargin'>
                                 <img class='Image' src='assets/images/Z.png'>
                             </div>
@@ -424,7 +425,7 @@ function calculateDate($daysToAddOrSubtract)
 
                             <div class='conv-area'>
                                 <div class='conv'>
-                                " . $row['class'] . $row['travel_id']."
+                                " . $row['class'] ."
                                 </div>
                             </div>
 
@@ -460,13 +461,15 @@ function calculateDate($daysToAddOrSubtract)
                                 <div class='price'>
                                 R$ " . $price_formatted . "</div>
                             </div>
-                        </div></a>";
+                    </a>        
+                </div>";
             }
         } else {
             echo "Nenhum resultado encontrado.";
         }
         ?>
     </div>
+   
 
     <footer class="footer">
         <div class="footer-links-sociais">

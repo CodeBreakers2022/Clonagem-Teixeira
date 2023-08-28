@@ -1,5 +1,3 @@
-
-
 .barra-pesquisa {
     width: 90%;
     height: 4vh;
@@ -9,6 +7,7 @@
     transform: translateX(-50%);
     background-color: lightgray;
 }
+
 
 
 
@@ -45,7 +44,7 @@
     font-weight: 800;
     text-transform: uppercase;
     word-wrap: break-word;
-   
+
 }
 
 .trechoclasse {
@@ -95,11 +94,25 @@
 
 }
 
+.link:hover {
+    background: #eeeeee;
+
+}
+
 .triplist {
-    padding-top: 15px;
-    padding-bottom: 16px;
-    padding-left: 15px;
-    padding-right: 40px;
+   
+    background: rgb(255, 255, 255);
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    display: flex;
+    position: relative;
+    cursor: pointer;
+}
+
+.link {
+    padding-top: 18px;
+    padding-bottom: 19px;
     background: rgb(255, 255, 255);
     border-bottom: 0.50px #e1e1e1 solid;
     justify-content: space-between;
@@ -107,6 +120,7 @@
     gap: 20px;
     display: flex;
     position: relative;
+    text-decoration: none;
 }
 
 .logoimg {
@@ -123,7 +137,7 @@
     padding-left: 14px;
     padding-right: 10px;
     justify-content: flex-start;
-    align-items: auto;
+    
     display: flex;
 }
 
@@ -273,15 +287,16 @@
 
 .price {
     color: #187BD1;
-    font-size: 22px;
+    font-size: 21px;
     font-family: Montserrat;
     font-weight: 700;
     word-wrap: break-word
 }
 
 .Image {
-    width: 100px;
+    width: 90px;
     height: 38.95px;
+    margin-left: 20px;
 }
 
 /* parte do pedro */
@@ -383,7 +398,7 @@ h5 {
     position: relative;
     width: 100%;
     min-height: 1px;
-    
+
 }
 
 .list {
@@ -398,14 +413,17 @@ h5 {
     display: flex;
     width: 100%;
 }
+
 @media (max-width: 1000px) {
-    #other-day-start{
+    #other-day-start {
         display: none;
     }
-    #other-day-and{
+
+    #other-day-and {
         display: none;
     }
 }
+
 .list .other-day {
     /* transition: all .1s ease;
     flex: 1;
@@ -472,7 +490,7 @@ h5 {
 
 .length {
     font-size: 14px;
-    padding-top: -20px  ;
+    padding-top: -20px;
     font-family: Montserrat;
     color: #707070;
 }
@@ -490,7 +508,8 @@ h5 {
     font-family: Montserrat;
     color: #707070;
 }
-.filters form{
+
+.filters form {
     display: flex;
 }
 
@@ -519,8 +538,14 @@ h5 {
     font-size: 14px;
     letter-spacing: .5px;
     white-space: nowrap;
-    border: 1px solid #545557 !;
-    color: #545557
+    border: 1px solid #545557;
+    color: #5d5d5d;
+    position: relative;
+    display: flex;
+    left: 325px;
+    top: 350px;
+    bottom: 47px;
+    background: white;
 }
 
 .loc {
@@ -534,38 +559,40 @@ h5 {
 /* Estilos para telas menores - tablets em modo paisagem */
 @media (max-width: 1024px) {
 
-    
+
+
 
     .step-title {
         padding-left: 20px;
         padding-right: 20px;
     }
-    .triplist{
-        margin-left: 50px
+
+
+
+    .actions {
+        display: flex;
+
+        padding-top: 30px;
+        margin-left: 90px;
+        margin-right: 90px;
+
     }
-    
-.actions {
-    display: flex;
-    
-    padding-top: 30px;
-    margin-left: 90px;
-    margin-right: 90px;
 
-}
+    .steps {
+        display: none;
+    }
 
-.steps{
-    display: none;
-}
-   
 }
 
 @media (max-width: 850px) {
+
+
+
+
+
     .tripcol {
         position: static;
     }
-
-    
-
 
     .step-title {
         justify-content: flex-start;
@@ -641,7 +668,20 @@ h5 {
         margin: 0;
         padding: 0;
         margin-bottom: 0px;
-        height:200px;
+        height: 200px;
+        padding: 0px 40px 40px 15px;
+    }
+
+    .link {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: calc(100% - 50px);
+        max-width: 768px;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 0px;
+        height: 200px;
         padding: 0px 40px 40px 15px;
     }
 
@@ -650,10 +690,11 @@ h5 {
         height: auto;
         left: 0px;
         position: relative;
-        top: 30px;
+       
     }
 
     .conv-area {
+        top: -30px;
         font-size: 18px;
         position: absolute;
         right: 0px;
@@ -664,12 +705,13 @@ h5 {
         transform: translateY(65%);
         position: relative;
         right: 15px;
+        top: -26px;
     }
 
     .divita {
         margin-top: 0px;
         font-size: 13px;
-        top: 25px;
+
         right: 15px;
         position: relative;
     }
@@ -686,7 +728,7 @@ h5 {
         position: absolute;
         right: 0px;
         top: 83%;
-        
+
     }
 
     .textprice {
@@ -699,8 +741,6 @@ h5 {
 }
 
 @media (max-width: 480px) {
-
-    
 
     .steps,
     .title {
@@ -718,7 +758,7 @@ h5 {
         position: static;
     }
 
-    
+
     .step-title {
         justify-content: flex-start;
         padding-left: 15px;
@@ -776,7 +816,7 @@ h5 {
         display: none;
     }
 
-  
+
 
     .triplist {
         display: flex;
@@ -787,51 +827,63 @@ h5 {
         margin: 0;
         padding: 0;
         margin-bottom: 0px;
-        height:200px;
+        height: 200px;
+        padding: 0px 40px 40px 15px;
+    }
+
+    .link {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: calc(100% - 50px);
+        max-width: 480px;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 0px;
+        height: 200px;
         padding: 0px 40px 40px 15px;
     }
 
     .Image {
         width: 80px;
         height: auto;
-        left: 9px;
         position: relative;
-        top: 30px;
+        left: -30px;
     }
 
     .conv-area {
         font-size: 18px;
         position: absolute;
-        right: 0px;
-        top: 40%;
+        right: -40px;
+        top: 30%;
         transform: translateY(-200%);
     }
 
     .loc {
         transform: translateY(65%);
         position: relative;
-        right: 15px;
+        right: 35px;
     }
 
     .divita {
-        margin-top: 0px;
+
         font-size: 13px;
         position: relative;
-        top: 25px;
-        right: 15px;
+
+        right: 37px;
     }
 
     .triptime {
         font-size: 16px;
         margin-top: 0px;
         transform: translateY(100%);
-        right: 40px;
+        right: 60px;
     }
 
     .tripprice {
         font-size: 22px;
         position: absolute;
-        right: 0px;
+        right: -40px;
         top: 90%;
         transform: translateY(-50%);
     }
@@ -844,7 +896,7 @@ h5 {
         transform: translateY(-160%);
     }
 
-    .filters{
+    .filters {
         left: -35;
         text-align: center;
         font-size: 13px;
@@ -855,18 +907,21 @@ h5 {
 
 @media (max-width: 1096px) {
 
+    .back {
+        left: 16;
+        top: 20;
+    }
 
-    
-.actions {
-    display: flex;
-    padding-top: 30px;
-    margin-left: 90px;
-    margin-right: 180px;
+    .actions {
+        display: flex;
+        padding-top: 30px;
+        margin-left: 90px;
+        margin-right: 180px;
 
-}
+    }
 
-.steps{
-    display: none;
-}
-   
+    .steps {
+        display: none;
+    }
+
 }
