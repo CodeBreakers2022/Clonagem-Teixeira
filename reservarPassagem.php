@@ -3,30 +3,29 @@
     // Incluindo o arquivo connect.php
     include_once('connect.php');
 
-    // Verifica se as seções de email e senha estão ativas
-    // if ((!isset($_SESSION['email']) == true) && (!isset($_SESSION['password_']) == true)) { // Não estão
-    //     // Não está logado
-    //     unset($_SESSION['email']);
-    //     unset($_SESSION['password_']);
-
-    //     // Destroi a sessão
-    //     session_destroy();
-
-    //     // Tentativa de acesso via URL, vai para a página de acesso negado
-    //     header('Location: login.html');
-    // }
-
-    //Pegando a variável de seção 
-    //$user_id = $_SESSION['user_id'];
-
     if (isset($_GET['travel_id'])) {
         $travel_id = $_GET['travel_id'];
     } else {
         // echo "Erro de carregamento";
     }
 
-    if (isset($_POST['reservar']) && !empty($_POST['chair'])) {
-        //tem que cadastrar passar o id do usuário ou por seção ou pelo get, se ele chegar aqui e não tiver cadastrado ainda, precisa direcionar ele para a página de login 
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $chairSelected = json_decode(file_get_contents('php://input'), true);
+
+        
+        echo "Dados recebidos com sucesso!";
+    }
+
+    function toggleChair($array, $value) {
+        if (in_array($value, $array)) {
+            $indexToRemove = array_search($value, $array);
+            unset($array[$indexToRemove]);
+        } else {
+            array_push($array, $value);
+        }
+        return $array;
     }
 
 ?>
@@ -163,37 +162,45 @@
                 <div class="container-vehicle">
                     <div class="bus-front"></div>
                     <div class="bus-middle">
-                        <div class="chair">
                         <?php
+                            $chairs = array();
 
                             echo "<div class='boxchair'>";
-                            $_SESSION['travel_id'] = $travel_id;
                             $contador = 1;
+                            
                             while ($contador <= 42) {
                                 $sql = "SELECT busy FROM user_chair WHERE chair_number = $contador AND travel_id = $travel_id";
                                 $result = mysqli_query($connection, $sql);
-
+                            
                                 if (mysqli_num_rows($result) > 0) {
                                     $row = mysqli_fetch_assoc($result);
                                     $busy = $row['busy'];
-
+                            
                                     if ($busy == 1) {
-                                        echo "<div name='bttchair' class='bttchair' style='background-color: #e9252b; font-size: 22px; opacity: 10%'>".$contador."</div>";
+                                        echo "<div name='bttchair' class='bttchair' style='background-color: #e9252b; font-size: 22px; opacity: 10%'>" . $contador . "</div>";
                                     } else {
-                                        echo "<div name='bttchair' class='bttchair' onclick='event'>".$contador."</div>";
+                                        echo "<button onclick=\"if(in_array($contador, \$chairs)) { \$indiceParaRemover = array_search(1, \$chairs); unset(\$chairs[\$indiceParaRemover]); } else { array_push(\$chairs, 1); }\">.$contador.</button>";
                                     }
                                 } else {
-                                    echo "<div name='bttchair' class='bttchair' onclick='event'>".$contador."</div>";
+                                    echo "<button onclick=\"if(in_array($contador, \$chairs)) { \$indiceParaRemover = array_search(1, \$chairs); unset(\$chairs[\$indiceParaRemover]); } else { array_push(\$chairs, 1); }\">.$contador.</button>";
                                 }
-
+                            
                                 $contador++;
-
-                            echo "</div>";
                             }
+                            echo "</div>";
                         ?>
-                        </div>
                     </div>
                     <div class="bus-back"></div>
+<!-- 
+                    <div class="select" id="select">
+                        <span>Selecionadas</span>
+                        <?php
+                            // for ($i = 0; $i < count($chairSelected); $i++) {
+                            //     $a = $chairSelected[$i];
+                            //     echo "<span>". $a ."</span>";
+                            // }
+                        ?>
+                    </div> -->
                 </div>
                 <div class="sum">
                     <div class="disponivel">disponivel</div>

@@ -68,16 +68,8 @@ for (let i = 0; i < colorize.length; i++) {
     });
 }
 
-// for (let i = 0; i < colorize.length; i++) {
-//     var chair = colorize[i];
-//     chair.addEventListener('click', (event) => {
-//         event.target.classList.toggle("selected");
-//         var chairS = event.target.innerText;
-//         chairSelected.push(chairS);
-//         console.log(chairS);
-//         console.log(chairSelected);
-//     });
-// }
+
+
 
 var xhr = new XMLHttpRequest();
 xhr.open("POST", "payment.php", true);
@@ -92,36 +84,3 @@ xhr.onreadystatechange = function() {
 
 xhr.send("selectedChairs=" + encodeURIComponent(JSON.stringify(chairSelected)));
 
-// const colorize = document.querySelectorAll('.bttchair');
-// const chairSelected = [];
-// for (let i = 0; i < colorize.length; i++){
-//     var chair = colorize[i];
-//     chair.addEventListener('click', (event)=> {
-//         event.target.classList.toggle("selected");
-//         var chairS = event.target.innerText;
-//         chairSelected.push(chairS);
-//         console.log(chairS);
-//         console.log(chairSelected);
-//     });
-// }
-
-// var xhr = new XMLHttpRequest();
-// xhr.open("POST", "reservarPassagem.php", true);
-// xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-// xhr.onreadystatechange = function() {
-//     if (xhr.readyState === 4 && xhr.status === 200) {
-//         console.log(xhr.responseText); // Resposta do PHP
-//     }
-// };
-// xhr.send("jsVariable=" + encodeURIComponent(chairSelected));
-
-// const colorize = document.querySelectorAll('.bttchair');
-
-// for (let i = 0; i < colorize.length; i++) {
-//     var chair = colorize[i];
-//     chair.addEventListener('click', (event) => {
-//         event.target.classList.toggle("selected");
-//         var chairS = event.target.innerText; // Captura o texto do elemento clicado
-//         console.log(chairS);
-//     });
-// }

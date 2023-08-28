@@ -408,7 +408,7 @@ function calculateDate($daysToAddOrSubtract)
 
                 $exitTime = new DateTime($row['exit_time']);
                 $formattedExitTime = $exitTime->format('H:i');
-                echo "<div class='triplist'>
+                echo "<a href='reservarPassagem.php?travel_id=" . $row['travel_id'] . "'><div class='triplist'>
                             <div class='imgmargin'>
                                 <img class='Image' src='assets/images/Z.png'>
                             </div>
@@ -460,55 +460,7 @@ function calculateDate($daysToAddOrSubtract)
                                 <div class='price'>
                                 R$ " . $price_formatted . "</div>
                             </div>
-                            <div class='container-father' id='div-father' style='display: block;'>
-                                <form method='post' action=''>
-                                    <div class='container-bus'>
-                                        <div class='container-vehicle'>
-                                            <div class='bus-front'></div>
-                                            <div class='bus-middle'>
-                                            <div class='chair'>
-                                                <div class='boxchair'>";
-                                                    echo "<div class='boxchair'>";
-                                                    
-                                                    $count = 1;
-                                                    while ($count <= 42) {
-                                                        $sql = "SELECT busy FROM user_chair WHERE chair_number = $count";
-                                                        $resultSearch = mysqli_query($connection, $sql);
-                        
-                                                        if (mysqli_num_rows($resultSearch) > 0) {
-                                                            $row = mysqli_fetch_assoc($resultSearch);
-                                                            $busy = $row['busy'];
-                        
-                                                            if ($busy == 1) {
-                                                                echo "<div name='bttchair' class='bttchair' style='background-color: #e9252b; font-size: 22px; opacity: 10%'>".$count."</div>";
-                                                            } else {
-                                                                echo "<div name='bttchair' class='bttchair' onclick='event'>".$count."</div>";
-                                                            }
-                                                        } else {
-                                                            echo "<div name='bttchair' class='bttchair' onclick='event'>".$count."</div>";
-                                                        }
-                        
-                                                        $count++;
-                        
-                                                    echo "</div>";
-                                                    }   
-                                                echo "</div>";
-                                            echo"</div>";
-                                            echo"<div class='bus-back'></div>";
-                                        echo"</div>";
-                                        echo"<div class='sum'>
-                                            <div class='disponivel'>disponivel</div>
-                                            <div class='ocupado'>ocupado</div>
-                                            <div class='selecionado'>selecionado</div>
-                                        </div>";
-                                    echo"</div>";
-                                    echo"<div class='container-father-footer'>
-                                        <input type='button' name='fechar' value='FECHAR' class='close-div-father' onclick='closedivfather()'>
-                                        <input type='submit' name='reservar' value='RESERVAR' class='submit-div-father'>
-                                    </div>";
-                                echo"</form>";
-                            echo"</div>";
-                        echo"</div>";
+                        </div></a>";
             }
         } else {
             echo "Nenhum resultado encontrado.";
