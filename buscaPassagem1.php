@@ -151,7 +151,63 @@ function calculateDate($daysToAddOrSubtract)
 
 </head>
 
-<body style="margin-top: 4em;">
+<header>
+<div class="container2">
+    
+    <form class="bus-search-form">
+        <div class="form-row">
+            <div class="form-item">
+                <label >Origem:</label>
+                
+                <select class="itms" name="city_origin_search" required>
+                <option <?php if (($city_origin !== null) && ($city_origin === 'DIVINOPOLIS - MG'))
+                    echo 'selected'; ?>>DIVINOPOLIS - MG</option>
+                <option <?php if (($city_origin !== null) && ($city_origin === 'SÃO JOSÉ DO SALGADO - MG'))
+                    echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
+                <option <?php if (($city_origin !== null) && ($city_origin === 'ITAUNA - MG'))
+                    echo 'selected'; ?>>ITAUNA - MG</option>
+                <option value="" disabled selected>Saindo de</option>
+                </select>
+            </div>
+            <div class="form-item">
+                <label >Destino:</label>
+                <select class="itms" name="city_destiny_search" required>
+                <option <?php if (($city_destiny !== null) && ($city_destiny === 'DIVINOPOLIS - MG'))
+                    echo 'selected'; ?>>DIVINOPOLIS - MG</option>
+                <option <?php if (($city_destiny !== null) && ($city_destiny === 'SÃO JOSÉ DO SALGADO - MG'))
+                    echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
+                <option <?php if (($city_destiny !== null) && ($city_destiny === 'ITAUNA - MG'))
+                    echo 'selected'; ?>>ITAUNA - MG</option>
+                <option value="" disabled selected>Chegando em</option>
+                 
+                </select>
+            </div>
+
+            <div class="form-item">
+            <label >Data de ida:</label>
+                <input class="itms" type="date" name="date_initial_search" placeholder="Data de ida" value="<?php if (($date_initial !== null) && (!empty($date_initial)))
+                echo $date_initial; ?>"/>
+            </div>
+            <div class="form-item">
+            <label >Data de volta</label>
+            <input class="itms" type="date" name="date_and_search" placeholder="Data de retorno" value="<?php if (($date_and !== null) && (!empty($date_and)))
+                echo $date_and; ?>"/>
+            </div>
+            <div class="form-item">
+            <label >Cupom de desconto:</label>
+            <input class="itms" type="text" name="coupon_search" placeholder="Cupom de desconto" value="<?php if (($coupon !== null) && (!empty($coupon)))
+                echo $date_and; ?>"/>
+                
+            </div>
+            <div class="form-item">
+             <input class="butt" name="submit" type="submit" value="Alterar busca"/>
+            </div>
+        </div>
+    </form>
+</div>
+</header>
+
+<body >
     <nav>
         <div class="navbar-big">
             <a href="homePage.php"><img src="assets/images/teixeira_logo.png" width="auto" height="50px" /></a>
@@ -261,7 +317,7 @@ function calculateDate($daysToAddOrSubtract)
 
     <!-- conteúdo -->
     
-    <form action="" method="post" class="form">
+    <!-- <form action="" method="post" class="form">
             <label>Origem:</label>
             <select name="city_origin_search" required>
                 <option <?php if (($city_origin !== null) && ($city_origin === 'DIVINOPOLIS - MG'))
@@ -291,20 +347,8 @@ function calculateDate($daysToAddOrSubtract)
             
             <input class="button_form" name="submit" type="submit" value="Alterar busca"/>
 
-        </form>
-
-        <div class="container-fluid">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="step-title">
-                            <h1 class="title">Passagens de ônibus de <?php echo "$city_origin"?> para <?php echo "$city_destiny"?>&nbsp;&nbsp;<span class="ida">ida</span></h1>
-                            <div class="steps">passo <b>1</b> de <b>2</b></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </form> -->
+        
         
         <div class="container">
             <section>

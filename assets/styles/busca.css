@@ -18,7 +18,6 @@
     padding-right: 15px;
     left: 200px;
     right: 200px;
-    top: 53vh;
     position: absolute;
     flex-direction: column;
     align-items: center;
@@ -537,6 +536,21 @@ h5 {
 /* Estilos para telas menores - tablets em modo paisagem */
 @media (max-width: 1024px) {
 
+    
+    .container2 {
+            max-width: 70%; 
+            /* Reduz a largura da container */
+    }
+    
+    .bus-search-form{
+            max-width: 70%;
+    }
+
+    .form-row{
+        max-width: 80%;
+    }
+    
+
     .filters{
         flex-wrap: wrap;
         margin: 15px;
@@ -566,6 +580,19 @@ h5 {
 }
 
 @media (max-width: 850px) {
+
+    .container2 {
+        max-width: 89%;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-item {
+        width: 100%;
+        margin: 10px 0;
+    }
 
     .filters{
         flex-wrap: wrap;
@@ -950,4 +977,87 @@ h5 {
     margin-left: 4px;
 }
 
+
+
+
+
+.container2 {
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #eaeaea;
+    font-family: "Montserrat";
+    border-radius: 8px;
+}
+
+
+
+.bus-search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%; 
+    max-width: 400px; 
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  
+}
+
+.form-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    font-family: "Montserrat";
+}
+
+label {
+    margin-bottom: 5px;
+    color: #414141;
+}
+
+.itms {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    font-family: "Montserrat";
+    color: #707070;
+}
+
+.butt {
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 25px;
+}
+
+.butt:hover {
+    background-color: #ff5555;
+}
+
+
+@media (max-width: 847px) {
+    .container2 {
+        max-width: 89%;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-item {
+        width: 100%;
+        margin: 10px 0;
+    }
+}
 
