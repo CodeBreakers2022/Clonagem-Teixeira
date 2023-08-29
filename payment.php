@@ -1,15 +1,24 @@
 <?php
-
-//Iniciando seção caso ainda não tenha sido iniciada
-if (!isset($_SESSION)) {
-    // Seção iniciada
+    // Inicializa a sessão
     session_start();
-}
 
-// Incluindo o arquivo connect.php
-include_once('connect.php');
-
+    // Verifica se a variável de sessão existe
+    if (isset($_SESSION['selected_numbers'])) {
+        $selectedNumbers = $_SESSION['selected_numbers'];
+    } else {
+        echo "nenhuma cadeira selecionada";
+    }
+    if(isset($_SESSION['travel_id'])){
+        $travel_id = ['travel_id'];
+    }
+    $chair1 = $chair1 = isset($selectedNumbers[0]) ? $selectedNumbers[0] : null;
+    $chair2 = $chair1 = isset($selectedNumbers[1]) ? $selectedNumbers[1] : null;
+    $chair3 = $chair1 = isset($selectedNumbers[2]) ? $selectedNumbers[2] : null;
+    $chair4 = $chair1 = isset($selectedNumbers[3]) ? $selectedNumbers[3] : null;
+    $chair5 = $chair1 = isset($selectedNumbers[4]) ? $selectedNumbers[4] : null;
+    $chair6 = $chair1 = isset($selectedNumbers[5]) ? $selectedNumbers[5] : null;
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -258,7 +267,7 @@ include_once('connect.php');
                                                                                 Nome completo *
                                                                             </label>
                                                                             <input formcontrolname="name" type="text"
-                                                                                value="" placeholder="Nome completo"
+                                                                                value="" placeholder="<?php echo "$chair1, $chair2, $chair3, $chair4, $chair5, $chair6 "; ?>"
                                                                                 disabled=""
                                                                                 class="ng-untouched ng-pristine"
                                                                                 data-dashlane-rid="20c715de4ca658f1"
@@ -1009,7 +1018,7 @@ include_once('connect.php');
             <!---->
             <!---->
 
-            <footer>
+            <!-- <footer>
                 <div class="row">
                     <div class="col">
                         <div class="main-footer-first-line">
@@ -1098,7 +1107,7 @@ include_once('connect.php');
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer> -->
         </div>
     </div>
 

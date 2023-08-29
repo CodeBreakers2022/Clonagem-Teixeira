@@ -1,39 +1,42 @@
 <?php
+    // Inicializa a sessão
+    session_start();
 
-    // Incluindo o arquivo connect.php
-    include_once('connect.php');
-
-    if (isset($_GET['travel_id'])) {
-        $travel_id = $_GET['travel_id'];
-    } else {
-        // echo "Erro de carregamento";
+    // Verifica se o array de seleções já foi criado na sessão
+    if (!isset($_SESSION['selected_numbers'])) {
+        $_SESSION['selected_numbers'] = array();
     }
 
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        $chairSelected = json_decode(file_get_contents('php://input'), true);
-
-        
-        echo "Dados recebidos com sucesso!";
-    }
-
-    function toggleChair($array, $value) {
-        if (in_array($value, $array)) {
-            $indexToRemove = array_search($value, $array);
-            unset($array[$indexToRemove]);
-        } else {
-            array_push($array, $value);
+    // Função para adicionar ou remover um número do array de seleções
+    function toggleNumber($number) {
+        if (in_array($number, $_SESSION['selected_numbers'])) {
+            $_SESSION['selected_numbers'] = array_diff($_SESSION['selected_numbers'], array($number));
+        } elseif (count($_SESSION['selected_numbers']) < 6) {
+            $_SESSION['selected_numbers'][] = $number;
         }
-        return $array;
     }
 
+    // Verifica se um botão foi clicado e adiciona ou remove o número do array
+    if (isset($_POST['number'])) {
+        $selectedNumber = $_POST['number'];
+        toggleNumber($selectedNumber);
+    }
+
+    // Verifica se o botão de redefinir foi clicado
+    if (isset($_POST['reset'])) {
+        $_SESSION['selected_numbers'] = array();
+    }
+
+    // Função para verificar se um número já foi selecionado
+    function isNumberSelected($number) {
+        return in_array($number, $_SESSION['selected_numbers']);
+    }
 ?>
 
 <!DOCTYPE html>
 <html>
-
 <head>
+    <!-- Seus meta tags, links para estilos e scripts aqui -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/styles/global.css">
@@ -43,12 +46,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
     </style>
     <!-- icons -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </head>
-
 <body>
-    <!-- Seu navbar aqui -->
+    
     <nav>
         <div class="navbar-big">
             <a href="homePage.php"><img src="assets/images/teixeira_logo.png" width="auto" height="50px" /></a>
@@ -155,52 +156,31 @@
             </div>
         </div>
     </nav>
-    <!-- Conteúdo -->
+
+
     <div class="container-father" id="div-father" style="display: block;">
-        <form method="post" action="">
+        <form method="post">
             <div class="container-bus">
                 <div class="container-vehicle">
                     <div class="bus-front"></div>
                     <div class="bus-middle">
-                        <?php
-                            $chairs = array();
-
-                            echo "<div class='boxchair'>";
-                            $contador = 1;
-                            
-                            while ($contador <= 42) {
-                                $sql = "SELECT busy FROM user_chair WHERE chair_number = $contador AND travel_id = $travel_id";
-                                $result = mysqli_query($connection, $sql);
-                            
-                                if (mysqli_num_rows($result) > 0) {
-                                    $row = mysqli_fetch_assoc($result);
-                                    $busy = $row['busy'];
-                            
-                                    if ($busy == 1) {
-                                        echo "<div name='bttchair' class='bttchair' style='background-color: #e9252b; font-size: 22px; opacity: 10%'>" . $contador . "</div>";
+                        <div class='boxchair'> 
+                            <?php
+                                for ($i = 1; $i <= 42; $i++) {
+                                    if (isNumberSelected($i)) {
+                                        echo "<button class='bttchair selected' name='number' value='$i'>$i</button>";
                                     } else {
-                                        echo "<button onclick=\"if(in_array($contador, \$chairs)) { \$indiceParaRemover = array_search(1, \$chairs); unset(\$chairs[\$indiceParaRemover]); } else { array_push(\$chairs, 1); }\">.$contador.</button>";
+                                        echo "<button class='bttchair' name='number' value='$i'>$i</button>";
                                     }
-                                } else {
-                                    echo "<button onclick=\"if(in_array($contador, \$chairs)) { \$indiceParaRemover = array_search(1, \$chairs); unset(\$chairs[\$indiceParaRemover]); } else { array_push(\$chairs, 1); }\">.$contador.</button>";
+                                    
+                                    if ($i % 7 === 0) {
+                                        echo "<br>";
+                                    }
                                 }
-                            
-                                $contador++;
-                            }
-                            echo "</div>";
-                        ?>
+                            ?>
+                        </div>
                     </div>
                     <div class="bus-back"></div>
-<!-- 
-                    <div class="select" id="select">
-                        <span>Selecionadas</span>
-                        <?php
-                            // for ($i = 0; $i < count($chairSelected); $i++) {
-                            //     $a = $chairSelected[$i];
-                            //     echo "<span>". $a ."</span>";
-                            // }
-                        ?>
-                    </div> -->
                 </div>
                 <div class="sum">
                     <div class="disponivel">disponivel</div>
@@ -209,15 +189,23 @@
                 </div>
             </div>
             <div class="container-father-footer">
-                <a class="close-div-father"href="buscaPassagem1.php">VOLTAR</a>
-                <input type="submit" name="reservar" value="RESERVAR" class="submit-div-father">
+                <a class="close-div-father" href="buscaPassagem1.php">VOLTAR</a>
+                <?php 
+                    if (empty($_SESSION['selected_numbers'])){
+                        $href = "reservarPassagem.php";
+                    }else{
+                        $href = "payment.php";
+                    }
+                ?>
+                <a class="close-div-father" type="submit" name="submit" href="<?php echo $href?>">RESERVAR</a>
+                
             </div>
         </form>
         
+        <?php if (!empty($_SESSION['selected_numbers'])): ?>
+            <p>Poltronas selecionadas: <?php echo implode(", ", $_SESSION['selected_numbers']); ?></p>
+        <?php endif; ?>
     </div>
-
-
-
 
     <footer class="footer" id="footer">
         <div class="footer-links-sociais">
@@ -263,8 +251,17 @@
             para deficientes de fala e auditivos.
         </div>
     </footer>
-    <script type="text/javascript" src="scripts/global.js"></script>
-</body>
-</body>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.bttchair');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+        });
+    </script>
+</body>
 </html>
