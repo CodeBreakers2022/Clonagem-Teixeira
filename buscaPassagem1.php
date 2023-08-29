@@ -154,7 +154,7 @@ function calculateDate($daysToAddOrSubtract)
 <header>
 <div class="container2">
     
-    <form class="bus-search-form">
+    <form class="bus-search-form" method="post">
         <div class="form-row">
             <div class="form-item">
                 <label >Origem:</label>
@@ -317,37 +317,7 @@ function calculateDate($daysToAddOrSubtract)
 
     <!-- conteúdo -->
     
-    <!-- <form action="" method="post" class="form">
-            <label>Origem:</label>
-            <select name="city_origin_search" required>
-                <option <?php if (($city_origin !== null) && ($city_origin === 'DIVINOPOLIS - MG'))
-                    echo 'selected'; ?>>DIVINOPOLIS - MG</option>
-                <option <?php if (($city_origin !== null) && ($city_origin === 'SÃO JOSÉ DO SALGADO - MG'))
-                    echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
-                <option <?php if (($city_origin !== null) && ($city_origin === 'ITAUNA - MG'))
-                    echo 'selected'; ?>>ITAUNA - MG</option>
-            </select>
-
-            <label>Destino: </label>
-            <select name="city_destiny_search" required>
-                <option <?php if (($city_destiny !== null) && ($city_destiny === 'DIVINOPOLIS - MG'))
-                    echo 'selected'; ?>>DIVINOPOLIS - MG</option>
-                <option <?php if (($city_destiny !== null) && ($city_destiny === 'SÃO JOSÉ DO SALGADO - MG'))
-                    echo 'selected'; ?>>SÃO JOSÉ DO SALGADO - MG</option>
-                <option <?php if (($city_destiny !== null) && ($city_destiny === 'ITAUNA - MG'))
-                    echo 'selected'; ?>>ITAUNA - MG</option>
-            </select>
-            <input type="date" name="date_initial_search" placeholder="Data de ida" value="<?php if (($date_initial !== null) && (!empty($date_initial)))
-                echo $date_initial; ?>"/>
-            <input type="date" name="date_and_search" placeholder="Data de retorno" value="<?php if (($date_and !== null) && (!empty($date_and)))
-                echo $date_and; ?>"/>
-            <input type="text" name="coupon_search" placeholder="cupom" value="<?php if (($coupon !== null) && (!empty($coupon)))
-                echo $date_and; ?>"/>
-
-            
-            <input class="button_form" name="submit" type="submit" value="Alterar busca"/>
-
-        </form> -->
+  
         
         
         <div class="container">
