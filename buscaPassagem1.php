@@ -355,13 +355,13 @@ function calculateDate($daysToAddOrSubtract)
                     
                     <div class="filters">&nbsp;&nbsp;filtrar viagens por 
                         <form action="" method="post">
-                            <select name="classe">
+                            <select class="sel1" name="classe">
                                 <option selected disabled>Classe</option>
                                 <option>EXECUTIVO</option>
                                 <option>CONVENCIONAL</option>
                                 <option>ECONOMICA</option>
                             </select>
-                            <select name="horario">
+                            <select class="sel" name="horario">
                                 <option selected disabled>Horário</option>
                                 <option>MANHÃ</option>
                                 <option>TARDE</option>
@@ -468,7 +468,13 @@ function calculateDate($daysToAddOrSubtract)
             echo "Nenhum resultado encontrado.";
         }
         ?>
+    
+     
+
     </div>
+
+
+    
    
 
     <footer class="footer">
