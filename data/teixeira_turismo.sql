@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `travel` (
   `arrival_time` time NOT NULL,
   `exit_time` time NOT NULL,
   `class` varchar(100) DEFAULT NULL,
+  `horario` varchar(100) DEFAULT NULL,
   `price` float DEFAULT NULL,
   PRIMARY KEY (`travel_id`)
 );
