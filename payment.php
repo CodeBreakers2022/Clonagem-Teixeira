@@ -1,6 +1,7 @@
 <?php
     // Inicializa a sessão
     session_start();
+    include_once('connect.php');
 
     // Verifica se a variável de sessão existe
     if (isset($_SESSION['selected_numbers'])) {
@@ -9,7 +10,21 @@
         echo "nenhuma cadeira selecionada";
     }
     if(isset($_SESSION['travel_id'])){
-        $travel_id = ['travel_id'];
+        $travel_id = $_SESSION['travel_id'];
+    }
+
+    if(isset($_SESSION['user_id'])){
+        $user_id = $_SESSION['user_id'];
+
+        $sql = "SELECT * FROM user WHERE user_id = ".$user_id."";
+        $result = mysqli_query($connection, $sql);
+        if ($result -> num_rows > 0){
+            $user_data = mysqli_fetch_assoc($result);
+            $login_user = true;
+        }else{
+            $login_user = false;
+        }
+        
     }
     $chair1 = $chair1 = isset($selectedNumbers[0]) ? $selectedNumbers[0] : null;
     $chair2 = $chair1 = isset($selectedNumbers[1]) ? $selectedNumbers[1] : null;
@@ -266,12 +281,13 @@
                                                                             <label>
                                                                                 Nome completo *
                                                                             </label>
-                                                                            <input formcontrolname="name" type="text"
-                                                                                value="" placeholder="<?php echo "$chair1, $chair2, $chair3, $chair4, $chair5, $chair6 "; ?>"
-                                                                                disabled=""
-                                                                                class="ng-untouched ng-pristine"
-                                                                                data-dashlane-rid="20c715de4ca658f1"
-                                                                                data-form-type="other">
+                                                                            <input formcontrolname="name" type="text" value=""
+                                                                            placeholder="<?php if (isset($_SESSION['user_id'])) { echo $user_data['user_name']; } else { echo 'Escreva o seu nome'; } ?>"
+                                                                            <?php if (isset($_SESSION['user_id'])) { echo 'disabled'; } ?>
+                                                                            class="ng-untouched ng-pristine"
+                                                                            data-dashlane-rid="20c715de4ca658f1"
+                                                                            data-form-type="other">
+
                                                                             <!---->
                                                                         </div>
                                                                     </div>
@@ -281,16 +297,16 @@
                                                                         <div class="input-container">
                                                                             <label>E-mail *</label>
                                                                             <input id="customerEmail"
-                                                                                formcontrolname="email" type="text"
-                                                                                value="" placeholder="E-mail"
-                                                                                disabled=""
-                                                                                class="ng-untouched ng-pristine"
-                                                                                data-dashlane-rid="0727db6529d75715"
-                                                                                data-kwcachedvalue="henriquevrios@gmail.com"
-                                                                                data-kwimpalastatus="asleep"
-                                                                                data-kwimpalaid="1692397960065-6"
-                                                                                data-form-type="email">
-                                                                            <!---->
+                                                                            formcontrolname="email" type="text"
+                                                                            value=""
+                                                                            placeholder="<?php if (isset($_SESSION['user_id'])) { echo $user_data['email']; } else { echo 'E-mail'; } ?>"
+                                                                            <?php if (isset($_SESSION['user_id'])) { echo 'disabled'; } ?>
+                                                                            class="ng-untouched ng-pristine"
+                                                                            data-dashlane-rid="0727db6529d75715"
+                                                                            data-kwcachedvalue="<?php if (isset($_SESSION['user_id'])) { echo $user_data['email']; } ?>"
+                                                                            data-kwimpalastatus="asleep"
+                                                                            data-kwimpalaid="1692397960065-6"
+                                                                            data-form-type="email">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -299,30 +315,30 @@
                                                                         <div class="input-container">
                                                                             <label>CPF *</label>
                                                                             <input id="customerId"
-                                                                                formcontrolname="document" type="text"
-                                                                                mask="000.000.000-00" placeholder="CPF"
-                                                                                class="ng-untouched ng-pristine"
-                                                                                disabled=""
-                                                                                data-dashlane-rid="3ecfc858f5bc6da1"
-                                                                                data-form-type="id_document">
-                                                                            <!---->
+                                                                            formcontrolname="document" type="text"
+                                                                            mask="000.000.000-00"
+                                                                            placeholder="<?php if (isset($_SESSION['user_id'])) { echo $user_data['cpf']; } else { echo 'CPF'; } ?>"
+                                                                            <?php if (isset($_SESSION['user_id'])) { echo 'disabled'; } ?>
+                                                                            class="ng-untouched ng-pristine"
+                                                                            data-dashlane-rid="3ecfc858f5bc6da1"
+                                                                            data-form-type="id_document">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 col-lg-6">
                                                                         <div class="input-container">
                                                                             <label for="customerPhoneNumber">N° de
-                                                                                telefone *</label>
+                                                                            telefone *</label>
                                                                             <input formcontrolname="customerPhone"
-                                                                                id="customerPhoneNumber"
-                                                                                mask="(00) 00000-0000" type="text"
-                                                                                placeholder="N° do telefone de contato"
-                                                                                class="ng-untouched ng-pristine"
-                                                                                disabled=""
-                                                                                data-dashlane-rid="a603ecad94e9f2e5"
-                                                                                data-kwcachedvalue="(37) 98406-7937"
-                                                                                data-kwimpalastatus="asleep"
-                                                                                data-kwimpalaid="1692397960065-7"
-                                                                                data-form-type="phone"><!---->
+                                                                            id="customerPhoneNumber"
+                                                                            mask="(00) 00000-0000" type="text"
+                                                                            placeholder="<?php if (isset($_SESSION['user_id'])) { echo $user_data['phone']; } else { echo 'N° do telefone de contato'; } ?>"
+                                                                            <?php if (isset($_SESSION['user_id'])) { echo 'disabled'; } ?>
+                                                                            class="ng-untouched ng-pristine"
+                                                                            data-dashlane-rid="a603ecad94e9f2e5"
+                                                                            data-kwcachedvalue="<?php if (isset($_SESSION['user_id'])) { echo $user_data['phone']; } ?>"
+                                                                            data-kwimpalastatus="asleep"
+                                                                            data-kwimpalaid="1692397960065-7"
+                                                                            data-form-type="phone">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -354,76 +370,81 @@
                                             </div>
                                             <!---->
                                             <br>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <form novalidate="" class="ng-untouched ng-pristine ng-invalid"
-                                                        data-dashlane-rid="be9a5c26f8f369cd" data-form-type="other">
-                                                        <div formarrayname="documents"
-                                                            class="ng-untouched ng-pristine ng-invalid">
-                                                            <div
-                                                                class="card card-checkout m-b-10 ng-untouched ng-pristine ng-invalid">
-                                                                <h3 class="card-section-title">
-                                                                    <i class="fad fa-fw fa-address-card"></i>
-                                                                    Passageiro #1
-                                                                    <span class="passenger-seat">
-                                                                        Poltrona
-                                                                        <b class="seat-number">
-                                                                            <i class="fa fa-chair-office icon-seat">
-                                                                            </i>
-                                                                            26
-                                                                        </b>
-                                                                    </span>
-                                                                    <!---->
-                                                                </h3>
-                                                                <div class="checkout-info">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12 col-lg-6">
-                                                                            <div class="input-container">
-                                                                                <label>Nome completo *</label>
-                                                                                <input formcontrolname="name"
-                                                                                    type="text" value="" id="name0"
-                                                                                    placeholder="Nome completo"
-                                                                                    class="ng-untouched ng-pristine ng-invalid"
-                                                                                    data-dashlane-rid="e0f3c38855e1a2af"
-                                                                                    data-form-type="other">
-                                                                                <!---->
+                                            <?php 
+                                                for ($i = 0; $i < count($selectedNumbers); $i++) {
+                                                    echo'
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <form novalidate="" class="ng-untouched ng-pristine ng-invalid"
+                                                                data-dashlane-rid="be9a5c26f8f369cd" data-form-type="other">
+                                                                <div formarrayname="documents"
+                                                                    class="ng-untouched ng-pristine ng-invalid">
+                                                                    <div
+                                                                        class="card card-checkout m-b-10 ng-untouched ng-pristine ng-invalid">
+                                                                        <h3 class="card-section-title">
+                                                                            <i class="fad fa-fw fa-address-card"></i>
+                                                                            Passageiro #1
+                                                                            <span class="passenger-seat">
+                                                                                Poltrona
+                                                                                <b class="seat-number">
+                                                                                    <i class="fa fa-chair-office icon-seat">
+                                                                                    </i>
+                                                                                    ' . $selectedNumbers[$i] . '
+                                                                                </b>
+                                                                            </span>
+                                                                            
+                                                                        </h3>
+                                                                        <div class="checkout-info">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 col-lg-6">
+                                                                                    <div class="input-container">
+                                                                                        <label>Nome completo *</label>
+                                                                                        <input formcontrolname="name"
+                                                                                            type="text" value="" id="name0"
+                                                                                            placeholder="Nome completo"
+                                                                                            class="ng-untouched ng-pristine ng-invalid"
+                                                                                            data-dashlane-rid="e0f3c38855e1a2af"
+                                                                                            data-form-type="other">
+                                                                                        
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12 col-lg-2">
+                                                                                    <div class="input-container">
+                                                                                        <label>Documento *</label>
+                                                                                        <select id="typeOfPassengerDoc"
+                                                                                            data-dashlane-rid="d8523b2943f75f6f"
+                                                                                            data-form-type="other">
+                                                                                            <option value="2" selected=""> RG
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12 col-lg-4">
+                                                                                    <div class="input-container">
+                                                                                        <label>N° do documento *</label>
+                                                                                        <input formcontrolname="documentValue"
+                                                                                            type="text" value="" minlength="2"
+                                                                                            maxlength="20"
+                                                                                            placeholder="Nro documento"
+                                                                                            class="ng-untouched ng-pristine ng-invalid"
+                                                                                            data-dashlane-rid="c19c1d81bf48d1c4"
+                                                                                            data-form-type="id_document,id_card">
+                                                                                    </div>
+                                                                                    
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="col-md-12 col-lg-2">
-                                                                            <div class="input-container">
-                                                                                <label>Documento *</label>
-                                                                                <select id="typeOfPassengerDoc"
-                                                                                    data-dashlane-rid="d8523b2943f75f6f"
-                                                                                    data-form-type="other">
-                                                                                    <option value="2" selected=""> RG
-                                                                                    </option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-12 col-lg-4">
-                                                                            <div class="input-container">
-                                                                                <label>N° do documento *</label>
-                                                                                <input formcontrolname="documentValue"
-                                                                                    type="text" value="" minlength="2"
-                                                                                    maxlength="20"
-                                                                                    placeholder="Nro documento"
-                                                                                    class="ng-untouched ng-pristine ng-invalid"
-                                                                                    data-dashlane-rid="c19c1d81bf48d1c4"
-                                                                                    data-form-type="id_document,id_card">
-                                                                            </div>
-                                                                            <!---->
+                                                                            
                                                                         </div>
                                                                     </div>
-                                                                    <!---->
                                                                 </div>
-                                                            </div>
+                                                                
+                                                            </form>
                                                         </div>
-                                                        <!---->
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <!---->
+                                                    </div>
+                                                        ';
+                                                }
+                                                
+                                            ?>
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="card card-checkout">
@@ -906,10 +927,20 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-lg-8 col-md-12 m-t-15 text-right">
-                                                    <button class="btn btn-primary">
+                                                    <button class="btn btn-primary" onclick="btpagar()">
                                                         FINALIZAR SUA COMPRA
                                                         &nbsp;&nbsp;&nbsp;
                                                         <i class="fa fa-check-circle icon-next"></i>
+                                                        <script>
+                                                            function btpagar(){
+                                                                <?php 
+                                                                    if(!isset($_SESSION['user_id'])){
+                                                                        header("Location: login.html");
+                                                                        exit(); 
+                                                                    }
+                                                                ?>
+                                                            }
+                                                        </script>
                                                     </button>
                                                     <!---->
                                                     <!---->
@@ -1015,99 +1046,6 @@
                     </app-checkout>
                 </app-booking-process>
             </div>
-            <!---->
-            <!---->
-
-            <!-- <footer>
-                <div class="row">
-                    <div class="col">
-                        <div class="main-footer-first-line">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-6 col-lg-3">
-                                        <div class="top footer-box">
-                                            <figure>
-                                                <img src="https://smartbus-preprod-cdn.azurewebsites.net/ecommerce/imgs/teixeira/teixeira-branco.png"
-                                                    alt="Teixeira" class="main-footer-logo" tabindex="0">
-                                            </figure>
-                                            <div class="social">
-                                                <a href="https://www.facebook.com/teixeiraturismooficial/"
-                                                    target="_blank" class="main-footer-social-icon">
-                                                    <i class="fab fa-facebook"></i>
-                                                    <span>Facebook</span>
-                                                </a>
-                                                <a href="https://www.instagram.com/teixeiraturismo/" target="_blank"
-                                                    class="main-footer-social-icon">
-                                                    <i class="fab fa-instagram"></i>
-                                                    <span>Instagram</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="help footer-box">
-                                            <h4 class="footer-title">Ajuda</h4>
-                                            <ul>
-                                                <li class="footer-menu-item" tabindex="0">Horários dos guichês</li>
-                                                <li class="footer-menu-item" tabindex="0">Sobre Nós</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <div class="payments footer-box">
-                                            <h4 class="footer-title">Meios de pagamento</h4>
-                                            <div class="payment-images">
-                                                <img src="https://smartbus-cdn.azurewebsites.net/_common/img/payment/visa.png"
-                                                    alt="Visa" title="Visa" class="payment-img">
-                                                <img src="https://smartbus-cdn.azurewebsites.net/_common/img/payment/mastercard.png"
-                                                    alt="Master Card" title="Master Card" class="payment-img">
-                                                <img src="https://smartbus-cdn.azurewebsites.net/_common/img/payment/amex.png"
-                                                    alt="Amex" title="Amex" class="payment-img">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <div class="buy-by-phone footer-box">
-                                            <h4 class="footer-title">COMPRE PELO TELEFONE</h4>
-                                            <ul>
-                                                <li class="footer-menu-item">
-                                                    <a href="tel:3732144070">
-                                                        <i class="fad fa-phone phone-icon"></i>
-                                                        (37) 3214-4070
-                                                    </a>
-                                                </li>
-                                                <li class="footer-menu-item footer-menu-item-email">
-                                                    <a href="mailto:falecom@teixeiraturismo.com.br" class="fs-13">
-                                                        <i class="fad fa-envelope envelope-icon"></i>
-                                                        &nbsp;&nbsp;falecom@teixeiraturismo.com.br
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <div class="info-content">
-                                            <h4 class="footer-title">SAC
-                                                <small>(atendimento ao consumidor)</small>
-                                            </h4>
-                                            <a href="tel:3732144070" class="a-sac"> (37) 3214-4070 </a>
-                                            <br><br>
-                                        </div>
-                                        <div class="info-content">
-                                            <span class="sac-number">
-                                                <a href="tel:0800 703 5203" class="a-number">
-                                                    <i class="fad fa-phone phone-icon"></i>
-                                                    0800 703 5203
-                                                </a>
-                                                <br>
-                                                para deficientes de fala e auditivos.
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer> -->
         </div>
     </div>
 

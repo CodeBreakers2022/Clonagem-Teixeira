@@ -31,6 +31,10 @@
     function isNumberSelected($number) {
         return in_array($number, $_SESSION['selected_numbers']);
     }
+
+    if (isset($_POST['reset'])) {
+        $_SESSION['selected_numbers'] = array();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -168,7 +172,7 @@
                             <?php
                                 for ($i = 1; $i <= 42; $i++) {
                                     if (isNumberSelected($i)) {
-                                        echo "<button class='bttchair selected' name='number' value='$i'>$i</button>";
+                                        echo "<button style='background-color: orange;' class='bttchair selected' name='number' value='$i'>$i</button>";
                                     } else {
                                         echo "<button class='bttchair' name='number' value='$i'>$i</button>";
                                     }
@@ -189,7 +193,7 @@
                 </div>
             </div>
             <div class="container-father-footer">
-                <a class="close-div-father" href="buscaPassagem1.php">VOLTAR</a>
+                <input style="width: auto;" class="close-div-father" name="reset" type="submit" value="LIMPAR SELEÇÃO"/>
                 <?php 
                     if (empty($_SESSION['selected_numbers'])){
                         $href = "reservarPassagem.php";
