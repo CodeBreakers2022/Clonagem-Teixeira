@@ -38,19 +38,18 @@ CREATE TABLE IF NOT EXISTS `travel` (
   `arrival_time` time NOT NULL,
   `exit_time` time NOT NULL,
   `class` varchar(100) DEFAULT NULL,
-  `horario` varchar(100) DEFAULT NULL,
   `price` float DEFAULT NULL,
   PRIMARY KEY (`travel_id`)
 );
 
 -- Inserindo valores na tabela travel
-INSERT INTO travel (travel_id, origin, destiny, departure_date, arrival_date, exit_time, class, horario, price)
-VALUES (1, 'DIVINOPOLIS - MG', 'ITAUNA - MG', '2023-08-20', '2023-08-25', '12:20:00', 'CONVENCIONAL', 'MANHÂ', '25.00'),
-       (2, 'ITAUNA - MG', 'DIVINÓPOLIS - MG', '2023-08-20', '2023-08-22', '15:10:00', 'CONVENCIONAL', 'TARDE', '30.00'),
-       (3, 'DIVINÓPOLIS - MG', 'BELO HORIZONTE - MG', '2023-08-20', '2023-08-21', '20:00:00', 'CONVENCIONAL', 'NOITE', '45.00'),
-       (4, 'SÃO JOSÉ DO SALGADO - MG', 'BELO HORIZONTE - MG', '2023-08-20', '2023-08-24', '17:00:00', 'CONVENCIONAL', 'MADRUGADA', '30.00'),
-       (5, 'SÃO JOSÉ DO SALGADO - MG', 'DIVINOPOLIS - MG', '2023-08-16', '2023-08-16', '00:00:00', 'ECONÔMICA', 'MANHÃ', '8'),
-       (6, 'DIVINÓPOLIS - MG', 'ITAUNA - MG', '2023-08-24', '2023-08-26', '14:55:00', 'ECONÔMICA', 'MANHÃ', '15');
+INSERT INTO travel (travel_id, origin, destiny, departure_date, arrival_date, exit_time, class, price)
+VALUES (1, 'Divinopolis - MG', 'Itauna - MG', '2023-08-20', '2023-08-25', '12:20:00', 'CONVENCIONAL', '25.00'),
+       (2, 'Itauna - MG', 'Divinopolis - MG', '2023-08-20', '2023-08-22', '15:10:00', 'CONVENCIONAL', '30.00'),
+       (3, 'Divinopolis - MG', 'Belo Horizonte - MG', '2023-08-20', '2023-08-21', '20:00:00', 'CONVENCIONAL', '45.00'),
+       (4, 'Sao Jose do Salgado - MG', 'Belo Horizonte - MG', '2023-08-20', '2023-08-24', '17:00:00', 'CONVENCIONAL', '30.00'),
+       (5, 'SÃO JOSÉ DO SALGADO - MG', 'DIVINOPOLIS - MG', '2023-08-16', '2023-08-16', '00:00:00', 'ECONOMICA', '8'),
+       (6, 'DIVINOPOLIS - MG', 'ITAUNA - MG', '2023-08-24', '2023-08-26', '14:55:00', 'ECONOMICA', '15');
 
 -- Criação da tabela "coupon"
 CREATE TABLE coupon (
