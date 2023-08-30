@@ -984,10 +984,9 @@ h5 {
 .container2 {
     width: 100%;
     margin: 0 auto;
-    padding: 20px;
+    padding-bottom: 20px;
     background-color: #eaeaea;
     font-family: "Montserrat";
-    border-radius: 8px;
 }
 
 
@@ -996,17 +995,17 @@ h5 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 80%; 
-    max-width: 400px; 
-    margin: 0 auto;
-    padding: 20px;
+    width: 100vw; 
+    max-width: 100%; 
+    padding-top: 30px;
 }
 
 .form-row {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    width: 80%;
   
 }
 
@@ -1018,7 +1017,7 @@ h5 {
     font-family: "Montserrat";
 }
 
-label {
+.name{
     margin-bottom: 5px;
     color: #414141;
 }
