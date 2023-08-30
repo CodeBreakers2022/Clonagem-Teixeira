@@ -4,10 +4,6 @@
     if(isset($_SESSION['user_id'])){
         $user_id = $_SESSION['user_id'];
     }
-    //get id da pasagem
-    if (isset($_GET['travel_id'])){
-        $travel_id = $_GET['travel_id'];
-    }
     // Verifica se o array de seleções já foi criado na sessão
     if (!isset($_SESSION['selected_numbers'])) {
         $_SESSION['selected_numbers'] = array();
@@ -204,7 +200,7 @@
                     if (empty($_SESSION['selected_numbers'])){
                         $href = "reservarPassagem.php";
                     }else{
-                        $href = "payment.php?travel_id=" . $travel_id . "";
+                        $href = "payment.php";
                     }
                 ?>
                 <?php if (!empty($_SESSION['selected_numbers'])): ?>
