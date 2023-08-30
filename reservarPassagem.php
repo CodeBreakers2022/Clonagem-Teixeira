@@ -1,7 +1,9 @@
 <?php
     // Inicializa a sessão
     session_start();
-
+    if(isset($_SESSION['user_id'])){
+        $user_id = $_SESSION['user_id'];
+    }
     // Verifica se o array de seleções já foi criado na sessão
     if (!isset($_SESSION['selected_numbers'])) {
         $_SESSION['selected_numbers'] = array();

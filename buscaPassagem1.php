@@ -1,7 +1,10 @@
 <?php
 
 include_once 'connect.php';
-
+    session_start();
+    if(isset($_SESSION['user_id'])){
+        $user_id = $_SESSION['user_id'];
+    }
     //inicializa as variáveis 
     $city_origin = '';
     $city_destiny = '';

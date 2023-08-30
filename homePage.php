@@ -1,5 +1,9 @@
 <?php
 include_once 'connect.php';
+session_start();
+if(isset($_SESSION['user_id'])){
+    $user_id = $_SESSION['user_id'];
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit']) && !empty($_POST['city_origin']) && !empty($_POST['city_destiny'])) { // Acessa através do método POST
@@ -98,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </span>
                                 </button>
                                 <p>Cliente novo?
-                                    <a href="register.html"
+                                    <a href="cadastro.html"
                                         style="text-decoration: none; color: black; font-weight: 500;">Cadastre-se
                                         aqui</a>
                                 </p>
@@ -117,13 +121,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <span class="material-symbols-outlined">
                                         person
                                     </span>
-                                </a>
+                                </a><hr>
                                 <a>
                                     Meus pedidos
                                     <span class="material-symbols-outlined">
                                         local_activity
                                     </span>
-                                </a>
+                                </a><hr>
+                                <?php
+                                    if(isset($_SESSION['user_id'])){
+                                        echo'<button onclick="sair()" style="background-color: transparent; color: black;" >Sair</button>';
+                                    }
+                                ?>
+                                <script type="text/javascript">
+                                    function sair(){
+                                        <?php
+                                            session_destroy();
+                                        ?>
+                                        window.location.reload()
+                                    }
+                                </script>
                             </div>
                         </div>
                     </li>
