@@ -201,14 +201,14 @@
                         $href = "payment.php";
                     }
                 ?>
+                <?php if (!empty($_SESSION['selected_numbers'])): ?>
+                    <p class="select-chair">Poltronas selecionadas <br> <?php echo implode(", ", $_SESSION['selected_numbers']); ?></p>
+                <?php endif; ?>
                 <a class="close-div-father" type="submit" name="submit" href="<?php echo $href?>">RESERVAR</a>
                 
             </div>
         </form>
         
-        <?php if (!empty($_SESSION['selected_numbers'])): ?>
-            <p>Poltronas selecionadas: <?php echo implode(", ", $_SESSION['selected_numbers']); ?></p>
-        <?php endif; ?>
     </div>
 
     <footer class="footer" id="footer">
