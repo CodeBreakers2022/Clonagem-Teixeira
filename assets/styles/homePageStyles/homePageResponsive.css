@@ -1,6 +1,87 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
+@media(max-width: 800px){
+    .navbar-big{
+        display: none !important;
+    }
+
+    .navbar-small{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top:0;
+        left: 0;
+        width: 100%;
+        height: 4em;
+        box-shadow: -1px 1px 20px 1px rgba(0,0,0,.2);
+        background-color: #eaeaea;
+        z-index: 1000; 
+    }
+    /* icone menu */
+    .menu-icon {
+        display: block;
+        width: 30px;
+        height: 25px;
+        position: relative;
+        cursor: pointer;
+        margin-left: 20px;
+        z-index: 2000;
+    }
+    .line {
+        display: block;
+        width: 100%;
+        height: 3px;
+        background-color: #333;
+        margin: 5px 0;
+        transition: transform 0.3s ease-in-out;
+    }
+    .active .line:nth-child(1) {
+        transform: translateY(10px) rotate(-45deg);
+    }
+    
+    .active .line:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .active .line:nth-child(3) {
+        transform: translateY(-6px) rotate(45deg);
+    }
+    /* conteiner */
+    .navbar-small-container {
+        position: fixed;
+        top: -100vh;
+        width: 100vw;
+        height: 100vh;
+        background-color: #414141;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out;
+        color:white;
+    }
+    .navbar-small-container-list{
+        margin-top: 60px;
+        margin-left: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 20px;
+        color:white;
+        width: 90%;
+    }
+    .navbar-small-container-list hr {
+        width: 100%;
+        border: none; 
+        border-top: 1px solid #9e9e9e;
+    }
+    .navbar-small-container-list a{
+        text-decoration: none;
+        color:white;
+    }
+}
+
+
 .fa,
 .fas,
 .fa-solid,
@@ -33057,7 +33138,7 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
     border-radius: 0;
     outline: initial;
     background: 0 0;
-    color: #ccc;
+    color: #ccc;        
     font-family: serif;
     font-size: 2.5em;
     line-height: 1.2;
@@ -36239,7 +36320,7 @@ select {
     text-overflow: ellipsis;
     width: 100%;
     margin-top: 5px;
-    padding: 12px 10px;
+    padding: 20px;
     font-weight: 600;
     font-size: 14px;
     border: 1px solid #d1d1d1;
