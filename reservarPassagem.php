@@ -1,39 +1,42 @@
 <?php
-session_start();
-
-if(isset($_SESSION['user_id'])){
-    $user_id = $_SESSION['user_id'];
-}
-
-if (!isset($_SESSION['selected_numbers'])) {
-    $_SESSION['selected_numbers'] = array();
-}
-
-function toggleNumber($number) {
-    if (count($_SESSION['selected_numbers']) >= 6 && !in_array($number, $_SESSION['selected_numbers'])) {
-        echo "<script>alert('Você já selecionou o número máximo de 6 números.'); </script>";
-        return;
+    // Inicializa a sessão
+    session_start();
+    if(isset($_SESSION['user_id'])){
+        $user_id = $_SESSION['user_id'];
+    }
+    // Verifica se o array de seleções já foi criado na sessão
+    if (!isset($_SESSION['selected_numbers'])) {
+        $_SESSION['selected_numbers'] = array();
     }
 
-    if (in_array($number, $_SESSION['selected_numbers'])) {
-        $_SESSION['selected_numbers'] = array_diff($_SESSION['selected_numbers'], array($number));
-    } else {
-        $_SESSION['selected_numbers'][] = $number;
+    // Função para adicionar ou remover um número do array de seleções
+    function toggleNumber($number) {
+        if (in_array($number, $_SESSION['selected_numbers'])) {
+            $_SESSION['selected_numbers'] = array_diff($_SESSION['selected_numbers'], array($number));
+        } elseif (count($_SESSION['selected_numbers']) < 6) {
+            $_SESSION['selected_numbers'][] = $number;
+        }
     }
-}
 
-if (isset($_POST['number'])) {
-    $selectedNumber = $_POST['number'];
-    toggleNumber($selectedNumber);
-}
+    // Verifica se um botão foi clicado e adiciona ou remove o número do array
+    if (isset($_POST['number'])) {
+        $selectedNumber = $_POST['number'];
+        toggleNumber($selectedNumber);
+    }
 
-if (isset($_POST['reset'])) {
-    $_SESSION['selected_numbers'] = array();
-}
+    // Verifica se o botão de redefinir foi clicado
+    if (isset($_POST['reset'])) {
+        $_SESSION['selected_numbers'] = array();
+    }
 
-function isNumberSelected($number) {
-    return in_array($number, $_SESSION['selected_numbers']);
-}
+    // Função para verificar se um número já foi selecionado
+    function isNumberSelected($number) {
+        return in_array($number, $_SESSION['selected_numbers']);
+    }
+
+    if (isset($_POST['reset'])) {
+        $_SESSION['selected_numbers'] = array();
+    }
 ?>
 
 <!DOCTYPE html>
