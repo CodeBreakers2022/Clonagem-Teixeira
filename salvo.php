@@ -1,21 +1,22 @@
 <?php
+    // Inicializa a sessão
+    
+    include_once('connect.php');
+    session_start();
 
-    //Iniciando seção caso ainda não tenha sido iniciada
-    if (!isset($_SESSION)) {
-        // Seção iniciada
-        session_start();
-    }
-   // Verifica se a variável de sessão existe
+    // Verifica se a variável de sessão existe
     if (isset($_SESSION['selected_numbers'])) {
         $selectedNumbers = $_SESSION['selected_numbers'];
     } else {
         $selectedNumbers = "nenhuma cadeira selecionada";
     }
-    //pesquisas referentes ao usuário 
+    if(isset($_SESSION['travel_id'])){
+        $travel_id = $_SESSION['travel_id'];
+    }
+
     if(isset($_SESSION['user_id'])){
         $user_id = $_SESSION['user_id'];
 
-        echo "<script>alert('".$user_id."');</script>";
         $sql = "SELECT * FROM user WHERE user_id = ".$user_id."";
         $result = mysqli_query($connection, $sql);
         if ($result -> num_rows > 0){
@@ -25,59 +26,15 @@
             $login_user = false;
         }
         
-    }   
-    // Incluindo o arquivo connect.php
-    include_once('connect.php');
-    if (isset($_GET['travel_id'])){
-        $travel_id = $_GET['travel_id'];
-
-        $sql_travel = "SELECT * FROM travel WHERE travel_id = '$travel_id'";
-        $result_travel = mysqli_query($connection, $sql_travel);
-        $row_travel = $result_travel->fetch_assoc();
-
-        //formatação de data:
-        $meses_em_portugues = array(
-            'January' => 'janeiro',
-            'February' => 'fevereiro',
-            'March' => 'março',
-            'April' => 'abril',
-            'May' => 'maio',
-            'June' => 'junho',
-            'July' => 'julho',
-            'August' => 'agosto',
-            'September' => 'setembro',
-            'October' => 'outubro',
-            'November' => 'novembro',
-            'December' => 'dezembro'
-        );
-        
-        $departure_date = $row_travel['departure_date'];
-        
-        $formatted_date = date('d \d\e F', strtotime($departure_date));
-        $formatted_date = strtr($formatted_date, $meses_em_portugues);
-
-        //formatação de horário
-        $arrivalTime = new DateTime($row_travel['arrival_time']);
-        $formattedArrivalTime = $arrivalTime->format('H:i');
-
-        $exitTime = new DateTime($row_travel['exit_time']);
-        $formattedExitTime = $exitTime->format('H:i');
-
-        //valor total a pagar 
-        $price = $row_travel['price'];
-        $percent = 7;
-        $percent_value = $price * ($percent / 100);
-        $total_price = $price + $percent_value;
-        //formatação
-        $price_formatted = number_format($price, 2, ',', '.');
-        $percent_value_formatted = number_format($percent_value, 2, ',', '.');
-        $total_price_formatted = number_format($total_price, 2, ',', '.');
-    }else{
-        echo "<script> alert('Selecione uma viagem'); </script>";
-        header('Location: buscaPassagem1.php');
-        exit();
     }
+    $chair1 = $chair1 = isset($selectedNumbers[0]) ? $selectedNumbers[0] : null;
+    $chair2 = $chair1 = isset($selectedNumbers[1]) ? $selectedNumbers[1] : null;
+    $chair3 = $chair1 = isset($selectedNumbers[2]) ? $selectedNumbers[2] : null;
+    $chair4 = $chair1 = isset($selectedNumbers[3]) ? $selectedNumbers[3] : null;
+    $chair5 = $chair1 = isset($selectedNumbers[4]) ? $selectedNumbers[4] : null;
+    $chair6 = $chair1 = isset($selectedNumbers[5]) ? $selectedNumbers[5] : null;
 ?>
+
 
 <!DOCTYPE html>
 <html>
@@ -331,6 +288,7 @@
                                                                             class="ng-untouched ng-pristine"
                                                                             data-dashlane-rid="20c715de4ca658f1"
                                                                             data-form-type="other">
+
                                                                             <!---->
                                                                         </div>
                                                                     </div>
@@ -340,16 +298,16 @@
                                                                         <div class="input-container">
                                                                             <label>E-mail *</label>
                                                                             <input id="customerEmail"
-                                                                                formcontrolname="email" type="text"
-                                                                                value="" placeholder="E-mail"
-                                                                                disabled=""
-                                                                                class="ng-untouched ng-pristine"
-                                                                                data-dashlane-rid="0727db6529d75715"
-                                                                                data-kwcachedvalue="henriquevrios@gmail.com"
-                                                                                data-kwimpalastatus="asleep"
-                                                                                data-kwimpalaid="1692397960065-6"
-                                                                                data-form-type="email">
-                                                                            <!---->
+                                                                            formcontrolname="email" type="text"
+                                                                            value=""
+                                                                            placeholder="<?php if (isset($_SESSION['user_id'])) { echo $user_data['email']; } else { echo 'E-mail'; } ?>"
+                                                                            <?php if (isset($_SESSION['user_id'])) { echo 'disabled'; } ?>
+                                                                            class="ng-untouched ng-pristine"
+                                                                            data-dashlane-rid="0727db6529d75715"
+                                                                            data-kwcachedvalue="<?php if (isset($_SESSION['user_id'])) { echo $user_data['email']; } ?>"
+                                                                            data-kwimpalastatus="asleep"
+                                                                            data-kwimpalaid="1692397960065-6"
+                                                                            data-form-type="email">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -358,30 +316,30 @@
                                                                         <div class="input-container">
                                                                             <label>CPF *</label>
                                                                             <input id="customerId"
-                                                                                formcontrolname="document" type="text"
-                                                                                mask="000.000.000-00" placeholder="CPF"
-                                                                                class="ng-untouched ng-pristine"
-                                                                                disabled=""
-                                                                                data-dashlane-rid="3ecfc858f5bc6da1"
-                                                                                data-form-type="id_document">
-                                                                            <!---->
+                                                                            formcontrolname="document" type="text"
+                                                                            mask="000.000.000-00"
+                                                                            placeholder="<?php if (isset($_SESSION['user_id'])) { echo $user_data['cpf']; } else { echo 'CPF'; } ?>"
+                                                                            <?php if (isset($_SESSION['user_id'])) { echo 'disabled'; } ?>
+                                                                            class="ng-untouched ng-pristine"
+                                                                            data-dashlane-rid="3ecfc858f5bc6da1"
+                                                                            data-form-type="id_document">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 col-lg-6">
                                                                         <div class="input-container">
                                                                             <label for="customerPhoneNumber">N° de
-                                                                                telefone *</label>
+                                                                            telefone *</label>
                                                                             <input formcontrolname="customerPhone"
-                                                                                id="customerPhoneNumber"
-                                                                                mask="(00) 00000-0000" type="text"
-                                                                                placeholder="N° do telefone de contato"
-                                                                                class="ng-untouched ng-pristine"
-                                                                                disabled=""
-                                                                                data-dashlane-rid="a603ecad94e9f2e5"
-                                                                                data-kwcachedvalue="(37) 98406-7937"
-                                                                                data-kwimpalastatus="asleep"
-                                                                                data-kwimpalaid="1692397960065-7"
-                                                                                data-form-type="phone"><!---->
+                                                                            id="customerPhoneNumber"
+                                                                            mask="(00) 00000-0000" type="text"
+                                                                            placeholder="<?php if (isset($_SESSION['user_id'])) { echo $user_data['phone']; } else { echo 'N° do telefone de contato'; } ?>"
+                                                                            <?php if (isset($_SESSION['user_id'])) { echo 'disabled'; } ?>
+                                                                            class="ng-untouched ng-pristine"
+                                                                            data-dashlane-rid="a603ecad94e9f2e5"
+                                                                            data-kwcachedvalue="<?php if (isset($_SESSION['user_id'])) { echo $user_data['phone']; } ?>"
+                                                                            data-kwimpalastatus="asleep"
+                                                                            data-kwimpalaid="1692397960065-7"
+                                                                            data-form-type="phone">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -413,76 +371,81 @@
                                             </div>
                                             <!---->
                                             <br>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <form novalidate="" class="ng-untouched ng-pristine ng-invalid"
-                                                        data-dashlane-rid="be9a5c26f8f369cd" data-form-type="other">
-                                                        <div formarrayname="documents"
-                                                            class="ng-untouched ng-pristine ng-invalid">
-                                                            <div
-                                                                class="card card-checkout m-b-10 ng-untouched ng-pristine ng-invalid">
-                                                                <h3 class="card-section-title">
-                                                                    <i class="fad fa-fw fa-address-card"></i>
-                                                                    Passageiro #1
-                                                                    <span class="passenger-seat">
-                                                                        Poltrona
-                                                                        <b class="seat-number">
-                                                                            <i class="fa fa-chair-office icon-seat">
-                                                                            </i>
-                                                                            26
-                                                                        </b>
-                                                                    </span>
-                                                                    <!---->
-                                                                </h3>
-                                                                <div class="checkout-info">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12 col-lg-6">
-                                                                            <div class="input-container">
-                                                                                <label>Nome completo *</label>
-                                                                                <input formcontrolname="name"
-                                                                                    type="text" value="" id="name0"
-                                                                                    placeholder="Nome completo"
-                                                                                    class="ng-untouched ng-pristine ng-invalid"
-                                                                                    data-dashlane-rid="e0f3c38855e1a2af"
-                                                                                    data-form-type="other">
-                                                                                <!---->
+                                            <?php 
+                                                for ($i = 0; $i < count($selectedNumbers); $i++) {
+                                                    echo'
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <form novalidate="" class="ng-untouched ng-pristine ng-invalid"
+                                                                data-dashlane-rid="be9a5c26f8f369cd" data-form-type="other">
+                                                                <div formarrayname="documents"
+                                                                    class="ng-untouched ng-pristine ng-invalid">
+                                                                    <div
+                                                                        class="card card-checkout m-b-10 ng-untouched ng-pristine ng-invalid">
+                                                                        <h3 class="card-section-title">
+                                                                            <i class="fad fa-fw fa-address-card"></i>
+                                                                            Passageiro #1
+                                                                            <span class="passenger-seat">
+                                                                                Poltrona
+                                                                                <b class="seat-number">
+                                                                                    <i class="fa fa-chair-office icon-seat">
+                                                                                    </i>
+                                                                                    ' . $selectedNumbers[$i] . '
+                                                                                </b>
+                                                                            </span>
+                                                                            
+                                                                        </h3>
+                                                                        <div class="checkout-info">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 col-lg-6">
+                                                                                    <div class="input-container">
+                                                                                        <label>Nome completo *</label>
+                                                                                        <input formcontrolname="name"
+                                                                                            type="text" value="" id="name0"
+                                                                                            placeholder="Nome completo"
+                                                                                            class="ng-untouched ng-pristine ng-invalid"
+                                                                                            data-dashlane-rid="e0f3c38855e1a2af"
+                                                                                            data-form-type="other">
+                                                                                        
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12 col-lg-2">
+                                                                                    <div class="input-container">
+                                                                                        <label>Documento *</label>
+                                                                                        <select id="typeOfPassengerDoc"
+                                                                                            data-dashlane-rid="d8523b2943f75f6f"
+                                                                                            data-form-type="other">
+                                                                                            <option value="2" selected=""> RG
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12 col-lg-4">
+                                                                                    <div class="input-container">
+                                                                                        <label>N° do documento *</label>
+                                                                                        <input formcontrolname="documentValue"
+                                                                                            type="text" value="" minlength="2"
+                                                                                            maxlength="20"
+                                                                                            placeholder="Nro documento"
+                                                                                            class="ng-untouched ng-pristine ng-invalid"
+                                                                                            data-dashlane-rid="c19c1d81bf48d1c4"
+                                                                                            data-form-type="id_document,id_card">
+                                                                                    </div>
+                                                                                    
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="col-md-12 col-lg-2">
-                                                                            <div class="input-container">
-                                                                                <label>Documento *</label>
-                                                                                <select id="typeOfPassengerDoc"
-                                                                                    data-dashlane-rid="d8523b2943f75f6f"
-                                                                                    data-form-type="other">
-                                                                                    <option value="2" selected=""> RG
-                                                                                    </option>
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-12 col-lg-4">
-                                                                            <div class="input-container">
-                                                                                <label>N° do documento *</label>
-                                                                                <input formcontrolname="documentValue"
-                                                                                    type="text" value="" minlength="2"
-                                                                                    maxlength="20"
-                                                                                    placeholder="Nro documento"
-                                                                                    class="ng-untouched ng-pristine ng-invalid"
-                                                                                    data-dashlane-rid="c19c1d81bf48d1c4"
-                                                                                    data-form-type="id_document,id_card">
-                                                                            </div>
-                                                                            <!---->
+                                                                            
                                                                         </div>
                                                                     </div>
-                                                                    <!---->
                                                                 </div>
-                                                            </div>
+                                                                
+                                                            </form>
                                                         </div>
-                                                        <!---->
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <!---->
+                                                    </div>
+                                                        ';
+                                                }
+                                                
+                                            ?>
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="card card-checkout">
@@ -540,7 +503,7 @@
                                             <!---->
                                             <!---->
                                             <!---->
-                                            <div class="row payment-details-container" style="display: none;">
+                                            <div class="row payment-details-container">
                                                 <div class="col">
                                                     <app-mp-checkout-provider>
                                                         <div class="card card-checkout">
@@ -900,13 +863,7 @@
                                                             </div>
                                                             <!---->
                                                         </div>
-                                                    </app-paymee-checkout-provider>
-                                                    <app-paymee-pix-checkout-provider
-                                                        hidden=""></app-paymee-pix-checkout-provider>
-                                                    <app-mercado-pago-pix-checkout-provider
-                                                        hidden=""></app-mercado-pago-pix-checkout-provider>
-                                                    <app-nupay-checkout-provider
-                                                        hidden=""></app-nupay-checkout-provider>
+                                                    </diapp-paymee-checkout-providerv>
                                                 </div>
                                             </div>
                                             <br>
@@ -965,10 +922,20 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-lg-8 col-md-12 m-t-15 text-right">
-                                                    <button class="btn btn-primary">
+                                                    <button class="btn btn-primary" onclick="btpagar()">
                                                         FINALIZAR SUA COMPRA
                                                         &nbsp;&nbsp;&nbsp;
                                                         <i class="fa fa-check-circle icon-next"></i>
+                                                        <script>
+                                                            function btpagar(){
+                                                                <?php 
+                                                                    if(!isset($_SESSION['user_id'])){
+                                                                        header("Location: login.html");
+                                                                        exit(); 
+                                                                    }
+                                                                ?>
+                                                            }
+                                                        </script>
                                                     </button>
                                                     <!---->
                                                     <!---->
@@ -984,7 +951,7 @@
                                                         <br>
                                                         <!---->
                                                         <br>
-                                                        <b>R$ <?php echo $total_price_formatted ; ?></b>
+                                                        <b>R$&nbsp;70,60</b>&nbsp;&nbsp;
                                                         <strong>no total</strong>
                                                     </div>
                                                     <div class="summary-info-block">
@@ -993,7 +960,7 @@
                                                             <span class="summary-info-subtitle"
                                                                 title="DIVINOPOLIS - MG">
                                                                 <i class="fad fa-fw fa-map-marker-alt"></i>
-                                                                <?php echo $row_travel['origin']; ?>
+                                                                DIVINOPOLIS - MG
                                                             </span>
                                                             <span class="departure-location-description"> </span>
                                                         </div>
@@ -1001,12 +968,12 @@
                                                             <span class="summary-info-subtitle"
                                                                 title="BELO HORIZONTE - MG">
                                                                 <i class="fad fa-fw fa-map-marker-alt"></i>
-                                                                <?php echo $row_travel['destiny']; ?>
+                                                                BELO HORIZONTE - MG
                                                             </span>
                                                         </div>
                                                         <span class="summary-info-text">
                                                             <i class="fad fa-fw fa-calendar"></i>
-                                                            <?php echo $formatted_date; ?> - <?php echo $formattedArrivalTime ?>
+                                                            19 de agosto - 06:30
                                                             <!---->
                                                             <!---->
                                                             <!---->
@@ -1014,14 +981,7 @@
                                                         <!---->
                                                         <span class="summary-info-text">
                                                             <i class="fad fa-fw fa-chair-office"></i>
-                                                            Poltrona: 
-                                                            <?php 
-                                                                for ($i = 0; $i <= 6; $i++) {
-                                                                    if (isset($selectedNumbers[$i])) {
-                                                                        echo $selectedNumbers[$i] . ', ';
-                                                                    }
-                                                                }
-                                                            ?>
+                                                            Poltrona 26
                                                             <!---->
                                                             <!---->
                                                             <!---->
@@ -1037,13 +997,13 @@
                                                         <div>
                                                             <span class="summary-info-text">
                                                                 <i class="fad fa-usd-circle"></i>
-                                                                <b>R$ <?php echo $price_formatted; ?></b>
+                                                                <b>R$&nbsp;60,90</b>
                                                                 <span class="gray push-right">bilhete</span>
                                                             </span>
                                                             <!---->
                                                             <span class="summary-info-text">
                                                                 <i class="fad fa-usd-circle"></i>
-                                                                <b>R$ <?php echo $percent_value_formatted;?></b>
+                                                                <b>R$&nbsp;9,70</b>
                                                                 <span class="gray push-right">tx de serviço</span>
                                                             </span>
                                                             <!---->
@@ -1081,99 +1041,6 @@
                     </app-checkout>
                 </app-booking-process>
             </div>
-            <!---->
-            <!---->
-
-            <footer>
-                <div class="row">
-                    <div class="col">
-                        <div class="main-footer-first-line">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-6 col-lg-3">
-                                        <div class="top footer-box">
-                                            <figure>
-                                                <img src="https://smartbus-preprod-cdn.azurewebsites.net/ecommerce/imgs/teixeira/teixeira-branco.png"
-                                                    alt="Teixeira" class="main-footer-logo" tabindex="0">
-                                            </figure>
-                                            <div class="social">
-                                                <a href="https://www.facebook.com/teixeiraturismooficial/"
-                                                    target="_blank" class="main-footer-social-icon">
-                                                    <i class="fab fa-facebook"></i>
-                                                    <span>Facebook</span>
-                                                </a>
-                                                <a href="https://www.instagram.com/teixeiraturismo/" target="_blank"
-                                                    class="main-footer-social-icon">
-                                                    <i class="fab fa-instagram"></i>
-                                                    <span>Instagram</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="help footer-box">
-                                            <h4 class="footer-title">Ajuda</h4>
-                                            <ul>
-                                                <li class="footer-menu-item" tabindex="0">Horários dos guichês</li>
-                                                <li class="footer-menu-item" tabindex="0">Sobre Nós</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <div class="payments footer-box">
-                                            <h4 class="footer-title">Meios de pagamento</h4>
-                                            <div class="payment-images">
-                                                <img src="https://smartbus-cdn.azurewebsites.net/_common/img/payment/visa.png"
-                                                    alt="Visa" title="Visa" class="payment-img">
-                                                <img src="https://smartbus-cdn.azurewebsites.net/_common/img/payment/mastercard.png"
-                                                    alt="Master Card" title="Master Card" class="payment-img">
-                                                <img src="https://smartbus-cdn.azurewebsites.net/_common/img/payment/amex.png"
-                                                    alt="Amex" title="Amex" class="payment-img">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <div class="buy-by-phone footer-box">
-                                            <h4 class="footer-title">COMPRE PELO TELEFONE</h4>
-                                            <ul>
-                                                <li class="footer-menu-item">
-                                                    <a href="tel:3732144070">
-                                                        <i class="fad fa-phone phone-icon"></i>
-                                                        (37) 3214-4070
-                                                    </a>
-                                                </li>
-                                                <li class="footer-menu-item footer-menu-item-email">
-                                                    <a href="mailto:falecom@teixeiraturismo.com.br" class="fs-13">
-                                                        <i class="fad fa-envelope envelope-icon"></i>
-                                                        &nbsp;&nbsp;falecom@teixeiraturismo.com.br
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <div class="info-content">
-                                            <h4 class="footer-title">SAC
-                                                <small>(atendimento ao consumidor)</small>
-                                            </h4>
-                                            <a href="tel:3732144070" class="a-sac"> (37) 3214-4070 </a>
-                                            <br><br>
-                                        </div>
-                                        <div class="info-content">
-                                            <span class="sac-number">
-                                                <a href="tel:0800 703 5203" class="a-number">
-                                                    <i class="fad fa-phone phone-icon"></i>
-                                                    0800 703 5203
-                                                </a>
-                                                <br>
-                                                para deficientes de fala e auditivos.
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
 

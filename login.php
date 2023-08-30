@@ -1,5 +1,4 @@
 <?php
-    session_start();
     // Verificação de Login
     if (isset($_POST['submit']) && !empty($_POST['email']) && !empty($_POST['password_'])) { // Acessa através do método POST
         // Incluindo o arquivo connect.php
@@ -13,12 +12,14 @@
         
         if (mysqli_num_rows($result) > 0) { // Verifica se o email está cadastrado
             $row = mysqli_fetch_assoc($result);
+            $user_id = $row['password_'];
             $hash = $row['password_']; // Obtém a senha criptografada do banco de dados
 
             // Verifica se a senha digitada corresponde à senha criptografada
             if (password_verify($password, $hash)) {
+                session_start();
                 $_SESSION['email'] = $email;
-                $_SESSION['user_id'] = $row['user_id'];
+                $_SESSION['user_id'] = $user_id;
                 
                 echo "<script>alert('Direcionando, bem vindo de volta!')</script>";
                 header("Location: homePage.php");
