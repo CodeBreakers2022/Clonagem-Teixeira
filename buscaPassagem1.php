@@ -380,6 +380,7 @@ function calculateDate($daysToAddOrSubtract)
                             </select>
                             <select class="sel" name="horario">
                                 <option selected disabled>Horário</option>
+                                <option>MADRUGADA</option>
                                 <option>MANHÃ</option>
                                 <option>TARDE</option>
                                 <option>NOITE</option>
