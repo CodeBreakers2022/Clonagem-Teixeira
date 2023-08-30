@@ -69,3 +69,54 @@ function checkNotification() {
     }
     console.log(getNotific);
 }
+
+/// Formata o número de telefone
+function formatPhoneNumber(input) {
+    let value = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+    if (value.length > 11) {
+        value = value.slice(0, 11); // Limita a 11 dígitos
+    }
+
+    if (value.length >= 10) {
+        value = value.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3'); // Formato (99) 99999-9999
+    } else if (value.length >= 6) {
+        value = value.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3'); // Formato (99) 9999-9999
+    } else if (value.length >= 3) {
+        value = value.replace(/^(\d{2})(\d{0,5})$/, '($1) $2'); // Formato (99) 9...
+    }
+
+    input.value = value;
+}
+
+// Adicionando ouvinte de evento para formatação de celular
+const phoneInput = document.getElementById('customerPhoneNumber');
+phoneInput.addEventListener('input', function () {
+    formatPhoneNumber(this);
+});
+
+
+// Formata o número de CPF
+function formatCPF(input) {
+    let value = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+
+    if (value.length > 11) {
+        value = value.slice(0, 11); // Limita a 11 dígitos
+    }
+
+    if (value.length > 9) {
+        value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})$/, '$1.$2.$3-$4'); // Formato 000.000.000-00
+    } else if (value.length > 6) {
+        value = value.replace(/^(\d{3})(\d{3})(\d{0,3})$/, '$1.$2.$3'); // Formato 000.000.000
+    } else if (value.length > 3) {
+        value = value.replace(/^(\d{3})(\d{0,3})$/, '$1.$2'); // Formato 000.000
+    }
+
+    input.value = value;
+}
+
+// Adicionando ouvinte de evento para formatação de CPF
+const cpfInput = document.getElementById('customerId');
+cpfInput.addEventListener('input', function () {
+    formatCPF(this);
+});
