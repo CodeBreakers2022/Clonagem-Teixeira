@@ -167,11 +167,12 @@ form{
     background-color: #FFFFFFCC;
     display: flex;
     flex-wrap: wrap;
+    padding: 1%
 }
 .boxchair button{
     border: none;
-    height: 19%;
-    width: 8%;
+    height: 15%;
+    width: 10%;
     margin-right: 5px;
     margin-left: 5px;
     font-size: 12px;
@@ -218,6 +219,19 @@ form{
         display: flex; 
         flex-direction: column;
     }
+    .boxchair{
+        box-sizing: border-box;
+        padding: 1%;
+        transform: scaleY(-1);
+    }
+    .boxchair button{
+        transform: scaleX(-1);
+        rotate: -90deg;
+    }
+}
+
+@media only screen and (max-width: 670px){
+
 }
 
 @media only screen  and (max-width: 425px){
@@ -228,5 +242,15 @@ form{
     .close-div-father,.submit-div-father {
         width: 90%;
         margin-bottom: 3%;
+    }
+    .sum{
+        padding: 0px;
+        flex-direction: column;
+        align-items: center;
+        padding-bottom: 10px;
+    }
+    .disponivel, .ocupado, .selecionado{
+        width: 40%;
+        text-align: center;
     }
 }

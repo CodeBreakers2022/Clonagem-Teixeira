@@ -193,7 +193,7 @@
                 </div>
             </div>
             <div class="container-father-footer">
-                <input style="width: auto;" class="close-div-father" name="reset" type="submit" value="LIMPAR SELEÇÃO"/>
+                <input class="close-div-father" name="reset" type="submit" value="LIMPAR SELEÇÃO"/>
                 <?php 
                     if (empty($_SESSION['selected_numbers'])){
                         $href = "reservarPassagem.php";
