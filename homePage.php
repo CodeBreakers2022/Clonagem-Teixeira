@@ -1,9 +1,17 @@
 <?php
+
 include_once 'connect.php';
+
 session_start();
-if(isset($_SESSION['user_id'])){
-    $user_id = $_SESSION['user_id'];
+
+if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+    $user_id = $_GET['user_id'];
+    // Agora você tem o valor de user_id e pode usá-lo como quiser
+    // echo "O valor de user_id é: " . $user_id;
+} else {
+    // echo "user_id não foi passado via GET.";
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['submit']) && !empty($_POST['city_origin']) && !empty($_POST['city_destiny'])) { // Acessa através do método POST
@@ -16,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($date_and !== null && $date_initial === null) {
             echo 'alert("Para preencher a dara final você precisa preencher a data de ida")';
         } else {
-            echo "<script>window.location.href = 'buscaPassagem1.php?city_origin=$city_origin&city_destiny=$city_destiny&date_initial=$date_initial&date_and=$date_and&coupon=$coupon';</script>";
+            echo "<script>window.location.href = 'buscaPassagem1.php?city_origin=$city_origin&city_destiny=$city_destiny&date_initial=$date_initial&date_and=$date_and&coupon=$coupon&user_id=$user_id';</script>";
         }
 
         mysqli_close($connection); // Fechando a conexão

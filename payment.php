@@ -1,33 +1,43 @@
 <?php
 
+    // Incluindo o arquivo connect.php
+    include_once('connect.php');
+
     //Iniciando seção caso ainda não tenha sido iniciada
     if (!isset($_SESSION)) {
         // Seção iniciada
         session_start();
     }
+
    // Verifica se a variável de sessão existe
     if (isset($_SESSION['selected_numbers'])) {
         $selectedNumbers = $_SESSION['selected_numbers'];
     } else {
         $selectedNumbers = "nenhuma cadeira selecionada";
     }
-    //pesquisas referentes ao usuário 
-    if(isset($_SESSION['user_id'])){
-        $user_id = $_SESSION['user_id'];
 
-        echo "<script>alert('".$user_id."');</script>";
-        $sql = "SELECT * FROM user WHERE user_id = ".$user_id."";
-        $result = mysqli_query($connection, $sql);
-        if ($result -> num_rows > 0){
-            $user_data = mysqli_fetch_assoc($result);
-            $login_user = true;
-        }else{
-            $login_user = false;
-        }
+    //pesquisas referentes ao usuário 
+    // if(isset($_SESSION['user_id'])){
+    //     $user_id = $_SESSION['user_id'];
+    //     echo $user_id;
+
+    //     echo "<script>alert('".$user_id."');</script>";
+    //     $sql = "SELECT * FROM user WHERE user_id = ".$user_id."";
+    //     $result = mysqli_query($connection, $sql);
+    //     if ($result -> num_rows > 0){
+    //         $user_data = mysqli_fetch_assoc($result);
+    //         $login_user = true;
+    //     }else{
+    //         $login_user = false;
+    //     }
         
-    }   
-    // Incluindo o arquivo connect.php
-    include_once('connect.php');
+    // }
+
+    if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+        $user_id = $_GET['user_id'];
+    }
+
+    
     if (isset($_GET['travel_id'])){
         $travel_id = $_GET['travel_id'];
 
@@ -325,12 +335,35 @@
                                                                             <label>
                                                                                 Nome completo *
                                                                             </label>
-                                                                            <input formcontrolname="name" type="text" value=""
-                                                                            placeholder="<?php if (isset($_SESSION['user_id'])) { echo $user_data['user_name']; } else { echo 'Escreva o seu nome'; } ?>"
-                                                                            <?php if (isset($_SESSION['user_id'])) { echo 'disabled'; } ?>
-                                                                            class="ng-untouched ng-pristine"
-                                                                            data-dashlane-rid="20c715de4ca658f1"
-                                                                            data-form-type="other">
+                                                                            <?php
+                                                                                if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+                                                                                    echo '<input formcontrolname="name" type="text" placeholder="" value="';
+                                                                                    
+                                                                                    if (isset($_GET['user_id'])) {
+                                                                                        $sql = "SELECT user_name FROM user WHERE user_id = " . $_GET['user_id'];
+                                                                                        $result = mysqli_query($connection, $sql);
+                                                                                        if ($result && mysqli_num_rows($result) > 0) {
+                                                                                            $row = mysqli_fetch_assoc($result);
+                                                                                            echo $row['user_name'];
+                                                                                        } else {
+                                                                                            echo 'Escreva o seu nome';
+                                                                                        }
+                                                                                    } else {
+                                                                                        echo 'Escreva o seu nome';
+                                                                                    }
+                                                                                    
+                                                                                    echo '"';
+                                                                                    
+                                                                                    if (!isset($_GET['user_id'])) {
+                                                                                        echo ' disabled';
+                                                                                    }
+                                                                                    
+                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                } else {
+                                                                                    echo '<input formcontrolname="name" type="text" value="" placeholder="Escreva o seu nome"';
+                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                }
+                                                                            ?>
                                                                             <!---->
                                                                         </div>
                                                                     </div>
@@ -339,7 +372,36 @@
                                                                     <div class="col-md-12 col-lg-12">
                                                                         <div class="input-container">
                                                                             <label>E-mail *</label>
-                                                                            <input id="customerEmail"
+                                                                            <?php
+                                                                                if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+                                                                                    echo '<input formcontrolname="name" type="text" placeholder="" value="';
+                                                                                    
+                                                                                    if (isset($_GET['user_id'])) {
+                                                                                        $sql = "SELECT email FROM user WHERE user_id = " . $_GET['user_id'];
+                                                                                        $result = mysqli_query($connection, $sql);
+                                                                                        if ($result && mysqli_num_rows($result) > 0) {
+                                                                                            $row = mysqli_fetch_assoc($result);
+                                                                                            echo $row['email'];
+                                                                                        } else {
+                                                                                            echo 'Escreva o seu email';
+                                                                                        }
+                                                                                    } else {
+                                                                                        echo 'Escreva o seu email';
+                                                                                    }
+                                                                                    
+                                                                                    echo '"';
+                                                                                    
+                                                                                    if (!isset($_GET['user_id'])) {
+                                                                                        echo ' disabled';
+                                                                                    }
+                                                                                    
+                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                } else {
+                                                                                    echo '<input formcontrolname="name" type="text" value="" placeholder="Escreva o seu email"';
+                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                }
+                                                                            ?>
+                                                                            <!-- <input id="customerEmail"
                                                                                 formcontrolname="email" type="text"
                                                                                 value="" placeholder="E-mail"
                                                                                 disabled=""
@@ -348,7 +410,7 @@
                                                                                 data-kwcachedvalue="henriquevrios@gmail.com"
                                                                                 data-kwimpalastatus="asleep"
                                                                                 data-kwimpalaid="1692397960065-6"
-                                                                                data-form-type="email">
+                                                                                data-form-type="email"> -->
                                                                             <!---->
                                                                         </div>
                                                                     </div>
@@ -357,21 +419,78 @@
                                                                     <div class="col-md-12 col-lg-6">
                                                                         <div class="input-container">
                                                                             <label>CPF *</label>
-                                                                            <input id="customerId"
+                                                                            <?php
+                                                                                if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+                                                                                    echo '<input formcontrolname="name" type="text" placeholder="" value="';
+                                                                                    
+                                                                                    if (isset($_GET['user_id'])) {
+                                                                                        $sql = "SELECT cpf FROM user WHERE user_id = " . $_GET['user_id'];
+                                                                                        $result = mysqli_query($connection, $sql);
+                                                                                        if ($result && mysqli_num_rows($result) > 0) {
+                                                                                            $row = mysqli_fetch_assoc($result);
+                                                                                            echo $row['cpf'];
+                                                                                        } else {
+                                                                                            echo 'Escreva o seu CPF';
+                                                                                        }
+                                                                                    } else {
+                                                                                        echo 'Escreva o seu CPF';
+                                                                                    }
+                                                                                    
+                                                                                    echo '"';
+                                                                                    
+                                                                                    if (!isset($_GET['user_id'])) {
+                                                                                        echo ' disabled';
+                                                                                    }
+                                                                                    
+                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                } else {
+                                                                                    echo '<input formcontrolname="name" type="text" value="" placeholder="Escreva o seu CPF"';
+                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                }
+                                                                            ?>
+                                                                            <!-- <input id="customerId"
                                                                                 formcontrolname="document" type="text"
                                                                                 mask="000.000.000-00" placeholder="CPF"
                                                                                 class="ng-untouched ng-pristine"
                                                                                 disabled=""
                                                                                 data-dashlane-rid="3ecfc858f5bc6da1"
-                                                                                data-form-type="id_document">
+                                                                                data-form-type="id_document"> -->
                                                                             <!---->
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 col-lg-6">
                                                                         <div class="input-container">
-                                                                            <label for="customerPhoneNumber">N° de
-                                                                                telefone *</label>
-                                                                            <input formcontrolname="customerPhone"
+                                                                            <label for="customerPhoneNumber">N° de telefone *</label>
+                                                                            <?php
+                                                                                if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+                                                                                    echo '<input formcontrolname="name" type="text" placeholder="" value="';
+                                                                                    
+                                                                                    if (isset($_GET['user_id'])) {
+                                                                                        $sql = "SELECT phone FROM user WHERE user_id = " . $_GET['user_id'];
+                                                                                        $result = mysqli_query($connection, $sql);
+                                                                                        if ($result && mysqli_num_rows($result) > 0) {
+                                                                                            $row = mysqli_fetch_assoc($result);
+                                                                                            echo $row['phone'];
+                                                                                        } else {
+                                                                                            echo 'Escreva o seu N° de telefone';
+                                                                                        }
+                                                                                    } else {
+                                                                                        echo 'Escreva o seu N° de telefone';
+                                                                                    }
+                                                                                    
+                                                                                    echo '"';
+                                                                                    
+                                                                                    if (!isset($_GET['user_id'])) {
+                                                                                        echo ' disabled';
+                                                                                    }
+                                                                                    
+                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                } else {
+                                                                                    echo '<input formcontrolname="name" type="text" value="" placeholder="Escreva o seu N° de telefone"';
+                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                }
+                                                                            ?>
+                                                                            <!-- <input formcontrolname="customerPhone"
                                                                                 id="customerPhoneNumber"
                                                                                 mask="(00) 00000-0000" type="text"
                                                                                 placeholder="N° do telefone de contato"
@@ -381,7 +500,7 @@
                                                                                 data-kwcachedvalue="(37) 98406-7937"
                                                                                 data-kwimpalastatus="asleep"
                                                                                 data-kwimpalaid="1692397960065-7"
-                                                                                data-form-type="phone"><!---->
+                                                                                data-form-type="phone"> -->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -439,37 +558,118 @@
                                                                         <div class="col-md-12 col-lg-6">
                                                                             <div class="input-container">
                                                                                 <label>Nome completo *</label>
-                                                                                <input formcontrolname="name"
+                                                                                <?php
+                                                                                    if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+                                                                                        echo '<input formcontrolname="name" type="text" placeholder="" value="';
+                                                                                        
+                                                                                        if (isset($_GET['user_id'])) {
+                                                                                            $sql = "SELECT user_name FROM user WHERE user_id = " . $_GET['user_id'];
+                                                                                            $result = mysqli_query($connection, $sql);
+                                                                                            if ($result && mysqli_num_rows($result) > 0) {
+                                                                                                $row = mysqli_fetch_assoc($result);
+                                                                                                echo $row['user_name'];
+                                                                                            } else {
+                                                                                                echo 'Escreva o seu nome';
+                                                                                            }
+                                                                                        } else {
+                                                                                            echo 'Escreva o seu nome';
+                                                                                        }
+                                                                                        
+                                                                                        echo '"';
+                                                                                        
+                                                                                        if (!isset($_GET['user_id'])) {
+                                                                                            echo ' disabled';
+                                                                                        }
+                                                                                        
+                                                                                        echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                    } else {
+                                                                                        echo '<input formcontrolname="name" type="text" value="" placeholder="Escreva o seu nome"';
+                                                                                        echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                    }
+                                                                                ?>
+                                                                                <!-- <input formcontrolname="name"
                                                                                     type="text" value="" id="name0"
                                                                                     placeholder="Nome completo"
                                                                                     class="ng-untouched ng-pristine ng-invalid"
                                                                                     data-dashlane-rid="e0f3c38855e1a2af"
-                                                                                    data-form-type="other">
+                                                                                    data-form-type="other"> -->
                                                                                 <!---->
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-12 col-lg-2">
-                                                                            <div class="input-container">
+                                                                            <!-- <div class="input-container">
                                                                                 <label>Documento *</label>
+                                                                                <?php
+                                                                                    //$doc = 'cpf';
+                                                                                ?>
                                                                                 <select id="typeOfPassengerDoc"
                                                                                     data-dashlane-rid="d8523b2943f75f6f"
                                                                                     data-form-type="other">
-                                                                                    <option value="2" selected=""> RG
-                                                                                    </option>
+                                                                                    <option value="1" selected=""> CPF </option>
+                                                                                    <option value="2"> RG </option>
+                                                                                    <?php
+                                                                                        //$doc = ($doc === 'rg') ? 'rg' : 'cpf';
+                                                                                    ?>
                                                                                 </select>
+                                                                            </div> -->
+                                                                            <div class="input-container">
+                                                                                <label>Documento *</label>
+                                                                                <?php
+                                                                                $doc = 'cpf'; // Definindo valor padrão
+                                                                                if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+                                                                                    echo '<select id="typeOfPassengerDoc"
+                                                                                            data-dashlane-rid="d8523b2943f75f6f"
+                                                                                            data-form-type="other">';
+                                                                                    echo '<option value="1" selected="">CPF</option>';
+                                                                                    echo '<option value="2">RG</option>';
+                                                                                    echo '</select>';
+                                                                                    $doc = ($doc === 'cpf') ? 'cpf' : 'rg'; // Atualizando a variável $doc
+                                                                                } else {
+                                                                                    echo '<select id="typeOfPassengerDoc"
+                                                                                            data-dashlane-rid="d8523b2943f75f6f"
+                                                                                            data-form-type="other">';
+                                                                                    echo '<option value="1" selected="">CPF</option>';
+                                                                                    echo '<option value="2">RG</option>';
+                                                                                    echo '</select>';
+                                                                                    $doc = ($doc === 'cpf') ? 'cpf' : 'rg'; // Atualizando a variável $doc
+                                                                                }
+                                                                                ?>
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-md-12 col-lg-4">
                                                                             <div class="input-container">
                                                                                 <label>N° do documento *</label>
-                                                                                <input formcontrolname="documentValue"
-                                                                                    type="text" value="" minlength="2"
-                                                                                    maxlength="20"
-                                                                                    placeholder="Nro documento"
-                                                                                    class="ng-untouched ng-pristine ng-invalid"
-                                                                                    data-dashlane-rid="c19c1d81bf48d1c4"
-                                                                                    data-form-type="id_document,id_card">
+                                                                                <?php
+                                                                                    if (isset($_GET['user_id']) && !empty($_GET['user_id']) && ($doc === 'cpf')) {
+                                                                                        echo '<input formcontrolname="documentValue" minlength="2" maxlength="20" type="text" placeholder="" value"';
+
+                                                                                        $sql = "SELECT cpf FROM user WHERE user_id = " . $_GET['user_id'];
+                                                                                        $result = mysqli_query($connection, $sql);
+
+                                                                                        if ($result && mysqli_num_rows($result) > 0) {
+                                                                                            $row = mysqli_fetch_assoc($result);
+                                                                                            echo $row['cpf'];
+                                                                                        } else {
+                                                                                            echo 'Escreva o seu Nro de documento';
+                                                                                        }
+
+                                                                                        echo '"';
+
+                                                                                        if (!isset($_GET['user_id'])) {
+                                                                                            echo ' disabled';
+                                                                                        }
+
+                                                                                        echo ' class="ng-untouched ng-pristine ng-invalid" data-dashlane-rid="c19c1d81bf48d1c4" data-form-type="id_document,id_card">';
+                                                                                    } else if (isset($_GET['user_id']) && !empty($_GET['user_id']) && ($doc === 'rg')) {
+                                                                                        echo '<input formcontrolname="documentValue" minlength="2"
+                                                                                            maxlength="20" type="text" placeholder="Escreva seu Nro de documento" value="" class="ng-untouched ng-pristine ng-invalid" data-dashlane-rid="c19c1d81bf48d1c4" data-form-type="id_document,id_card">';
+                                                                                    } else {
+                                                                                        echo '<input formcontrolname="documentValue" type="text" value="" placeholder="Escreva o seu Nro de documento"';
+                                                                                        echo ' class="ng-untouched ng-pristine ng-invalid" data-dashlane-rid="c19c1d81bf48d1c4" data-form-type="id_document,id_card">';
+                                                                                    }
+                                                                                ?>
                                                                             </div>
+
                                                                             <!---->
                                                                         </div>
                                                                     </div>

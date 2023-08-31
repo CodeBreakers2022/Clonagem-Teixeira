@@ -1,9 +1,23 @@
 <?php
+
+    include_once 'connect.php';
+
     // Inicializa a sessão
     session_start();
-    if(isset($_SESSION['user_id'])){
-        $user_id = $_SESSION['user_id'];
+
+    if (isset($_GET['travel_id'])) {
+        $travel_id = $_GET['travel_id'];
+    } else {
+        // echo "user_id não foi passado via GET.";
     }
+
+    if (isset($_GET['user_id']) && !empty($_GET['user_id'])){
+        $user_id = $_GET['user_id'];
+    }
+
+    // if(isset($_SESSION['user_id'])){
+    //     $user_id = $_SESSION['user_id'];
+    // }
     // Verifica se o array de seleções já foi criado na sessão
     if (!isset($_SESSION['selected_numbers'])) {
         $_SESSION['selected_numbers'] = array();
@@ -199,8 +213,10 @@
                 <?php 
                     if (empty($_SESSION['selected_numbers'])){
                         $href = "reservarPassagem.php";
-                    }else{
-                        $href = "payment.php";
+                    }else if (empty($_GET['user_id'])) {
+                        $href = "payment.php?travel_id=" . $travel_id . "";
+                    } else {
+                        $href = "payment.php?travel_id=" . $travel_id . "&user_id=" . $user_id . "";
                     }
                 ?>
                 <?php if (!empty($_SESSION['selected_numbers'])): ?>

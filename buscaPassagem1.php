@@ -1,17 +1,24 @@
 <?php
 
 include_once 'connect.php';
-    session_start();
-    if(isset($_SESSION['user_id'])){
-        $user_id = $_SESSION['user_id'];
-    }
-    //inicializa as variáveis 
-    $city_origin = '';
-    $city_destiny = '';
-    $date_initial = '';
-    $date_and = '';
-    $classe = '';
-    $horario = '';
+
+session_start();
+
+    // if(isset($_SESSION['user_id'])){
+    //     $user_id = $_SESSION['user_id'];
+    // }
+
+//inicializa as variáveis 
+$city_origin = '';
+$city_destiny = '';
+$date_initial = '';
+$date_and = '';
+$classe = '';
+$horario = '';
+
+if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
+    $user_id = $_GET['user_id'];
+};
 
 //get
 if (isset($_GET['city_origin']) && isset($_GET['city_destiny'])) {
@@ -426,8 +433,10 @@ function calculateDate($daysToAddOrSubtract)
 
                 $exitTime = new DateTime($row['exit_time']);
                 $formattedExitTime = $exitTime->format('H:i');
-                echo "<div class='triplist'>
-                    <a class='link' href='reservarPassagem.php?travel_id=" . $row['travel_id'] . "' >
+                if (empty($_GET['user_id'])) {
+                    echo "<div class='triplist'>
+                    <a class='link' href='reservarPassagem.php?travel_id=" . $row['travel_id'] . "'>
+
                             <div class='imgmargin'>
                                 <img class='Image' src='assets/images/Z.png'>
                             </div>
@@ -481,6 +490,65 @@ function calculateDate($daysToAddOrSubtract)
                             </div>
                     </a>        
                 </div>";
+                } else {
+                    echo "<div class='triplist'>
+                    <a class='link' href='reservarPassagem.php?travel_id=" . $row['travel_id'] . "&user_id=" . $user_id . "'>
+
+                            <div class='imgmargin'>
+                                <img class='Image' src='assets/images/Z.png'>
+                            </div>
+
+                            <div class='route'>
+                                <div class='loc'>
+                                    <i class='fa fa-map-marker' aria-hidden='true'></i>
+                                </div>
+                                <div class='divita'>
+                                    " . $row['origin'] . "<br>" . $row['destiny'] . "
+                                </div>
+                            </div>
+
+                            <div class='conv-area'>
+                                <div class='conv'>
+                                " . $row['class'] ."
+                                </div>
+                            </div>
+
+                            <div class='triptime'>
+                                <div class='hourcontainer'>
+                                <div class='clock'> <i class='fa fa-clock-o' aria-hidden='true'></i></div>
+                                    <div class='hours'>
+                                        <span class='time'> " . $formattedArrivalTime . " </span>
+                                    </div>
+                                </div>
+                                <div class='duration'>
+                                    <div class='duration-container'>
+                                    <div class='arrow-icon'>
+                                        <i class='fa fa-long-arrow-right'aria-hidden='true'></i>
+                                    </div>
+                                        <div class='dur'>
+                                            <span class='h'>00h</span>
+                                            <span class='min'>55m</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='hourcontainer2'>
+
+                                    <div class='hours'>
+                                        <span class='time'> " . $formattedExitTime . " </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class='tripprice'>
+                                <div class='textprice'>
+                                    a partir de</div>
+                                <div class='price'>
+                                R$ " . $price_formatted . "</div>
+                            </div>
+                    </a>        
+                </div>";
+                }
+
             }
         } else {
             echo "Nenhum resultado encontrado.";

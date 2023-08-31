@@ -38,7 +38,8 @@
                 $consultaUsers = "SELECT user_id FROM user WHERE email = '$email' AND user_name = '$name'";
                 $result = mysqli_query($connection, $consultaUsers);
                 $row = $result->fetch_assoc();
-                $idUser = $row["user_id"]; 
+                $_SESSION['user_id'] = $row["user_id"];
+            
                 // $consultaTrilhas = "SELECT id FROM trilhas";
                 // $resultTrilhas = mysqli_query($conexao, $consultaTrilhas);
                 // while ($row = $resultTrilhas->fetch_assoc()) {
@@ -53,7 +54,7 @@
                 }
 
                 echo "<script>alert('Cadastro realizado com sucesso!')</script>";
-                echo "<script>window.location.href = 'homePage.php';</script>";
+                echo "<script>window.location.href = 'homePage.php?user_id=" . $_SESSION['user_id'] . "</script>";
 
             } else { // Cadastro não efetuado
                 echo "Erro ao cadastrar no banco de dados " . mysqli_error($connection);
