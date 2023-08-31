@@ -16,23 +16,6 @@
         $selectedNumbers = "nenhuma cadeira selecionada";
     }
 
-    //pesquisas referentes ao usuário 
-    // if(isset($_SESSION['user_id'])){
-    //     $user_id = $_SESSION['user_id'];
-    //     echo $user_id;
-
-    //     echo "<script>alert('".$user_id."');</script>";
-    //     $sql = "SELECT * FROM user WHERE user_id = ".$user_id."";
-    //     $result = mysqli_query($connection, $sql);
-    //     if ($result -> num_rows > 0){
-    //         $user_data = mysqli_fetch_assoc($result);
-    //         $login_user = true;
-    //     }else{
-    //         $login_user = false;
-    //     }
-        
-    // }
-
     if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
         $user_id = $_GET['user_id'];
     }
@@ -86,6 +69,38 @@
         echo "<script> alert('Selecione uma viagem'); </script>";
         header('Location: buscaPassagem1.php');
         exit();
+    }
+
+    if (isset($_POST['submit_cupom'])) {
+        $cupom_code = $_POST['cupom_code'];
+        // echo "<script> alert('".$cupom_code."'); </script>";
+    
+        $sql_cupom = "SELECT * FROM coupon WHERE coupon_name = '$cupom_code'";
+        $result_cupom = mysqli_query($connection, $sql_cupom);
+    
+        if ($result_cupom && mysqli_num_rows($result_cupom) > 0) {
+            $row_cupom = mysqli_fetch_assoc($result_cupom);
+            $desconto = $row_cupom['discount'];
+            $desconto_valor = $total_price * ($desconto / 100);
+    
+            $total_price -= $desconto_valor; // Subtrair o valor do desconto
+            $total_price_formatted = number_format($total_price, 2, ',', '.'); // Atualizar a formatação do preço
+        } else {
+            echo "<script> alert('Cupom não encontrado');</script>";
+        }
+    }
+
+    //finalizar_compra
+    if (isset($_POST['finalizar_compra'])) {
+        if (isset($_GET['user_id'])){
+            for ($i = 0; $i < count($selectedNumbers); $i++) {
+                $sql_reservar_cadeira = "INSERT INTO user_chair (user_id, travel_id, chair_number, busy) VALUES (".$user_id.", ".$travel_id.", ".$selectedNumbers[$i].", 1)";
+                $result_reservar_cadeira = mysqli_query($connection, $sql_reservar_cadeira);
+            }
+        }else{
+            header('Location: login.html');
+            exit();
+        }
     }
 ?>
 
@@ -354,7 +369,7 @@
                                                                                     
                                                                                     echo '"';
                                                                                     
-                                                                                    if (!isset($_GET['user_id'])) {
+                                                                                    if (isset($_GET['user_id'])) {
                                                                                         echo ' disabled';
                                                                                     }
                                                                                     
@@ -391,7 +406,7 @@
                                                                                     
                                                                                     echo '"';
                                                                                     
-                                                                                    if (!isset($_GET['user_id'])) {
+                                                                                    if (isset($_GET['user_id'])) {
                                                                                         echo ' disabled';
                                                                                     }
                                                                                     
@@ -438,8 +453,8 @@
                                                                                     
                                                                                     echo '"';
                                                                                     
-                                                                                    if (!isset($_GET['user_id'])) {
-                                                                                        echo ' disabled';
+                                                                                    if (isset($_GET['user_id'])) {
+                                                                                        echo ' disabled=""';
                                                                                     }
                                                                                     
                                                                                     echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
@@ -448,14 +463,6 @@
                                                                                     echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
                                                                                 }
                                                                             ?>
-                                                                            <!-- <input id="customerId"
-                                                                                formcontrolname="document" type="text"
-                                                                                mask="000.000.000-00" placeholder="CPF"
-                                                                                class="ng-untouched ng-pristine"
-                                                                                disabled=""
-                                                                                data-dashlane-rid="3ecfc858f5bc6da1"
-                                                                                data-form-type="id_document"> -->
-                                                                            <!---->
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-12 col-lg-6">
@@ -480,27 +487,16 @@
                                                                                     
                                                                                     echo '"';
                                                                                     
-                                                                                    if (!isset($_GET['user_id'])) {
-                                                                                        echo ' disabled';
+                                                                                    if (isset($_GET['user_id'])) {
+                                                                                        echo ' disabled=""';
                                                                                     }
                                                                                     
-                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
+                                                                                    echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other" >';
                                                                                 } else {
                                                                                     echo '<input formcontrolname="name" type="text" value="" placeholder="Escreva o seu N° de telefone"';
                                                                                     echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
                                                                                 }
                                                                             ?>
-                                                                            <!-- <input formcontrolname="customerPhone"
-                                                                                id="customerPhoneNumber"
-                                                                                mask="(00) 00000-0000" type="text"
-                                                                                placeholder="N° do telefone de contato"
-                                                                                class="ng-untouched ng-pristine"
-                                                                                disabled=""
-                                                                                data-dashlane-rid="a603ecad94e9f2e5"
-                                                                                data-kwcachedvalue="(37) 98406-7937"
-                                                                                data-kwimpalastatus="asleep"
-                                                                                data-kwimpalaid="1692397960065-7"
-                                                                                data-form-type="phone"> -->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -532,155 +528,83 @@
                                             </div>
                                             <!---->
                                             <br>
-                                            <div class="row">
-                                                <div class="col">
-                                                    <form novalidate="" class="ng-untouched ng-pristine ng-invalid"
-                                                        data-dashlane-rid="be9a5c26f8f369cd" data-form-type="other">
-                                                        <div formarrayname="documents"
-                                                            class="ng-untouched ng-pristine ng-invalid">
-                                                            <div
-                                                                class="card card-checkout m-b-10 ng-untouched ng-pristine ng-invalid">
-                                                                <h3 class="card-section-title">
-                                                                    <i class="fad fa-fw fa-address-card"></i>
-                                                                    Passageiro #1
-                                                                    <span class="passenger-seat">
-                                                                        Poltrona
-                                                                        <b class="seat-number">
-                                                                            <i class="fa fa-chair-office icon-seat">
-                                                                            </i>
-                                                                            26
-                                                                        </b>
-                                                                    </span>
-                                                                    <!---->
-                                                                </h3>
-                                                                <div class="checkout-info">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12 col-lg-6">
-                                                                            <div class="input-container">
-                                                                                <label>Nome completo *</label>
-                                                                                <?php
-                                                                                    if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
-                                                                                        echo '<input formcontrolname="name" type="text" placeholder="" value="';
-                                                                                        
-                                                                                        if (isset($_GET['user_id'])) {
-                                                                                            $sql = "SELECT user_name FROM user WHERE user_id = " . $_GET['user_id'];
-                                                                                            $result = mysqli_query($connection, $sql);
-                                                                                            if ($result && mysqli_num_rows($result) > 0) {
-                                                                                                $row = mysqli_fetch_assoc($result);
-                                                                                                echo $row['user_name'];
-                                                                                            } else {
-                                                                                                echo 'Escreva o seu nome';
-                                                                                            }
-                                                                                        } else {
-                                                                                            echo 'Escreva o seu nome';
-                                                                                        }
-                                                                                        
-                                                                                        echo '"';
-                                                                                        
-                                                                                        if (!isset($_GET['user_id'])) {
-                                                                                            echo ' disabled';
-                                                                                        }
-                                                                                        
-                                                                                        echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
-                                                                                    } else {
-                                                                                        echo '<input formcontrolname="name" type="text" value="" placeholder="Escreva o seu nome"';
-                                                                                        echo ' class="ng-untouched ng-pristine" data-dashlane-rid="20c715de4ca658f1" data-form-type="other">';
-                                                                                    }
-                                                                                ?>
-                                                                                <!-- <input formcontrolname="name"
-                                                                                    type="text" value="" id="name0"
-                                                                                    placeholder="Nome completo"
-                                                                                    class="ng-untouched ng-pristine ng-invalid"
-                                                                                    data-dashlane-rid="e0f3c38855e1a2af"
-                                                                                    data-form-type="other"> -->
+
+                                            <?php 
+                                                for ($i = 0; $i < count($selectedNumbers); $i++) {
+                                                    echo'
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <form novalidate="" class="ng-untouched ng-pristine ng-invalid"
+                                                                    data-dashlane-rid="be9a5c26f8f369cd" data-form-type="other">
+                                                                    <div formarrayname="documents"
+                                                                        class="ng-untouched ng-pristine ng-invalid">
+                                                                        <div
+                                                                            class="card card-checkout m-b-10 ng-untouched ng-pristine ng-invalid">
+                                                                            <h3 class="card-section-title">
+                                                                                <i class="fad fa-fw fa-address-card"></i>
+                                                                                Passageiro #1
+                                                                                <span class="passenger-seat">
+                                                                                    Poltrona
+                                                                                    <b class="seat-number">
+                                                                                        <i class="fa fa-chair-office icon-seat">
+                                                                                        </i>
+                                                                                        '.$selectedNumbers[$i].'
+                                                                                    </b>
+                                                                                </span>
+                                                                                <!---->
+                                                                            </h3>
+                                                                            <div class="checkout-info">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12 col-lg-6">
+                                                                                        <div class="input-container">
+                                                                                            <label>Nome completo *</label>
+                                                                                            <input formcontrolname="name"
+                                                                                                type="text" value="" id="name0"
+                                                                                                placeholder="Nome completo"
+                                                                                                class="ng-untouched ng-pristine ng-invalid"
+                                                                                                data-dashlane-rid="e0f3c38855e1a2af"
+                                                                                                data-form-type="other">
+                                                                                            <!---->
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-12 col-lg-2">
+                                                                                        <div class="input-container">
+                                                                                            <label>Documento *</label>
+                                                                                            <select id="typeOfPassengerDoc"
+                                                                                                data-dashlane-rid="d8523b2943f75f6f"
+                                                                                                data-form-type="other">
+                                                                                                <option value="2" selected=""> RG
+                                                                                                </option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-12 col-lg-4">
+                                                                                        <div class="input-container">
+                                                                                            <label>N° do documento *</label>
+                                                                                            <input formcontrolname="documentValue"
+                                                                                                type="text" value="" minlength="2"
+                                                                                                maxlength="20"
+                                                                                                placeholder="Nro documento"
+                                                                                                class="ng-untouched ng-pristine ng-invalid"
+                                                                                                data-dashlane-rid="c19c1d81bf48d1c4"
+                                                                                                data-form-type="id_document,id_card">
+                                                                                        </div>
+                                                                                        <!---->
+                                                                                    </div>
+                                                                                </div>
                                                                                 <!---->
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-md-12 col-lg-2">
-                                                                            <!-- <div class="input-container">
-                                                                                <label>Documento *</label>
-                                                                                <?php
-                                                                                    //$doc = 'cpf';
-                                                                                ?>
-                                                                                <select id="typeOfPassengerDoc"
-                                                                                    data-dashlane-rid="d8523b2943f75f6f"
-                                                                                    data-form-type="other">
-                                                                                    <option value="1" selected=""> CPF </option>
-                                                                                    <option value="2"> RG </option>
-                                                                                    <?php
-                                                                                        //$doc = ($doc === 'rg') ? 'rg' : 'cpf';
-                                                                                    ?>
-                                                                                </select>
-                                                                            </div> -->
-                                                                            <div class="input-container">
-                                                                                <label>Documento *</label>
-                                                                                <?php
-                                                                                $doc = 'cpf'; // Definindo valor padrão
-                                                                                if (isset($_GET['user_id']) && !empty($_GET['user_id'])) {
-                                                                                    echo '<select id="typeOfPassengerDoc"
-                                                                                            data-dashlane-rid="d8523b2943f75f6f"
-                                                                                            data-form-type="other">';
-                                                                                    echo '<option value="1" selected="">CPF</option>';
-                                                                                    echo '<option value="2">RG</option>';
-                                                                                    echo '</select>';
-                                                                                    $doc = ($doc === 'cpf') ? 'cpf' : 'rg'; // Atualizando a variável $doc
-                                                                                } else {
-                                                                                    echo '<select id="typeOfPassengerDoc"
-                                                                                            data-dashlane-rid="d8523b2943f75f6f"
-                                                                                            data-form-type="other">';
-                                                                                    echo '<option value="1" selected="">CPF</option>';
-                                                                                    echo '<option value="2">RG</option>';
-                                                                                    echo '</select>';
-                                                                                    $doc = ($doc === 'cpf') ? 'cpf' : 'rg'; // Atualizando a variável $doc
-                                                                                }
-                                                                                ?>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-12 col-lg-4">
-                                                                            <div class="input-container">
-                                                                                <label>N° do documento *</label>
-                                                                                <?php
-                                                                                    if (isset($_GET['user_id']) && !empty($_GET['user_id']) && ($doc === 'cpf')) {
-                                                                                        echo '<input formcontrolname="documentValue" minlength="2" maxlength="20" type="text" placeholder="" value"';
-
-                                                                                        $sql = "SELECT cpf FROM user WHERE user_id = " . $_GET['user_id'];
-                                                                                        $result = mysqli_query($connection, $sql);
-
-                                                                                        if ($result && mysqli_num_rows($result) > 0) {
-                                                                                            $row = mysqli_fetch_assoc($result);
-                                                                                            echo $row['cpf'];
-                                                                                        } else {
-                                                                                            echo 'Escreva o seu Nro de documento';
-                                                                                        }
-
-                                                                                        echo '"';
-
-                                                                                        if (!isset($_GET['user_id'])) {
-                                                                                            echo ' disabled';
-                                                                                        }
-
-                                                                                        echo ' class="ng-untouched ng-pristine ng-invalid" data-dashlane-rid="c19c1d81bf48d1c4" data-form-type="id_document,id_card">';
-                                                                                    } else if (isset($_GET['user_id']) && !empty($_GET['user_id']) && ($doc === 'rg')) {
-                                                                                        echo '<input formcontrolname="documentValue" minlength="2"
-                                                                                            maxlength="20" type="text" placeholder="Escreva seu Nro de documento" value="" class="ng-untouched ng-pristine ng-invalid" data-dashlane-rid="c19c1d81bf48d1c4" data-form-type="id_document,id_card">';
-                                                                                    } else {
-                                                                                        echo '<input formcontrolname="documentValue" type="text" value="" placeholder="Escreva o seu Nro de documento"';
-                                                                                        echo ' class="ng-untouched ng-pristine ng-invalid" data-dashlane-rid="c19c1d81bf48d1c4" data-form-type="id_document,id_card">';
-                                                                                    }
-                                                                                ?>
-                                                                            </div>
-
-                                                                            <!---->
-                                                                        </div>
                                                                     </div>
                                                                     <!---->
-                                                                </div>
+                                                                </form>
                                                             </div>
                                                         </div>
-                                                        <!---->
-                                                    </form>
-                                                </div>
-                                            </div>
+                                                    ';
+                                                }
+
+                                            ?>
+                                            
                                             <br>
                                             <!---->
                                             <div class="row">
@@ -1154,25 +1078,11 @@
                                             </div>
                                             <!---->
                                             <div class="row row-checkout-btns">
-                                                <div class="col-lg-4 col-md-12 m-t-15">
-                                                    <button class="btn btn-outline">
-                                                        <a href="/buscaPassagem.php"
-                                                            style="text-decoration: none; color: black;">
-                                                            <i class="fa fa-chevron-circle-left"></i>
-                                                            &nbsp;&nbsp;
-                                                            VOLTAR
-                                                        </a>
-                                                    </button>
-                                                </div>
-                                                <div class="col-lg-8 col-md-12 m-t-15 text-right">
-                                                    <button class="btn btn-primary">
-                                                        FINALIZAR SUA COMPRA
-                                                        &nbsp;&nbsp;&nbsp;
-                                                        <i class="fa fa-check-circle icon-next"></i>
-                                                    </button>
-                                                    <!---->
-                                                    <!---->
-                                                </div>
+                                                <form method="post">
+                                                    <div class="col-lg-8 col-md-12 m-t-15 text-right" style="width: auto;">
+                                                        <input type="submit" style="width: auto;" class="btn btn-primary" name="finalizar_compra" value="FINALIZAR SUA COMPRA" />
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                         <div class="col-md-5 col-lg-3">
@@ -1258,17 +1168,19 @@
                                                     <!---->
                                                     <div class="summary-info-block coupon-block">
                                                         <label>Cupom de Desconto</label>
-                                                        <div class="content" data-dashlane-rid="ef2366d817fbc7f9"
-                                                            data-form-type="other">
-                                                            <input type="text" value=""
-                                                                class="ng-untouched ng-pristine ng-valid"
-                                                                data-dashlane-rid="b0f697939db181d1"
+                                                        <form method="post">
+                                                            <div class="content" data-dashlane-rid="ef2366d817fbc7f9"
                                                                 data-form-type="other">
-                                                            <button class="btn btn-primary" disabled=""
-                                                                data-dashlane-rid="ed51a99dbd47320c"
-                                                                data-dashlane-label="true"
-                                                                data-form-type="action">Aplicar</button>
-                                                        </div>
+                                                                <input type="text" value="" name="cupom_code"
+                                                                    class="ng-untouched ng-pristine ng-valid"
+                                                                    data-dashlane-rid="b0f697939db181d1"
+                                                                    data-form-type="other">
+                                                                <input class="btn btn-primary" name="submit_cupom" type="submit"
+                                                                    data-dashlane-rid="ed51a99dbd47320c"
+                                                                    data-dashlane-label="true"
+                                                                    data-form-type="action" value="Aplicar" />
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                     <!---->
                                                 </div>
@@ -1284,7 +1196,7 @@
             <!---->
             <!---->
 
-            <footer>
+            <!-- <footer>
                 <div class="row">
                     <div class="col">
                         <div class="main-footer-first-line">
@@ -1373,7 +1285,7 @@
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer> -->
         </div>
     </div>
 
@@ -1386,8 +1298,6 @@
         style="display: none; width: 0; height: 0; border: none; margin: 0;" data-dashlane-frameid="29"></iframe>
 
     <script type="text/javascript" src="scripts/payment.js"></script>
-
-
 </body>
 
 </html>
