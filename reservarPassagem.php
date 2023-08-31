@@ -185,19 +185,29 @@
                     <div class="bus-front"></div>
                     <div class="bus-middle">
                         <div class='boxchair'> 
-                            <?php
-                                for ($i = 1; $i <= 42; $i++) {
-                                    if (isNumberSelected($i)) {
-                                        echo "<button style='background-color: orange;' class='bttchair selected' name='number' value='$i'>$i</button>";
-                                    } else {
-                                        echo "<button class='bttchair' name='number' value='$i'>$i</button>";
-                                    }
-                                    
-                                    if ($i % 7 === 0) {
-                                        echo "<br>";
-                                    }
+                        <?php
+                            $sql_cadeiras_reservadas = "SELECT chair_number FROM user_chair WHERE busy = 1";
+                            $result_cadeiras_reservadas = mysqli_query($connection, $sql_cadeiras_reservadas);
+                            $reservadas = array();
+
+                            while ($row_cadeiras_reservadas = mysqli_fetch_assoc($result_cadeiras_reservadas)) {
+                                $reservadas[] = $row_cadeiras_reservadas['chair_number'];
+                            }
+
+                            for ($i = 1; $i <= 42; $i++) {
+                                if (isNumberSelected($i)) {
+                                    echo "<button style='background-color: orange;' class='bttchair selected' name='number' value='$i'>$i</button>";
+                                } else if (in_array($i, $reservadas)) {
+                                    echo "<button style='background-color: red;' class='bttchair' name='number' value='$i' disabled>$i</button>";
+                                } else {
+                                    echo "<button class='bttchair' name='number' value='$i'>$i</button>";
                                 }
-                            ?>
+                                
+                                if ($i % 7 === 0) {
+                                    echo "<br>";
+                                }
+                            }
+                        ?>
                         </div>
                     </div>
                     <div class="bus-back"></div>
