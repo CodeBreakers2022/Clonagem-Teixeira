@@ -29,6 +29,8 @@
             $_SESSION['selected_numbers'] = array_diff($_SESSION['selected_numbers'], array($number));
         } elseif (count($_SESSION['selected_numbers']) < 6) {
             $_SESSION['selected_numbers'][] = $number;
+        } else {
+            echo "<script>alert('Limite de passagens alcançado')</script>";
         }
     }
 
