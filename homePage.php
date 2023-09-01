@@ -38,24 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/styles/global.css">
-    <!-- <link rel="stylesheet" type="text/css" href="assets/styles/register.css"> -->
-    <link rel="stylesheet" href="styles.fedbbe35ba989d852a08.css" media="all" onload="this.media='all'"><noscript>
-        <link rel="stylesheet" href="styles.fedbbe35ba989d852a08.css">
-    </noscript>
-    <meta name="description"
-        content="Compre passagens de ônibus da Teixeira. Garanta sua passagem online, com antecedência, segurança e conforto. Acesse o site e garanta já a sua!">
-    <meta name="theme-color" content="#04642f">
-    <link rel="canonical" href="/">
-    <link type="image/x-icon" rel="shortcut icon" href="assets/images/homePage/Icons/teixeira.ico">
-    <link type="image/x-icon" rel="icon" href="assets/images/homePage/Icons/teixeira.ico">
+    <link rel="stylesheet" href="styles.fedbbe35ba989d852a08.css">
     <link type="text/css" rel="stylesheet" href="assets/styles/homePageStyles/styleHomePage.css">
-    <!-- <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-    </style> -->
-    <!-- icons -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <!--tecket 2-->
 </header>
 
 <body>
@@ -170,8 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div class="navbar-small-container" id="navbar-small-container">
                 <div class="navbar-small-container-list">
-                    <!-- <a href="#">Buscar pedido</a>
-                        <hr> -->
                     <a href="#">Nossos destinos</a>
                     <hr>
                     <a href="#">Horários de guichês</a>
@@ -180,27 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </nav>
 
-    <!-- conteudo -->
-    <!-- <form action="" class="form-container" method="post" class="form"> -->
-    <!-- Seus campos de formulário aqui -->
-    <!-- <select name="city_origin" required>
-            <option disabled selected value="">Saindo de</option>
-            <option>DIVINOPOLIS - MG</option>
-            <option>SÃO JOSÉ DO SALGADO -MG</option>
-            <option>ITAUNA - MG</option>
-        </select>
-        <select name="city_destiny" required>
-            <option disabled selected value="">Chegando em</option>
-            <option>DIVINOPOLIS - MG</option>
-            <option>SÃO JOSÉ DO SALGADO -MG</option>
-            <option>ITAUNA - MG</option>
-        </select>
-        <input type="date" name="date_initial" placeholder="Data de ida" />
-        <input type="date" name="date_and" placeholder="Data de retorno" />
-        <input type="text" name="coupon" placeholder="cupom" />
-        <input class="button_form" name="submit" type="submit" value="Submit" />
-    </form> -->
-
+    <!--conteudo-->
     <body ng-version="12.1.0">
         <div class="body-loading">
             <i class="fad fa-circle-notch fa-spin"></i>
@@ -214,12 +178,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <app-teixeira-home class="ng-star-inserted">
                         <div class="home-main-banner-container">
                             <app-carousel>
-                                <!---->
                                 <a loading="lazy" target="_blank" href="#" class="ng-star-inserted">
                                     <img class="main-banner-image" src="assets/images/homePage/main-banner.jpg"
                                         alt="Em Minas Gerais Viaje Com Conforto E Segurança">
                                 </a>
-                                <!---->
                             </app-carousel>
                             <div class="container">
                                 <div class="row">
@@ -242,13 +204,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     <option>SÃO JOSÉ DO SALGADO - MG</option>
                                                                     <option>ITAUNA - MG</option>
                                                                 </select>
-                                                                <!----><!----><!---->
                                                             </div>
                                                             <button class="btn-change-direction ng-star-inserted"
                                                                 style="background-color: rgb(237, 28, 36);">
                                                                 <i class="fas fa-exchange-alt"></i>
                                                             </button>
-                                                            <!---->
                                                         </div>
                                                         <div class="search-field search-field-destination">
                                                             <label class="lbl">Destino</label>
@@ -261,7 +221,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     <option>SÃO JOSÉ DO SALGADO - MG</option>
                                                                     <option>ITAUNA - MG</option>
                                                                 </select>
-                                                                <!----><!----><!---->
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -272,20 +231,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                         class="no-icon-input input-date-search departure">
                                                                         <input type="date" name="date_initial"
                                                                             class="ng-star-inserted">
-                                                                        <!-- <style>
-                                                                            input[type="date"]::-webkit-calendar-picker-indicator {
-                                                                                display: none;
-                                                                            }
-                                                                        </style> -->
-                                                                        <!---->
                                                                         <app-custom-datepicker
                                                                             class="departure ng-star-inserted">
-                                                                            <!----><!----><!---->
                                                                         </app-custom-datepicker>
-                                                                        <!----><!---->
                                                                     </div>
                                                                 </div>
-                                                                <!---->
                                                             </div>
                                                             <div class="col-md-6 search-field-return-date">
                                                                 <div class="search-field date-field ng-star-inserted">
@@ -294,15 +244,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                         class="no-icon-input input-date-search arrival">
                                                                         <input type="date" name="date_and"
                                                                             class="no-border-left ng-star-inserted">
-                                                                        <!---->
                                                                         <app-custom-datepicker subtitle="volta"
                                                                             class="arrival ng-star-inserted">
-                                                                            <!----><!----><!---->
                                                                         </app-custom-datepicker>
-                                                                        <!----><!---->
                                                                     </div>
                                                                 </div>
-                                                                <!---->
                                                             </div>
                                                         </div>
                                                         <div class="search-field discount-field ng-star-inserted">
@@ -313,7 +259,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     class="ng-untouched ng-pristine ng-valid">
                                                             </div>
                                                         </div>
-                                                        <!----><!----><!---->
                                                         <button
                                                             class="btn-primary search-button button-home button_form"
                                                             name="submit" type="submit"
@@ -342,7 +287,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                             alt="Embarque Digital">
                                                         <div style="color: rgb(79, 79, 79);">Embarque Digital</div>
                                                     </div>
-                                                    <!---->
                                                 </app-feature>
                                                 <app-feature class="ng-star-inserted">
                                                     <div class="feature ng-star-inserted">
@@ -351,7 +295,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                             alt="Descontos">
                                                         <div style="color: rgb(79, 79, 79);">Descontos</div>
                                                     </div>
-                                                    <!---->
                                                 </app-feature>
                                                 <app-feature class="ng-star-inserted">
                                                     <div class="feature ng-star-inserted">
@@ -360,7 +303,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                             alt="100% Seguro">
                                                         <div style="color: rgb(79, 79, 79);">100% Seguro</div>
                                                     </div>
-                                                    <!---->
                                                 </app-feature>
                                                 <app-feature class="ng-star-inserted">
                                                     <div class="feature ng-star-inserted">
@@ -369,7 +311,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                             alt="Ônibus Sanitizados">
                                                         <div style="color: rgb(79, 79, 79);">Ônibus Sanitizados</div>
                                                     </div>
-                                                    <!---->
                                                 </app-feature>
                                                 <app-feature class="ng-star-inserted">
                                                     <div class="feature ng-star-inserted">
@@ -378,15 +319,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                             alt="Remarcação Fácil">
                                                         <div style="color: rgb(79, 79, 79);">Remarcação Fácil</div>
                                                     </div>
-                                                    <!---->
                                                 </app-feature>
-                                                <!----><!---->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!---->
                         </app-features>
                         <div class="home-company-offers">
                             <h2>Passagens de ônibus mais baratas</h2>
@@ -394,18 +332,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="container ng-star-inserted">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <!---->
                                             <div class="owl-carousel-filters tags ng-star-inserted">
                                                 <div class="owl-carousel-filter active ng-star-inserted"> Ofertas
                                                     especiais
                                                 </div>
-                                                <!---->
                                             </div>
-                                            <!---->
                                         </div>
                                     </div>
                                 </div>
-                                <!---->
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-md-12">
@@ -422,31 +356,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                     <div class="owl-item ng-tns-c55-0 ng-trigger ng-trigger-autoHeight active ng-star-inserted"
                                                                         style="width: 346.667px; margin-right: 20px;">
                                                                         <a class="ng-star-inserted"> <!--style--->
-                                                                            <!---->
                                                                             <img class="img-slide ng-star-inserted"
                                                                                 style="max-width: 350px;"
                                                                                 src="assets/images/homePage/divinopolis-bh.png"
                                                                                 alt="DIVINOPOLIS VS BH1"
                                                                                 title="DIVINOPOLIS VS BH1">
-                                                                            <!---->
                                                                         </a>
-                                                                        <!----><!---->
                                                                     </div>
-                                                                    <!---->
                                                                     <div class="owl-item ng-tns-c55-0 ng-trigger ng-trigger-autoHeight active ng-star-inserted"
                                                                         style="width: 346.667px; margin-right: 20px;">
                                                                         <a class="ng-star-inserted"> <!--style--->
-                                                                            <!---->
                                                                             <img class="img-slide ng-star-inserted"
                                                                                 style="max-width: 350px;"
                                                                                 src="assets/images/homePage/bh-betim.png"
                                                                                 alt="BELO HORIZONTE VS BETIN"
                                                                                 title="BELO HORIZONTE VS BETIN">
-                                                                            <!---->
                                                                         </a>
-                                                                        <!----><!---->
                                                                     </div>
-                                                                    <!---->
                                                                     <div class="owl-item ng-tns-c55-0 ng-trigger ng-trigger-autoHeight active ng-star-inserted"
                                                                         style="width: 346.667px; margin-right: 20px;">
                                                                         <a class="ng-star-inserted"> <!--style--->
@@ -456,16 +382,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                                                 src="assets/images/homePage/itauna-div.png"
                                                                                 alt="ITUANA VS DIV"
                                                                                 title="ITUANA VS DIV">
-                                                                            <!---->
                                                                         </a>
-                                                                        <!----><!---->
                                                                     </div>
-                                                                    <!----><!---->
                                                                 </div>
                                                             </div>
                                                         </owl-stage>
                                                     </div>
-                                                    <!---->
                                                     <div _ngcontent-serverapp-c54=""
                                                         class="owl-nav disabled ng-star-inserted">
                                                         <div _ngcontent-serverapp-c54="" class="owl-prev">prev</div>
@@ -477,12 +399,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                             class="owl-dot active ng-star-inserted">
                                                             <span _ngcontent-serverapp-c54=""></span>
                                                         </div>
-                                                        <!---->
                                                     </div>
-                                                    <!----><!---->
                                                 </div>
                                             </owl-carousel-o>
-                                            <!---->
                                         </div>
                                     </div>
                                 </div>
@@ -505,11 +424,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                             MG</span>
                                                         <i class="fas fa-times-circle icon-remove"></i>
                                                     </div>
-                                                    <!---->
                                                 </div>
                                             </div>
                                         </div>
-                                        <!---->
                                     </div>
                                 </div>
                             </div>
@@ -532,7 +449,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         <h4 class="route-title-destination"> A PARTIR DE<span
                                                                 class="price">R$&nbsp;14,20</span></h4>
                                                     </a>
-                                                    <!---->
                                                 </div>
                                                 <div class="col-md-4 promotional-banner ng-star-inserted">
                                                     <a class="route ng-star-inserted">
@@ -545,7 +461,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         <h4 class="route-title-destination"> A PARTIR DE<span
                                                                 class="price">R$&nbsp;34,90</span></h4>
                                                     </a>
-                                                    <!---->
                                                 </div>
                                                 <div class="col-md-4 promotional-banner ng-star-inserted">
                                                     <a class="route ng-star-inserted">
@@ -558,7 +473,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         <h4 class="route-title-destination"> A PARTIR DE <span
                                                                 class="price">R$&nbsp;31,05</span></h4>
                                                     </a>
-                                                    <!---->
                                                 </div>
                                                 <div class="col-md-4 promotional-banner ng-star-inserted">
                                                     <a class="route ng-star-inserted">
@@ -571,7 +485,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         <h4 class="route-title-destination"> A PARTIR DE<span
                                                                 class="price">R$&nbsp;6,20</span></h4>
                                                     </a>
-                                                    <!---->
                                                 </div>
                                                 <div class="col-md-4 promotional-banner ng-star-inserted">
                                                     <a class="route ng-star-inserted">
@@ -584,7 +497,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         <h4 class="route-title-destination"> A PARTIR DE<span
                                                                 class="price">R$&nbsp;10,00</span></h4>
                                                     </a>
-                                                    <!---->
                                                 </div>
                                                 <div class="col-md-4 promotional-banner ng-star-inserted">
                                                     <a class="route ng-star-inserted">
@@ -597,18 +509,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                         <h4 class="route-title-destination"> A PARTIR DE<span
                                                                 class="price">R$&nbsp;14,80</span></h4>
                                                     </a>
-                                                    <!---->
                                                 </div>
-                                                <!---->
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <!---->
                             </app-site-tripbanner>
                         </div>
                     </app-teixeira-home>
-                    <!---->
                     <app-teixeira-footer>
                         <footer>
                             <div class="row">
@@ -695,16 +603,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="main-footer-second-line">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-md-4"> © 2023 Grupo Teixeira <br>
-                                                    <a href="https://smarttravelit.com.br/" target="_blank"
-                                                        class="smart-travel-footer">powered by Smart Travel</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </footer>
@@ -712,10 +610,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         </div>
-        <whatsapp-link>
-            <!---->
-        </whatsapp-link>
-        <!---->
         <script type="text/javascript" src="scripts/scriptBusca.js"></script>
         <script type="text/javascript" src="scripts/global.js"></script>
                                                       
