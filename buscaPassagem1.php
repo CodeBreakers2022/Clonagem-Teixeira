@@ -327,7 +327,18 @@ function calculateDate($daysToAddOrSubtract)
 
     <!-- conteúdo -->
     
-  
+    <div class="container-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="step-title">
+                            <h1 class="title">Passagens de ônibus de <?php echo "$city_origin"?> para <?php echo "$city_destiny"?>&nbsp;&nbsp;<span class="ida">ida</span></h1>
+                            <div class="steps">passo <b>1</b> de <b>2</b></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         
         <div class="container">
@@ -370,12 +381,14 @@ function calculateDate($daysToAddOrSubtract)
                     </div>
                 </div>
             </section>
+            
             <div class="actions">
                 <div class="length"><b> <?php echo $result->num_rows;?></b> viagens encontradas</div>
                     <!-- <div class="filters">&nbsp;&nbsp;filtrar viagens por 
                         <span title="Filtrar por classe" class="filter-type">classe</span>
                         <span title="Filtrar por horário" class="filter-type">horário</span>
                     </div> -->
+                   
                     
                     <div class="filters">&nbsp;&nbsp;filtrar viagens por 
                         <form action="" method="post">
