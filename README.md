@@ -72,7 +72,7 @@ Este projeto foi desenvolvido como parte do módulo de Análise e Projetos em Si
 <!-- Links úteis -->
 ## 🔗 Links
 - [Documentação](Document/documentation.txt)
-- [Projeto](https://github.com/guisilvas/CodeBreakers-Devway)
+- [Projeto](https://github.com/CodeBreakers2022/Clonagem-Teixeira)
 - [Endereço]()
 
 <br>
